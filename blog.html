@@ -6,555 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Readings — Chezter Vargas</title>
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    /* ── Blog-specific layout ─────────────────────────────────────────────── */
-    .blog-shell {
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: 32px var(--pad) 0;
-    }
-
-    .blog-hd {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: end;
-      gap: 24px;
-      padding-bottom: 22px;
-      border-bottom: 1px solid var(--rule);
-      margin-bottom: 28px;
-    }
-
-    .blog-hd h1 {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(44px, 6vw, 88px);
-      line-height: .95;
-      letter-spacing: -0.02em;
-      margin: 0;
-    }
-
-    .blog-hd h1 em {
-      font-style: italic;
-      color: var(--signal);
-    }
-
-    .blog-hd .crumbs {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--mute);
-    }
-
-    .blog-hd .crumbs a {
-      color: inherit;
-      text-decoration: none;
-      border-bottom: 1px dotted var(--mute-2);
-    }
-
-    .blog-hd .crumbs a:hover {
-      color: var(--signal);
-      border-color: var(--signal);
-    }
-
-    .blog-grid {
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: clamp(20px, 3vw, 56px);
-      align-items: start;
-    }
-
-    /* ── Index sidebar ────────────────────────────────────────────────────── */
-    .idx {
-      position: sticky;
-      top: 56px;
-      align-self: start;
-      max-height: calc(100vh - 80px);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .idx .ttl-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--mute);
-    }
-
-    .idx .ttl-row b {
-      color: var(--ink);
-      font-weight: 500;
-    }
-
-    .idx .filters {
-      display: flex;
-      gap: 4px;
-      flex-wrap: wrap;
-    }
-
-    .idx .filters button {
-      appearance: none;
-      border: 1px solid var(--rule);
-      background: transparent;
-      color: var(--mute);
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      padding: 4px 8px;
-      cursor: pointer;
-      border-radius: 2px;
-      transition: color .15s, border-color .15s, background .15s;
-    }
-
-    .idx .filters button.on,
-    .idx .filters button:hover {
-      color: var(--paper);
-      background: var(--ink);
-      border-color: var(--ink);
-    }
-
-    .idx .search {
-      position: relative;
-    }
-
-    .idx .search input {
-      width: 100%;
-      height: 32px;
-      padding: 0 10px 0 28px;
-      border: 1px solid var(--rule);
-      background: transparent;
-      color: var(--ink);
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .02em;
-      border-radius: 2px;
-      outline: none;
-      transition: border-color .15s;
-    }
-
-    .idx .search input:focus {
-      border-color: var(--signal);
-    }
-
-    .idx .search input::placeholder {
-      color: var(--mute-2);
-    }
-
-    .idx .search::before {
-      content: "/";
-      position: absolute;
-      left: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-family: var(--mono);
-      color: var(--signal);
-      font-size: 13px;
-    }
-
-    .idx-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      flex: 1;
-      min-height: 0;
-    }
-
-    .idx-list li {
-      border-top: 1px solid var(--rule);
-    }
-
-    .idx-list li:last-child {
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .idx-list .entry {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 8px;
-      padding: 12px 6px;
-      cursor: pointer;
-      color: var(--ink);
-      text-decoration: none;
-      transition: padding .2s, background .2s;
-      position: relative;
-    }
-
-    .idx-list .entry:hover {
-      padding-left: 12px;
-      background: var(--signal-soft);
-    }
-
-    .idx-list .entry.active {
-      padding-left: 14px;
-      background: var(--signal-soft);
-    }
-
-    .idx-list .entry.active::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 12px;
-      bottom: 12px;
-      width: 2px;
-      background: var(--signal);
-    }
-
-    .idx-list .entry .meta-row {
-      display: flex;
-      gap: 10px;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--mute);
-      margin-bottom: 6px;
-    }
-
-    .idx-list .entry .meta-row .tag {
-      color: var(--signal);
-    }
-
-    .idx-list .entry .ttl {
-      font-family: var(--serif);
-      font-size: 18px;
-      line-height: 1.2;
-      letter-spacing: -0.005em;
-      text-wrap: balance;
-    }
-
-    .idx-list .entry .n {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--mute-2);
-      align-self: start;
-      padding-top: 2px;
-    }
-
-    /* ── Reader ───────────────────────────────────────────────────────────── */
-    .reader {
-      border: 1px solid var(--rule);
-      background: var(--paper-2);
-      border-radius: 4px;
-      padding: clamp(28px, 4vw, 64px) clamp(24px, 4vw, 72px);
-      position: relative;
-      min-height: 70vh;
-    }
-
-    .reader::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 28px;
-      height: 28px;
-      background:
-        linear-gradient(to right, var(--ink) 10px, transparent 10px) 0 0/100% 1px no-repeat,
-        linear-gradient(to bottom, var(--ink) 10px, transparent 10px) 0 0/1px 100% no-repeat;
-    }
-
-    .reader .header {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      padding-bottom: 22px;
-      border-bottom: 1px solid var(--rule);
-      margin-bottom: 32px;
-    }
-
-    .reader .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--mute);
-    }
-
-    .reader .meta .tag {
-      color: var(--signal);
-    }
-
-    .reader .meta .dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--mute-2);
-      align-self: center;
-    }
-
-    .reader h1.post-title {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(34px, 4.2vw, 60px);
-      line-height: 1.02;
-      letter-spacing: -0.02em;
-      margin: 0;
-      text-wrap: balance;
-    }
-
-    .reader h1.post-title em {
-      font-style: italic;
-      color: var(--signal);
-    }
-
-    .reader .lede {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: clamp(18px, 1.8vw, 22px);
-      line-height: 1.4;
-      color: var(--mute);
-      max-width: 56ch;
-      margin: 0;
-    }
-
-    /* Prose */
-    .prose-body {
-      max-width: 64ch;
-      font-family: var(--serif);
-      font-size: clamp(18px, 1.4vw, 21px);
-      line-height: 1.55;
-      color: var(--ink);
-    }
-
-    .prose-body p {
-      margin: 0 0 1.1em;
-      text-wrap: pretty;
-    }
-
-    .prose-body p:first-of-type::first-letter {
-      font-family: var(--serif);
-      font-size: 3.6em;
-      line-height: .85;
-      float: left;
-      padding: 6px 10px 0 0;
-      color: var(--signal);
-    }
-
-    .prose-body h2 {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-style: italic;
-      font-size: clamp(24px, 2.2vw, 32px);
-      line-height: 1.15;
-      letter-spacing: -0.01em;
-      margin: 1.6em 0 0.5em;
-      color: var(--ink);
-      text-wrap: balance;
-    }
-
-    .prose-body h2::before {
-      content: "§ ";
-      color: var(--signal);
-      font-style: normal;
-    }
-
-    .prose-body a {
-      color: inherit;
-      text-decoration: none;
-      background-image: linear-gradient(var(--signal), var(--signal));
-      background-size: 100% 1px;
-      background-position: 0 95%;
-      background-repeat: no-repeat;
-      transition: background-size .25s, color .25s;
-    }
-
-    .prose-body a:hover {
-      color: var(--signal);
-    }
-
-    .prose-body code,
-    .prose-body pre {
-      font-family: var(--mono);
-      font-size: 0.86em;
-      background: var(--paper);
-      border: 1px solid var(--rule);
-      border-radius: 3px;
-    }
-
-    .prose-body code {
-      padding: 1px 6px;
-    }
-
-    .prose-body pre {
-      padding: 16px 18px;
-      overflow-x: auto;
-      margin: 1.2em 0;
-      line-height: 1.5;
-    }
-
-    .prose-body blockquote {
-      margin: 1.4em 0;
-      padding: 4px 0 4px 22px;
-      border-left: 3px solid var(--signal);
-      font-style: italic;
-      color: var(--mute);
-    }
-
-    .prose-body hr {
-      border: 0;
-      height: 1px;
-      background: var(--rule);
-      margin: 2.2em 0;
-    }
-
-    .prose-body hr::after {
-      content: "❦";
-      display: block;
-      text-align: center;
-      margin-top: -10px;
-      background: var(--paper-2);
-      width: 28px;
-      margin-left: auto;
-      margin-right: auto;
-      color: var(--mute-2);
-    }
-
-    /* Reading-position indicator on right edge */
-    .read-progress {
-      position: fixed;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: transparent;
-      z-index: 40;
-    }
-
-    .read-progress i {
-      display: block;
-      width: 2px;
-      background: var(--signal);
-      box-shadow: 0 0 8px var(--signal);
-      height: 0%;
-      transition: height .08s linear;
-    }
-
-    /* Reader footer */
-    .reader .post-footer {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 56px;
-      padding-top: 24px;
-      border-top: 1px solid var(--rule);
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .reader .post-footer a {
-      color: var(--ink);
-      text-decoration: none;
-      padding: 12px 14px;
-      border: 1px solid var(--rule);
-      border-radius: 3px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      transition: border-color .2s, background .2s;
-    }
-
-    .reader .post-footer a:hover {
-      border-color: var(--signal);
-      background: var(--signal-soft);
-    }
-
-    .reader .post-footer .label {
-      color: var(--mute-2);
-    }
-
-    .reader .post-footer .next {
-      text-align: right;
-    }
-
-    .reader .post-footer .next a {
-      align-items: flex-end;
-    }
-
-    .reader .post-footer .ttl {
-      color: var(--ink);
-      font-family: var(--serif);
-      font-size: 15px;
-      text-transform: none;
-      letter-spacing: 0;
-    }
-
-    /* Empty state */
-    .empty {
-      text-align: center;
-      padding: 80px 20px;
-      color: var(--mute);
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    /* Mini-ECG bar at very top of reader, draws while you read */
-    .reader-pulse {
-      height: 36px;
-      margin: 0 0 24px;
-      border-bottom: 1px solid var(--rule);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .reader-pulse svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .reader-pulse svg path {
-      stroke: var(--signal);
-      stroke-width: 1.4;
-      fill: none;
-      filter: drop-shadow(0 0 4px var(--signal-soft));
-    }
-
-    .reader-pulse .label {
-      position: absolute;
-      right: 8px;
-      top: 8px;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--mute);
-    }
-
-    /* ── Responsive ───────────────────────────────────────────────────────── */
-    @media (max-width: 900px) {
-      .blog-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .idx {
-        position: static;
-        max-height: none;
-      }
-
-      .idx-list {
-        max-height: 40vh;
-      }
-
-      .reader {
-        padding: 28px 22px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="blog.css" />
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
 <body>
@@ -572,6 +26,7 @@
   </header>
 
   <div class="read-progress" aria-hidden="true"><i id="read-progress-bar"></i></div>
+  <div class="idx-overlay" id="idx-overlay"></div>
 
   <div class="blog-shell">
     <div class="blog-hd">
@@ -600,6 +55,11 @@
 
       <!-- Reader -->
       <article class="reader" id="reader" aria-live="polite">
+        <!-- Hamburger toggle (mobile only) -->
+        <button class="idx-toggle" id="idx-toggle" aria-label="Open post index">
+          <span class="burger"><span></span><span></span><span></span></span>
+          INDEX
+        </button>
         <div class="reader-pulse" aria-hidden="true">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 36" preserveAspectRatio="none">
             <path d="" id="pulse-path" />
@@ -618,118 +78,18 @@
     <div>UTC <span data-clock>00:00:00</span></div>
   </footer>
 
-  <script>
+  <script type="module">
     /* ──────────────────────────────────────────────────────────────────────
        Posts data — keep these in one place so the index + reader stay in sync.
        Body content is a structural preview; live posts on the canonical blog.
        ────────────────────────────────────────────────────────────────────── */
-    const POSTS = [
-      {
-        slug: "fine-tuning-my-own-ai",
-        date: "Mar 30, 2025",
-        tag: "coding",
-        readTime: "7 min",
-        title: "I tried to fine-tune my own AI but my laptop had other plans",
-        lede: "An eight-gig RAM machine, a copy of Llama, and the slow education that ambition is not a substitute for VRAM.",
-        body: `
-      <p>At some point during my local AI journey, I stumbled upon what sounded like a rather ambitious idea. Instead of trying to wrap a general purpose chatbot in Python, and given that my hardware wasn't strong enough to run the larger models that actually give decent answers, why not just fine-tune a small language model to fit one of my specific needs? Like a coding assistant that would give me a base code structure for me to fill in with my own logic and variables. Now that sounded like a proper game plan, right?</p>
-      <h2>The setup</h2>
-      <p>So I started researching. I read about parameter-efficient fine-tuning methods, about datasets, about training loops. I started putting together what I'd need. The good thing was that most of these I just pulled from Hugging Face all together. The harder part was figuring out what models and data to actually pull. I started with an 8B parameter model which I knew could at least run fine on inference on my poor laptop, and paired it with a standard coding dataset so that the model could specialize in programming languages.</p>
-      <p>And immediately, I hit a brick wall.</p>
-      <h2>My laptop said no</h2>
-      <p>Every time I tried to run the training process, there was always a parameter that was too extensive for my hardware and it just wouldn't execute the way I hoped. So I tweaked everything to work within my 4GB VRAM and even downgraded to a 3B parameter model, and still, even though I got it running, it took almost an hour or two just to train <em>0.01%</em> of the model.</p>
-      <p>Yikes.</p>
-      <p>Don't get me wrong. My laptop's RTX 3050 is not a bad GPU for most things. I can play high end AAA games at a solid 45 to 60 FPS most of the time, but I guess LLMs are just on a completely different league than your average video game. Fine-tuning, even on a small model, asks for a level of VRAM that the 3050 simply doesn't have. I think even 6 to 8GB would be the bare minimum to fine-tune the smallest models out there, and I'm sitting below that ceiling.</p>
-      <blockquote>My hardware just said no. And I was genuinely frustrated by that. Not because I didn't understand the idea. Not because I didn't have a plan. Just because of the raw reality of what my machine could do.</blockquote>
-      <h2>What comes next</h2>
-      <p>After that, I decided to stop trying to do the most ambitious version of what I wanted, and just start thinking about the most meaningful version I could actually finish.</p>
-    `
-      },
-      {
-        slug: "maybe-were-all-vibing",
-        date: "Mar 30, 2025",
-        tag: "coding",
-        readTime: "4 min",
-        title: "Maybe we're all just vibe coding",
-        lede: "On the strange new shape of programming when the compiler is also your collaborator.",
-        body: `
-      <p>After all that AI and LLM extravaganza, I decided to step back from that topic for now. I decided to focus on other projects that are better aligned to what I actually need in my day to day life, and to what will benefit the community. For now, I have taken on a new biomedical related project but I am not yet revealing what it is here in this post. I feel like it's barely just a version 1 of what I actually want to make and you might all laugh at me lol.</p>
-      <p>Anyway, my approach to this project is to minimize the help of AI generation and just do my own thing really, and write the code the way I want it to. But that got me thinking deeply. <em>"Is what I am doing now actually different from vibe coding?"</em></p>
-      <h2>AI with extra steps?</h2>
-      <p>I still use AI when I build, although instead of asking for the whole code directly, I just ask it what libraries I should be using, or how do I build this function, or what does this concept mean, or if it can check my work for any errors that I might have overlooked. And I know what you're thinking. "Isn't that just vibe coding with extra steps?"</p>
-      <p>And to be honest with you, I don't really think that it is, but the line is thinner than I had assumed.</p>
-      <h2>Author vs. yes man</h2>
-      <p>The way that I look at it, it's not just about whether or not we use AI. Rather, it's about <em>what you do with what it gives you</em>. When I first started coding CH3SH1RE, I was just accepting output. I was accepting a blob and approving code that I hadn't read or understood. I was running functions that I couldn't explain even in the simplest terms and I was patching errors by just generating replacements. At that time, the AI felt more like the author and I was just the yes man who passes everything.</p>
-      <p>But now it's different. And I want you to really hear me out on this because my whole point might sound controversial. When I ask an AI to give me a list of possible libraries to use or to show me a function structure, isn't that just the same as asking other developers on Stack Overflow, or looking at code snippets on a random GitHub repo, or reading a library's documentation manually? I'm not asking AI for the whole code right away but rather asking it to fetch information like I would ask on a subreddit. I go in with a specific question. I get a specific answer. I take that answer and do something with it myself, whether I test it or break it on purpose, it doesn't really matter.</p>
-      <h2>The only real measure</h2>
-      <p>And maybe that's the only real measure of whether you're actually learning. Not where the information came from, but what you can do with it once the tab is closed. If I can close the conversation and still write the function, then cool, something stuck. If I can't, then I was just vibe coding in slow motion.</p>
-      <p>And look, you might argue that I'm being inefficient, that by now I could have had a fully working app already. And yeah, fair enough. But it doesn't bother me. I'd rather be slow and actually get something out of it than be fast and end up staring at code I don't recognize again.</p>
-      <blockquote>CH3SH1RE had to happen first. The vibe coded version, the hollow confidence, the moment of looking at my own code and not recognizing it. That was the education. Everything after that is just me actually showing up to class.</blockquote>
-    `
-      },
-      {
-        slug: "the-rabbit-hole",
-        date: "Mar 27, 2025",
-        tag: "coding",
-        readTime: "6 min",
-        title: "Falling down the rabbit hole of local LLM deployment",
-        lede: "A field report from someone who wanted privacy and ended up with a homelab.",
-        body: `
-      <p>After realizing that vibe coding wasn't the way to actually learn programming (even though it's just a hobby!), I started looking for different options and tools to help me get started with deploying AI locally on my laptop.</p>
-      <h2>LM Studio</h2>
-      <p>The first and most beginner friendly option was of course LM Studio. It was as simple as installing any regular <code>.exe</code> program, and once I booted it up I was greeted with a nice and clean UI. Personally though, I didn't like it. I thought it looked worse than ChatGPT in terms of minimalism, which is saying something. To be fair, it wasn't inherently bad because all the extra stuff displayed around the screen was there to let you customize how the AI model behaved. But after a little bit of exploring, I decided to move on.</p>
-      <h2>Ollama</h2>
-      <p>Next up was Ollama, which I'd say sits somewhere between LM Studio and llama.cpp. For one, it had its own interface that looked a lot like ChatGPT, but I could also control it through powershell — basically just a text based window where you type instructions directly into your computer instead of clicking around a screen (think like hackerman). This was also the point where I discovered a whole world of different AI models. Google's Gemma, Microsoft's Phi, Meta's Llama. And as controversial as AI is, there was an entire community of open models over at <em>Hugging Face</em>, which is kind of like GitHub but for AI models, and I had no idea that world even existed. Though, with my limited hardware I could only play around with models under 9B parameters with quantization, but that was still enough to go down a pretty deep rabbit hole.</p>
-      <p>The thing I really didn't like about Ollama though was that it came with its own ready to use UI (I wanted to make my own, alright?!) and that it lived in my taskbar. And anything sitting in my taskbar is usually a red flag for memory hogging. So I moved on again.</p>
-      <h2>llama.cpp</h2>
-      <p>This time I found llama.cpp, which I believe is the backbone that most of the local AI ecosystem quietly depends on. This one was a bit more difficult to navigate. I had to launch either <code>llama-cli.exe</code> for a CLI experience (which I first thought was a shortcut for "client") or <code>llama-server.exe</code> which had its own UI like the other two. Naturally, guess which one I picked. I went with the CLI because I didn't want another pre-built interface. But even then, the same problem was there. All the interesting work was already done for me. The model selection, the quantization, the serving, the interface — all of it was handled. I wasn't a builder. I was just another user of a local alternative to ChatGPT, and I hated that. I'd gone from vibe coding my own assistant to plug and playing someone else's.</p>
-      <h2>Where I landed</h2>
-      <p>So by this point I was set on building my own Python wrapper around llama.cpp to actually build something, customize the model, and understand how they work and process data. I needed to get my hands into the pipeline.</p>
-      <p>Don't get me wrong. These tools are not bad for general use if you just want a quick and private alternative to the big AI apps. They just weren't for me.</p>
-    `
-      },
-      {
-        slug: "i-started-vibe-coding",
-        date: "Mar 26, 2025",
-        tag: "coding",
-        readTime: "5 min",
-        title: "I started vibe coding a month ago, and I understood nothing",
-        lede: "A confession from someone whose code now works, but who would struggle to defend it in a job interview.",
-        body: `
-      <p>A month ago, during early March, I had this urge to stop supporting commercial AI chatbots because for one, we all know the computing power it takes affects our environment negatively, and two, I heavily dislike AI generated slop and soulless content on this dead internet. Sooooo…</p>
-      <p>I formed a thought. What if I just run my own AI chat assistant locally on my laptop? That way, I could keep my data private, and take a small stand against AI slop destroying our environment. But I had no idea where to start. I did have some experience writing C/C++ from my embedded systems days back in university, so I wasn't completely new to programming. And because of that, I also wasn't new to the concept of <em>vibe coding</em>.</p>
-      <h2>What is vibe coding?</h2>
-      <p>It's a term floating around the developer space right now where you describe what you want to an AI, it generates the code, you tweak things until they seem to work, and you ship it. You're not really writing code so much as <em>conducting</em> it. Pointing at things and saying more of this, less of that.</p>
-      <p>Ironic, fighting AI slop with AI. But eh, I had to start somewhere. And at the time, I felt super productive about it. I had a working Python stack faster than I ever could have managed on my own. There were moving parts — a Python backend, an SQLite database, a conversational interface — and they fit together in ways that looked, from the outside, like something I had built. If you go to my <a href="https://github.com/LeCaseus" target="_blank" rel="noopener">CH3SH1RE repo</a> over at GitHub, you'd see the whole thing right from the initial commit. It was built so fast that I genuinely thought I was finally gonna be rid of all those commercial AI apps for good. ChatGPT, Gemini, Copilot, gone. I had already deleted all my accounts.</p>
-      <h2>The floor I hadn't checked</h2>
-      <p>But here's the thing about vibe coding a project you don't fully understand: you can <em>feel</em> it. Not immediately, but eventually. You start noticing that you can't explain why something works. You can't predict what will break when you change something. Heck, I even noticed that Cheshire's responses were weirdly generic and I didn't know why. The code started to feel less like something I made and more like something that just happened to me.</p>
-      <p>I remember looking at a chunk of the CH3SH1RE codebase and realising I genuinely could not tell you what it was doing line by line. I had approved it. I had run it. But I hadn't read it, not really. I'd read it the way you read the terms and conditions of a software update:</p>
-      <blockquote>Scanning for anything alarming, then clicking accept.</blockquote>
-      <p>That was the moment I knew something had to change.</p>
-      <p>I didn't know yet what the alternative looked like. But I knew that building something I couldn't explain felt like standing on a floor I hadn't checked the weight rating on. Functional, until it isn't.</p>
-    `
-      },
-      {
-        slug: "hello-real-world",
-        date: "Jul 5, 2024",
-        tag: "personal",
-        readTime: "3 min",
-        title: 'print("Hello to the Real World!")',
-        lede: "The first post, written as my first mark on the internet, but I doubt anyone read.",
-        body: `
-      <p>This is my first ever blog post. Well, technically it's the first I ever made but not quite the first I'm posting now. This is a revision or a repost you might say, of my first blog entry. See, I had this blog site on Wordpress a while ago and it was called <em>CTRL+chill</em>. I don't really know the direction I was going for at the time but I had this idea. I wanted to write something that people will actually read. And thinking about it I have just now realized that most people don't actually read long articles.</p>
-      <h2>On the dead internet</h2>
-      <p>But anyway, one of the first few words in my original post was:</p>
-      <blockquote>I've been feeling this itch to create something real, something meaningful, something that is actually worth creating.</blockquote>
-      <p>Because in the world we live in today, there is no doubt that the dead internet theory is actually coming true. Everything nowadays is just a bunch of SEO optimization and spouting out AI nonsense. Countless posts that are just generated by AI. The captions, the posts, even the comments sometimes. Honestly, I can't tell anymore if they were written by a really good writer or just AI.</p>
-      <p>It feels like people are just posting for the sake of the money, instead of posting something that they are actually passionate about. I certainly didn't want to make my future content that way, because I felt like it was taking away the creativity and the passion that other content creators have, and it is an <em>infestation</em> to the platforms to just generate mass media and profit off of it.</p>
-      <h2>Where I stand on AI</h2>
-      <p>Don't get me wrong, I do think that AI will be the path to the future in terms of like, technological advancements and embedded systems, but I will forever dislike the people who uses AI as a way to generate slop content and being a nuisance to multiple social platforms.</p>
-      <h2>Why I'm here</h2>
-      <p>That's why when I chose to start this blogging journey, I wanted to write with a passion; To write what I actually feel like writing. These weird, little blogs. The kind that people will actually look for and stay, not because of algorithms and whatever that SEO nonsense was about. And I hope that whoever might stay to read my stuff, as cringey as it may be, might stay to support me, because at least I'm <em>real</em>. Not some robot that spits out "relatable" content.</p>
-    `
-      }
-    ];
+    const res = await fetch('/api/posts');
+    const index = await res.json();
+
+    const POSTS = await Promise.all(index.map(async p => {
+      const md = await fetch(`/api/posts/${p.slug}`).then(r => r.text());
+      return {...p, body: md};
+    }));
 
     const POST_BY_SLUG = Object.fromEntries(POSTS.map(p => [p.slug, p]));
 
@@ -774,15 +134,15 @@
     const renderList = () => {
       const q = currentSearch.trim().toLowerCase();
       const filtered = POSTS.filter(p => {
-        if (currentFilter !== 'all' && p.tag !== currentFilter) return false;
-        if (q && !(p.title.toLowerCase().includes(q) || p.lede.toLowerCase().includes(q))) return false;
+        if (currentFilter !== 'all' && p.tags !== currentFilter) return false;
+        if (q && !(p.title.toLowerCase().includes(q) || p.summary.toLowerCase().includes(q))) return false;
         return true;
       });
       listEl.innerHTML = filtered.map((p, i) => `
     <li>
       <a class="entry ${p.slug === currentSlug ? 'active' : ''}" href="#/${p.slug}" data-slug="${p.slug}">
         <div>
-          <div class="meta-row"><span>${p.date}</span><span class="tag">${p.tag}</span></div>
+          <div class="meta-row"><span>${p.date}</span><span class="tag">${p.tags}</span></div>
           <div class="ttl">${p.title}</div>
         </div>
         <div class="n">${String(POSTS.indexOf(p) + 1).padStart(2, '0')}</div>
@@ -823,16 +183,16 @@
       <div class="meta">
         <span>${post.date}</span>
         <span class="dot"></span>
-        <span class="tag">${post.tag}</span>
+        <span class="tag">${post.tags}</span>
         <span class="dot"></span>
         <span>${post.readTime} read</span>
         <span class="dot"></span>
         <span>entry ${String(idx + 1).padStart(2, '0')} / ${String(POSTS.length).padStart(2, '0')}</span>
       </div>
       <h1 class="post-title">${post.title}</h1>
-      <p class="lede">${post.lede}</p>
+      <p class="lede">${post.summary}</p>
     </header>
-    <div class="prose-body">${post.body}</div>
+    <div class="prose-body">${marked.parse(post.body)}</div>
     <div class="post-footer">
       <div class="prev">
         ${prev ? `<a href="#/${prev.slug}">
@@ -921,6 +281,37 @@
       const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
       document.getElementById('read-progress-bar').style.height = pct + '%';
     }, {passive: true});
+
+
+    /* ── Mobile sidebar toggle ──────────────────────────────────────────── */
+    const idxToggle = document.getElementById('idx-toggle');
+    const idxOverlay = document.getElementById('idx-overlay');
+    const idxPanel = document.querySelector('.idx');
+
+    const openIdx = () => {
+      idxPanel.classList.add('open');
+      idxOverlay.classList.add('visible');
+      idxToggle.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeIdx = () => {
+      idxPanel.classList.remove('open');
+      idxOverlay.classList.remove('visible');
+      idxToggle.classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    idxToggle.addEventListener('click', () => {
+      idxPanel.classList.contains('open') ? closeIdx() : openIdx();
+    });
+
+    idxOverlay.addEventListener('click', closeIdx);
+
+    // Close drawer when a post is selected
+    listEl.addEventListener('click', (e) => {
+      if (e.target.closest('[data-slug]')) closeIdx();
+    });
 
     /* ── Boot ─────────────────────────────────────────────────────────────── */
     renderList();

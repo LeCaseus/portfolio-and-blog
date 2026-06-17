@@ -205,3 +205,63 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 })();
+
+/* =========================================================================
+   Dynamic content loaders
+   Readings from posts/index.json · Notes from notes/index.json
+   ========================================================================= */
+
+// ── Readings (CH-03) ──────────────────────────────────────────────────
+(async () => {
+  const strip = document.querySelector('.readings .strip');
+  if (!strip) return;
+  try {
+    const posts = await fetch('/api/posts').then(r => r.json());
+    strip.innerHTML = posts.map(p => `
+      <a class="read" href="blog.html#/${p.slug}">
+        <span class="date">${p.date}</span>
+        <span class="tag">${p.tags}</span>
+        <span class="ttl">${p.title}</span>
+        <span class="arrow">↗</span>
+      </a>
+    `).join('');
+  } catch {
+    strip.innerHTML = '<div class="note">// no readings found.</div>';
+  }
+})();
+
+// ── Notes (CH-05) ─────────────────────────────────────────────────────
+(async () => {
+  const log = document.querySelector('.notes .log');
+  if (!log) return;
+  try {
+    const notes = await fetch('/api/notes').then(r => r.json());
+
+    // update entry count in the log bar
+    const countEl = log.querySelector('[data-note-count]');
+    if (countEl) countEl.textContent = String(notes.length).padStart(3, '0');
+
+    const foot = log.querySelector('.log-foot');
+    const entries = notes.map(n => {
+      const tags = n.tags?.length
+        ? `<div class="tags">${n.tags.map(t => `<span>${t}</span>`).join('')}</div>`
+        : '';
+      // use marked.parseInline if available, otherwise treat as plain text
+      const msg = typeof marked !== 'undefined'
+        ? marked.parseInline(n.msg)
+        : n.msg;
+      return `
+        <div class="entry-row">
+          <div class="ts">${n.ts}</div>
+          <div class="lvl" data-lvl="${n.lvl}">${n.label}</div>
+          <div class="msg">${msg}${tags}</div>
+        </div>
+      `;
+    }).join('');
+
+    // insert entries before the footer line
+    foot.insertAdjacentHTML('beforebegin', entries);
+  } catch (e) {
+    console.error('[notes] load failed:', e);
+  }
+})();

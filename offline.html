@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chezter Vargas — Offline</title>
+  <meta name="description" content="Site is currently offline. Chezter Vargas — Biomedical Engineer, Hobbyist C/C++, PC Gamer." />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --ink:         #0c0d0c;
+      --paper:       #f3eee4;
+      --paper-2:     #ebe5d7;
+      --rule:        rgba(12,13,12,.14);
+      --mute:        rgba(12,13,12,.55);
+      --mute-2:      rgba(12,13,12,.38);
+      --signal:      oklch(0.62 0.16 145);
+      --signal-soft: oklch(0.62 0.16 145 / .14);
+      --warn:        oklch(0.62 0.16 65);
+      --grid:        rgba(12,13,12,.05);
+      --serif: "Instrument Serif", "Times New Roman", serif;
+      --mono:  "Fira Code", ui-monospace, "JetBrains Mono", Menlo, monospace;
+      --pad: clamp(20px, 4vw, 64px);
+      --maxw: 1240px;
+    }
+
+    [data-theme="dark"] {
+      --ink:         #f0ece3;
+      --paper:       #0b0c0c;
+      --paper-2:     #131413;
+      --rule:        rgba(240,236,227,.16);
+      --mute:        rgba(240,236,227,.6);
+      --mute-2:      rgba(240,236,227,.4);
+      --signal:      oklch(0.78 0.17 145);
+      --signal-soft: oklch(0.78 0.17 145 / .18);
+      --warn:        oklch(0.82 0.16 75);
+      --grid:        rgba(240,236,227,.06);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    html {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        linear-gradient(var(--grid) 1px, transparent 1px) 0 0/100% 28px,
+        var(--paper);
+      background-attachment: fixed;
+      transition: background-color .35s ease, color .35s ease;
+      overflow-x: hidden;
+    }
+
+    /* ── Status bar ───────────────────────────────────────────────────── */
+    .status {
+      position: sticky; top: 0; z-index: 50;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 24px;
+      padding: 10px var(--pad);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--mute);
+      background: color-mix(in oklab, var(--paper) 88%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* Dot is warn color and not pulsing — disconnected */
+    .status .dot {
+      display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--warn);
+      margin-right: 8px;
+      vertical-align: middle;
+      opacity: .8;
+    }
+
+    .status .left { color: var(--warn); letter-spacing: .06em; }
+    .status .center { text-align: center; opacity: .8; }
+    .status .right { display: flex; gap: 16px; align-items: center; }
+
+    .status button.theme {
+      appearance: none; border: 1px solid var(--rule); background: transparent;
+      color: var(--ink); font: inherit; font-family: var(--mono); font-size: 10.5px;
+      padding: 4px 9px; cursor: pointer; letter-spacing: .08em;
+      border-radius: 2px;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .status button.theme:hover { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+
+    /* ── Layout ───────────────────────────────────────────────────────── */
+    main {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 var(--pad);
+    }
+
+    section {
+      position: relative;
+      padding: clamp(72px, 12vh, 140px) 0;
+      border-top: 1px solid var(--rule);
+    }
+    section:first-of-type { border-top: 0; }
+
+    .channel {
+      position: absolute;
+      top: 28px; left: 0;
+      display: flex; align-items: baseline; gap: 14px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--mute-2);
+    }
+    .channel b { color: var(--ink); font-weight: 500; }
+    .channel .line { display: inline-block; width: 36px; height: 1px; background: var(--rule); }
+
+    /* ── HERO ─────────────────────────────────────────────────────────── */
+    .hero {
+      padding-top: clamp(60px, 10vh, 120px);
+      padding-bottom: clamp(48px, 7vh, 90px);
+      border-top: 0;
+    }
+    .hero .channel { position: static; margin-bottom: 32px; }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(56px, 11vw, 168px);
+      line-height: .88;
+      letter-spacing: -0.025em;
+      margin: 0;
+      text-transform: lowercase;
+    }
+
+    .hero h1 .addr {
+      display: block;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .15em;
+      color: var(--mute-2);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    /* vargas_ stays green even offline — it's the identity */
+    .hero h1 .alive {
+      display: inline-block;
+      font-style: italic;
+      color: var(--signal);
+      position: relative;
+      opacity: .5;
+    }
+
+    .hero .meta {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: clamp(16px, 2.5vw, 40px);
+      align-items: end;
+    }
+
+    .hero .role {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--mute);
+      line-height: 1.7;
+    }
+    .hero .role span { color: var(--ink); }
+    .hero .role .sep { color: var(--mute-2); margin: 0 8px; }
+
+    /* Offline message where typewriter was */
+    .hero .offline-msg {
+      font-family: var(--mono);
+      font-size: clamp(13px, 1.3vw, 16px);
+      line-height: 1.65;
+      color: var(--warn);
+      padding-left: 14px;
+      border-left: 1px solid var(--warn);
+    }
+    .hero .offline-msg::before {
+      content: "// TX/RX BUFFER";
+      display: block;
+      font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--mute-2); margin-bottom: 8px;
+    }
+
+    /* Flatline ECG */
+    .ecg {
+      margin: 56px 0 0;
+      position: relative;
+      height: 96px;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      background:
+        linear-gradient(to right, var(--rule) 1px, transparent 1px) 0 0/56px 100%,
+        linear-gradient(to bottom, var(--rule) 1px, transparent 1px) 0 0/100% 24px;
+      overflow: hidden;
+      opacity: .5;
+    }
+    .ecg svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .ecg svg path { stroke: var(--warn); stroke-width: 1.6; fill: none; }
+    .ecg .ecg-readout {
+      position: absolute; right: 12px; top: 8px;
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em;
+      color: var(--mute); text-transform: uppercase;
+    }
+    .ecg .ecg-readout b { color: var(--warn); font-weight: 500; }
+
+    /* ── NOW ──────────────────────────────────────────────────────────── */
+    .now .panel {
+      margin-top: 24px;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: var(--paper-2);
+      overflow: hidden;
+    }
+
+    .now .cell {
+      padding: 22px 22px 18px;
+      border-right: 1px solid var(--rule);
+    }
+    .now .cell:last-child { border-right: 0; }
+
+    .now .cell .key {
+      font-family: var(--mono); font-size: 10.5px;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--mute);
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 12px;
+    }
+    .now .cell .key i {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--warn); opacity: .6;
+    }
+    .now .cell .v {
+      font-family: var(--mono); font-weight: 500;
+      font-size: clamp(15px, 1.5vw, 18px);
+      line-height: 1.2; text-transform: uppercase;
+      color: var(--mute);
+    }
+    .now .cell .v::before { content: "› "; color: var(--warn); opacity: .6; }
+    .now .cell .sub {
+      margin-top: 10px;
+      font-family: var(--mono); font-size: 10.5px; color: var(--mute-2);
+    }
+    .now .cell .bar {
+      margin-top: 14px; height: 4px; border-radius: 2px;
+      background: var(--rule);
+    }
+
+    /* ── ABOUT ────────────────────────────────────────────────────────── */
+    .about .grid {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1fr 2.1fr;
+      gap: clamp(16px, 2.5vw, 40px);
+    }
+    .about .marginalia {
+      font-family: var(--mono);
+      font-size: 11px; line-height: 1.7;
+      letter-spacing: .03em;
+      color: var(--mute);
+      text-transform: uppercase;
+    }
+    .about .marginalia ul { list-style: none; padding: 0; margin: 0; }
+    .about .marginalia li {
+      padding: 8px 0;
+      border-top: 1px solid var(--rule);
+      display: flex; justify-content: space-between; gap: 8px;
+    }
+    .about .marginalia li:last-child { border-bottom: 1px solid var(--rule); }
+    .about .marginalia li b { color: var(--ink); font-weight: 500; }
+
+    .about .prose {
+      font-family: var(--mono);
+      font-size: clamp(13px, 1.2vw, 15px);
+      line-height: 1.7;
+      max-width: 60ch;
+    }
+    .about .prose .lead {
+      font-family: var(--serif);
+      font-size: clamp(22px, 2.4vw, 32px);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      display: block;
+      margin-bottom: 1.2em;
+    }
+    .about .prose p { margin: 0 0 0.85em; }
+    .about .prose em { color: var(--signal); font-style: italic; }
+    .about .prose a {
+      color: inherit; text-decoration: none;
+      background-image: linear-gradient(var(--signal), var(--signal));
+      background-size: 100% 1px;
+      background-position: 0 95%;
+      background-repeat: no-repeat;
+      padding-bottom: .06em;
+      transition: color .25s;
+    }
+    .about .prose a:hover { color: var(--signal); }
+
+    /* ── CONTACT ──────────────────────────────────────────────────────── */
+    .contact .term {
+      margin-top: 28px;
+      padding: 28px clamp(20px, 3vw, 44px);
+      border: 1px solid var(--rule);
+      background:
+        linear-gradient(var(--grid) 1px, transparent 1px) 0 0/100% 22px,
+        var(--paper-2);
+      border-radius: 4px;
+      font-family: var(--mono);
+      font-size: clamp(14px, 1.4vw, 16px);
+      line-height: 1.7;
+    }
+    .contact .term .ln { display: block; color: var(--mute); }
+    .contact .term .ln .prompt { color: var(--signal); margin-right: 8px; }
+    .contact .term .out { color: var(--ink); padding-left: 18px; }
+    .contact .term a {
+      color: var(--ink); text-decoration: none;
+      border-bottom: 1px solid var(--signal);
+      padding-bottom: 1px;
+      transition: background .2s, color .2s;
+    }
+    .contact .term a:hover { background: var(--signal); color: var(--paper); }
+
+    /* ── Footer ───────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 18px var(--pad);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 24px;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--mute);
+    }
+    footer .c { text-align: center; color: var(--warn); }
+
+    /* ── Responsive ───────────────────────────────────────────────────── */
+    @media (max-width: 880px) {
+      .hero .meta { grid-template-columns: 1fr; align-items: start; }
+      .now .panel { grid-template-columns: repeat(2, 1fr); }
+      .now .cell { border-right: 0; border-bottom: 1px solid var(--rule); }
+      .now .cell:nth-child(odd) { border-right: 1px solid var(--rule); }
+      .now .cell:nth-last-child(1), .now .cell:nth-last-child(2) { border-bottom: 0; }
+      .about .grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .now .panel { grid-template-columns: 1fr; }
+      .now .cell { border-right: 0 !important; border-bottom: 1px solid var(--rule); }
+      .now .cell:last-child { border-bottom: 0; }
+      .status { gap: 12px; font-size: 9.5px; }
+      .status .center { display: none; }
+      footer { grid-template-columns: 1fr; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      main { padding: 0 18px; }
+      section { padding: 56px 0 40px; }
+      .hero { padding-top: 48px; padding-bottom: 32px; }
+      .hero h1 { font-size: clamp(72px, 22vw, 96px); line-height: .86; }
+      .hero .meta { margin-top: 28px; display: flex; flex-direction: column; gap: 16px; }
+      .hero .role { font-size: 11px; letter-spacing: .1em; line-height: 1.8; }
+      .hero .offline-msg { padding-left: 0; border-left: none; border-top: 1px solid var(--warn); padding-top: 14px; }
+      .ecg { height: 64px; margin-top: 28px; }
+      .about .marginalia li { display: flex; justify-content: space-between; padding: 8px 0; }
+      .contact .term { padding: 20px 16px; font-size: 13px; word-break: break-word; }
+      footer { grid-template-columns: 1fr; text-align: center; padding: 16px 18px; font-size: 10px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Status bar ── -->
+  <header class="status" role="banner">
+    <div class="left">
+      <span class="dot" aria-hidden="true"></span>ELECTRODES DISCONNECTED
+    </div>
+    <div class="center">SIGNAL · LOST · LEAD II · — HZ</div>
+    <div class="right">
+      <button class="theme" id="theme-toggle" type="button" aria-label="Toggle theme">☾ DARK</button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── HERO CH-00 ── -->
+    <section class="hero">
+      <div class="channel">
+        <span class="line"></span>
+        <span>CH-00</span>
+        <b>SUBJECT&nbsp;001 · CHEZTER&nbsp;VARGAS</b>
+      </div>
+      <h1>
+        <span class="addr">0x0001 · site is offline · check back later</span>
+        chezter<br />
+        <span class="alive">vargas_</span>
+      </h1>
+      <div class="meta">
+        <div class="role">
+          <span>BIOMEDICAL ENGINEER</span><span class="sep">/</span>
+          <span>HOBBYIST C/C++</span><span class="sep">/</span>
+          <span>PC GAMER</span>
+        </div>
+        <div class="offline-msg">
+          server is down.<br />
+          probably my laptop sleeping.<br />
+          links below still work.
+        </div>
+      </div>
+
+      <!-- Flatline -->
+      <div class="ecg" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 96" preserveAspectRatio="none">
+          <path d="M0,53 L1200,53" />
+        </svg>
+        <div class="ecg-readout">
+          <b>HR</b> — BPM &nbsp;·&nbsp; NO SIGNAL
+        </div>
+      </div>
+    </section>
+
+    <!-- ── NOW CH-01 ── -->
+    <section class="now">
+      <div class="channel"><span class="line"></span><span>CH-01</span><b>CURRENT&nbsp;READINGS</b></div>
+      <div class="panel">
+        <div class="cell">
+          <div class="key"><i></i>STATUS</div>
+          <div class="v">OFFLINE</div>
+          <div class="sub">server unreachable</div>
+          <div class="bar"></div>
+        </div>
+        <div class="cell">
+          <div class="key"><i></i>BUILDING</div>
+          <div class="v">HOMELAB</div>
+          <div class="sub">self-hosting everything I can</div>
+          <div class="bar"></div>
+        </div>
+        <div class="cell">
+          <div class="key"><i></i>LEARNING</div>
+          <div class="v">C / C++</div>
+          <div class="sub">slowly, from first principles</div>
+          <div class="bar"></div>
+        </div>
+        <div class="cell">
+          <div class="key"><i></i>LOCATION</div>
+          <div class="v">EARTH / 2026</div>
+          <div class="sub">last sync — unknown</div>
+          <div class="bar"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ABOUT CH-02 ── -->
+    <section class="about">
+      <div class="channel"><span class="line"></span><span>CH-02</span><b>ABOUT</b></div>
+      <div class="grid">
+        <aside class="marginalia" aria-label="Vitals">
+          <ul>
+            <li><span>NAME</span><b>Chezter Vargas</b></li>
+            <li><span>GRAD</span><b>2025</b></li>
+            <li><span>FIELD</span><b>Biomedical Eng.</b></li>
+            <li><span>STACK</span><b>C / C++</b></li>
+            <li><span>OFF-HOURS</span><b>PC Gaming</b></li>
+            <li><span>OPEN</span><b>This site →</b></li>
+          </ul>
+        </aside>
+        <div class="prose">
+          <span class="lead">I tinker with a bunch of hardware and softwares to understand <em>how they work</em>.</span>
+          <p>// recently graduated bme by the end of 2025 and doing side quests first.<br />// exploring the world, figuring out what comes next.</p>
+          <p>// this site is fully self-hosted. If it's offline, then my laptop is sleeping.<br />// occasionally writing at the <a href="blog.html">./blog</a> when something's on my mind.</p>
+          <p>// formal version: <a href="assets/CVargas_CV.pdf" target="_blank" rel="noopener">CVargas_CV.pdf</a> and i'm also on <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener">linkedin</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTACT CH-06 ── -->
+    <section class="contact">
+      <div class="channel"><span class="line"></span><span>CH-06</span><b>CONTACT</b></div>
+      <div class="term" role="region" aria-label="Contact terminal">
+        <span class="ln"><span class="prompt">$</span> whoami</span>
+        <span class="ln out">chezter — biomedical engineer, hobbyist programmer</span>
+        <span class="ln"><span class="prompt">$</span> want_to_talk()</span>
+        <span class="ln out">→ <a href="mailto:cheztervargas353@gmail.com">email me here!</a></span>
+        <span class="ln"><span class="prompt">$</span> ls ./elsewhere</span>
+        <span class="ln out">
+          <a href="https://github.com/LeCaseus" target="_blank" rel="noopener">github</a> ·
+          <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener">linkedin</a> ·
+          <a href="assets/CVargas_CV.pdf" target="_blank" rel="noopener">cv.pdf</a>
+        </span>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>SYS:OFFLINE · hardcoded by me</div>
+    <div class="c">// server is sleeping. check back soon.</div>
+    <div>cheztervargas.xyz</div>
+  </footer>
+
+  <script>
+    // Theme toggle — localStorage works even when server is down
+    const root = document.documentElement;
+    const btn  = document.getElementById('theme-toggle');
+    const stored = localStorage.getItem('cv.theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initial = stored || (prefersDark ? 'dark' : 'light');
+    root.setAttribute('data-theme', initial);
+    btn.textContent = initial === 'dark' ? '☼ LIGHT' : '☾ DARK';
+    btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('cv.theme', next);
+      btn.textContent = next === 'dark' ? '☼ LIGHT' : '☾ DARK';
+    });
+  </script>
+
+</body>
+</html>
