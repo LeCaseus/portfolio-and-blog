@@ -1,58 +1,39 @@
-# lecaseus.github.io
+# Portfolio & Blog
 
-This is the repository for my personal site at [lecaseus.github.io](https://lecaseus.github.io). Feel free to poke around, borrow what you want, or just read this for fun.
+This is the repository for my personal website at [cheztervargas.xyz](https://cheztervargas.xyz). Feel free to poke around, borrow what you want, or just read this for fun.
+
+> I plan to make a template of this soon, but for now I will fix everything first until its stable and consistent with my vision for the website.
 
 ---
 
 ## The story
 
-This site has actually been rebuilt four times because each version was an honest reflection of where I was at. (but mainly because I was bored and couldn't decide on one theme)
+This site has actually been rebuilt four times and each version was an honest reflection of where I was at. (but also because I was bored and couldn't decide on one theme)
 
-**v1** started as a Node.js/Express app with a PostgreSQL database hosted on Vercel and Neon. I had no business building a backend at the time and I knew it, but I did it anyway. I wanted to make my own micro-blogging/blogging platform which was basically me refusing to use Twitter. It worked, barely, but I wasn't proud of it.
+### The vibe coded attempt
 
-I realized that I had built something that I don't really understand, and couldn't maintain in the long run so, I stripped the backend entirely. Went fully static. The database was overkill for a personal site and I was just worried about getting hacked not knowing how the network works.
+**v1** started as a Node.js/Express app with a PostgreSQL database hosted on Vercel and Neon iirc. There was no point in building a backend at the time and I knew it, but I did it anyway. I wanted to make my own micro-blogging/blogging platform which was basically me refusing to use Twitter, Threads, Tumblr, and the like. It worked, barely, but I wasn't proud of it. I realized that I had built something that I don't really understand, and couldn't maintain in the long run so, I stripped the backend entirely. Went fully static. The database was overkill for a personal site and I was just worried about getting hacked not knowing how the network works yet.
 
-**v2** was the editorial brutalist era. Big red type, my photo against a dark city backdrop, aggressive layout. I just saw this on Pinterest and was fixated on getting noticed by employers and I let that show a little too much. It looked cool. It didn't feel like me.
+### First redesign, nothing happened?
 
-**v3** was the Jekyll diagnostic redesign. I went for a Jekyll SSG because I wanted something to modularize my source code and make things easier to navigate. The site had a dark background, phosphor green accent, biosignal waveforms everywhere, posts called *readings*. The whole site read like a piece of medical equipment. I was happy with the direction. But now I've come to realize that jumping across Jekyll files, especially since I'v moved to helix, was just a hassle really, and jumping across files just to change one line isn't really it.
+**v2** was the editorial brutalist era. Big red typography, my photo against a dark city backdrop, aggressive layout. I just saw this on Pinterest and was fixated on getting noticed by employers and I let that show a little too much. It looked cool to be honest, but it didn't feel like me.
 
-So, **v4** is this. Plain HTML, CSS, and JS. No build step, no SSG, no framework. I know I went full circle back to the start. Nevertheless, I've improved the visual direction from v3, same design language, same waveforms, but now all in one place. The kind of thing you can open, read, and change without switching files. It made sense to go back to basics.
+### A better outlook on the vision for the platform
 
-The plan is to eventually wire up my own C++ backend for the blog and notes, so new posts don't require editing a JS array. But that's a near future project. For now, this is it.
+**v3** was the Jekyll diagnostic redesign. I went for a Jekyll SSG because I wanted something to modularize my source code and make things easier to navigate. The site had a dark background, phosphor green accent, biosignal waveforms everywhere, posts called *readings*. The whole site read like a piece of medical equipment. I was happy with the direction. But then I'd realize that jumping across Jekyll files, especially since I've moved to helix, was just a hassle really, and jumping across files just to change one line isn't really it.
 
----
+### Current awesome live work
 
-## Stack
+So, **v4** is this. Plain HTML, CSS, and JS. No build step, no SSG, no framework. I know I went full circle back to the basics. Nevertheless, I've improved the visual direction from v3, same design language, same waveforms, but now all in one place. The kind of thing you can open, read, and change without switching files. It made sense to go back to basics.
+
+> The plan is to eventually wire up my own C++ backend for the blog and notes, so new posts don't require editing a JS array. But that's a near future project. For now, this is it.
 
 | | |
 |---|---|
-| Hosting | GitHub Pages |
+| Hosting | Cloudflared |
 | Fonts | Instrument Serif · Inter Tight · Fira Code |
 | Styling | Vanilla CSS |
 | JS | Vanilla JS |
-| Backend | coming soon! |
+| Backend | Custom C++ HTTP Server |
 
----
-
-## Past designs
-
-| Version | Look |
-|---|---|
-| v1 | warm beige, editorial, photo-forward |
-| v2 | brutalist red/black, huge type, dark city |
-| v3 | Jekyll, dark diagnostic, phosphor green |
-| v4 | plain stack, same diagnostic direction, simpler |
-
----
-
-## Running locally
-
-```bash
-python -m http.server 8080
-```
-
-Visit `localhost:8080`. That's it.
-
----
-
-*Chezter Vargas — [lecaseus.github.io](https://lecaseus.github.io)*
+That old quote block was me one month ago and I am proud to say that I have finally finished building the backend with [cpp-httplib](https://github.com/yhirose/cpp-httplib) and I am now fully selfhosting my website, although not 24/7 because it lives on my laptop and not a dedicated homelab. (yet!)
