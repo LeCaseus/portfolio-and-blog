@@ -54,6 +54,7 @@
   grid-template-columns: 320px 1fr;
   gap: clamp(20px, 3vw, 56px);
   align-items: start;
+  grid-template-columns: 320px minmax(0, 1fr);
 }
 
 .idx {
@@ -222,6 +223,7 @@
   padding: clamp(28px, 4vw, 64px) clamp(24px, 4vw, 72px);
   position: relative;
   min-height: 70vh;
+  min-width: 0;
 }
 
 .reader::before {
@@ -493,7 +495,7 @@
 }
 
 @media (max-width: 900px) {
-  .blog-grid { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: minmax(0, 1fr); }
   .idx { position: static; max-height: none; }
   .idx-list { max-height: 40vh; }
   .reader { padding: 28px 22px; }
