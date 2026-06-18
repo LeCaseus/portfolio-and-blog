@@ -25,7 +25,7 @@ let current_slug = null;
 function render_list() {
   const query = current_search.trim().toLowerCase();
   const filtered_posts = posts.filter(post => {
-    if (current_filter !== 'all' && post.tags !== current_filter) return false;
+    if (current_filter !== 'all' && !post.tags.includes(current_filter)) return false;
     if (query && !(post.title.toLowerCase().includes(query) || post.summary.toLowerCase().includes(query))) return false;
     return true;
   });
@@ -34,7 +34,7 @@ function render_list() {
     <li>
       <a class="entry ${post.slug === current_slug ? 'active' : ''}" href="#/${post.slug}" data-slug="${post.slug}">
         <div>
-          <div class="meta-row"><span>${post.date}</span><span class="tag">${post.tags}</span></div>
+          <div class="meta-row"><span>${post.date}</span>${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
           <div class="ttl">${post.title}</div>
         </div>
         <div class="n">${String(posts.indexOf(post) + 1).padStart(2, '0')}</div>
@@ -58,7 +58,7 @@ function render_post(slug) {
       <div class="meta">
         <span>${post.date}</span>
         <span class="dot"></span>
-        <span class="tag">${post.tags}</span>
+        ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
         <span class="dot"></span>
         <span>${post.readTime} read</span>
         <span class="dot"></span>
@@ -93,6 +93,12 @@ function slug_from_hash() {
   const hash_slug = location.hash.replace(/^#\/?/, '').trim();
   return post_by_slug[hash_slug] ? hash_slug : posts[0].slug;
 }
+
+const filters_el = document.querySelector('[data-filters]');
+const unique_tags = [...new Set(posts.flatMap(post => post.tags))].sort();
+filters_el.insertAdjacentHTML('beforeend', unique_tags.map(tag =>
+  `<button data-filter="${tag}">${tag}</button>`
+).join(''));
 
 document.querySelectorAll('[data-filters] button').forEach(button => {
   button.addEventListener('click', () => {
