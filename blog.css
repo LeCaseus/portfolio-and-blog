@@ -337,13 +337,33 @@
   border-radius: 3px;
 }
 
-.prose-body code { padding: 1px 6px; }
+.prose-body code {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  color: var(--signal);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 1px 6px;
+}
 
 .prose-body pre {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  line-height: 1.5;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
   padding: 16px 18px;
   overflow-x: auto;
   margin: 1.2em 0;
-  line-height: 1.5;
+}
+
+.prose-body pre code {
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
 }
 
 .prose-body blockquote {
