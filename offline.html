@@ -6,18 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chezter Vargas — Offline</title>
   <meta name="description" content="Site is currently offline. Chezter Vargas — Biomedical Engineer, Hobbyist C/C++, PC Gamer." />
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fira+Code:wght@400;500&display=swap');
 
     :root {
       --ink:         #0c0d0c;
       --paper:       #f3eee4;
-      --paper-2:     #ebe5d7;
+      --paper_2:     #ebe5d7;
       --rule:        rgba(12,13,12,.14);
       --mute:        rgba(12,13,12,.55);
-      --mute-2:      rgba(12,13,12,.38);
+      --mute_2:      rgba(12,13,12,.38);
       --signal:      oklch(0.62 0.16 145);
-      --signal-soft: oklch(0.62 0.16 145 / .14);
+      --signal_soft: oklch(0.62 0.16 145 / .14);
       --warn:        oklch(0.62 0.16 65);
       --grid:        rgba(12,13,12,.05);
       --serif: "Instrument Serif", "Times New Roman", serif;
@@ -29,12 +30,12 @@
     [data-theme="dark"] {
       --ink:         #f0ece3;
       --paper:       #0b0c0c;
-      --paper-2:     #131413;
+      --paper_2:     #131413;
       --rule:        rgba(240,236,227,.16);
       --mute:        rgba(240,236,227,.6);
-      --mute-2:      rgba(240,236,227,.4);
+      --mute_2:      rgba(240,236,227,.4);
       --signal:      oklch(0.78 0.17 145);
-      --signal-soft: oklch(0.78 0.17 145 / .18);
+      --signal_soft: oklch(0.78 0.17 145 / .18);
       --warn:        oklch(0.82 0.16 75);
       --grid:        rgba(240,236,227,.06);
     }
@@ -62,7 +63,6 @@
       overflow-x: hidden;
     }
 
-    /* ── Status bar ───────────────────────────────────────────────────── */
     .status {
       position: sticky; top: 0; z-index: 50;
       display: grid;
@@ -80,7 +80,6 @@
       border-bottom: 1px solid var(--rule);
     }
 
-    /* Dot is warn color and not pulsing — disconnected */
     .status .dot {
       display: inline-block; width: 6px; height: 6px; border-radius: 50%;
       background: var(--warn);
@@ -102,7 +101,6 @@
     }
     .status button.theme:hover { border-color: var(--ink); background: var(--ink); color: var(--paper); }
 
-    /* ── Layout ───────────────────────────────────────────────────────── */
     main {
       max-width: var(--maxw);
       margin: 0 auto;
@@ -124,12 +122,11 @@
       font-size: 10.5px;
       letter-spacing: .14em;
       text-transform: uppercase;
-      color: var(--mute-2);
+      color: var(--mute_2);
     }
     .channel b { color: var(--ink); font-weight: 500; }
     .channel .line { display: inline-block; width: 36px; height: 1px; background: var(--rule); }
 
-    /* ── HERO ─────────────────────────────────────────────────────────── */
     .hero {
       padding-top: clamp(60px, 10vh, 120px);
       padding-bottom: clamp(48px, 7vh, 90px);
@@ -152,12 +149,11 @@
       font-family: var(--mono);
       font-size: 11px;
       letter-spacing: .15em;
-      color: var(--mute-2);
+      color: var(--mute_2);
       text-transform: uppercase;
       margin-bottom: 14px;
     }
 
-    /* vargas_ stays green even offline — it's the identity */
     .hero h1 .alive {
       display: inline-block;
       font-style: italic;
@@ -183,9 +179,8 @@
       line-height: 1.7;
     }
     .hero .role span { color: var(--ink); }
-    .hero .role .sep { color: var(--mute-2); margin: 0 8px; }
+    .hero .role .sep { color: var(--mute_2); margin: 0 8px; }
 
-    /* Offline message where typewriter was */
     .hero .offline-msg {
       font-family: var(--mono);
       font-size: clamp(13px, 1.3vw, 16px);
@@ -198,10 +193,9 @@
       content: "// TX/RX BUFFER";
       display: block;
       font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
-      color: var(--mute-2); margin-bottom: 8px;
+      color: var(--mute_2); margin-bottom: 8px;
     }
 
-    /* Flatline ECG */
     .ecg {
       margin: 56px 0 0;
       position: relative;
@@ -223,14 +217,13 @@
     }
     .ecg .ecg-readout b { color: var(--warn); font-weight: 500; }
 
-    /* ── NOW ──────────────────────────────────────────────────────────── */
     .now .panel {
       margin-top: 24px;
       border: 1px solid var(--rule);
       border-radius: 4px;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      background: var(--paper-2);
+      background: var(--paper_2);
       overflow: hidden;
     }
 
@@ -260,14 +253,13 @@
     .now .cell .v::before { content: "› "; color: var(--warn); opacity: .6; }
     .now .cell .sub {
       margin-top: 10px;
-      font-family: var(--mono); font-size: 10.5px; color: var(--mute-2);
+      font-family: var(--mono); font-size: 10.5px; color: var(--mute_2);
     }
     .now .cell .bar {
       margin-top: 14px; height: 4px; border-radius: 2px;
       background: var(--rule);
     }
 
-    /* ── ABOUT ────────────────────────────────────────────────────────── */
     .about .grid {
       margin-top: 28px;
       display: grid;
@@ -317,14 +309,13 @@
     }
     .about .prose a:hover { color: var(--signal); }
 
-    /* ── CONTACT ──────────────────────────────────────────────────────── */
     .contact .term {
       margin-top: 28px;
       padding: 28px clamp(20px, 3vw, 44px);
       border: 1px solid var(--rule);
       background:
         linear-gradient(var(--grid) 1px, transparent 1px) 0 0/100% 22px,
-        var(--paper-2);
+        var(--paper_2);
       border-radius: 4px;
       font-family: var(--mono);
       font-size: clamp(14px, 1.4vw, 16px);
@@ -341,7 +332,6 @@
     }
     .contact .term a:hover { background: var(--signal); color: var(--paper); }
 
-    /* ── Footer ───────────────────────────────────────────────────────── */
     footer {
       border-top: 1px solid var(--rule);
       padding: 18px var(--pad);
@@ -357,7 +347,6 @@
     }
     footer .c { text-align: center; color: var(--warn); }
 
-    /* ── Responsive ───────────────────────────────────────────────────── */
     @media (max-width: 880px) {
       .hero .meta { grid-template-columns: 1fr; align-items: start; }
       .now .panel { grid-template-columns: repeat(2, 1fr); }
@@ -392,7 +381,6 @@
 
 <body>
 
-  <!-- ── Status bar ── -->
   <header class="status" role="banner">
     <div class="left">
       <span class="dot" aria-hidden="true"></span>ELECTRODES DISCONNECTED
@@ -405,7 +393,6 @@
 
   <main>
 
-    <!-- ── HERO CH-00 ── -->
     <section class="hero">
       <div class="channel">
         <span class="line"></span>
@@ -430,7 +417,6 @@
         </div>
       </div>
 
-      <!-- Flatline -->
       <div class="ecg" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 96" preserveAspectRatio="none">
           <path d="M0,53 L1200,53" />
@@ -441,7 +427,6 @@
       </div>
     </section>
 
-    <!-- ── NOW CH-01 ── -->
     <section class="now">
       <div class="channel"><span class="line"></span><span>CH-01</span><b>CURRENT&nbsp;READINGS</b></div>
       <div class="panel">
@@ -472,7 +457,6 @@
       </div>
     </section>
 
-    <!-- ── ABOUT CH-02 ── -->
     <section class="about">
       <div class="channel"><span class="line"></span><span>CH-02</span><b>ABOUT</b></div>
       <div class="grid">
@@ -490,12 +474,11 @@
           <span class="lead">I tinker with a bunch of hardware and softwares to understand <em>how they work</em>.</span>
           <p>// recently graduated bme by the end of 2025 and doing side quests first.<br />// exploring the world, figuring out what comes next.</p>
           <p>// this site is fully self-hosted. If it's offline, then my laptop is sleeping.<br />// occasionally writing at the <a href="blog.html">./blog</a> when something's on my mind.</p>
-          <p>// formal version: <a href="assets/CVargas_CV.pdf" target="_blank" rel="noopener">CVargas_CV.pdf</a> and i'm also on <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener">linkedin</a>.</p>
+          <p>// formal version: <a href="/assets/CVargas_CV.pdf" target="_blank" rel="noopener">CVargas_CV.pdf</a> and i'm also on <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener">linkedin</a>.</p>
         </div>
       </div>
     </section>
 
-    <!-- ── CONTACT CH-06 ── -->
     <section class="contact">
       <div class="channel"><span class="line"></span><span>CH-06</span><b>CONTACT</b></div>
       <div class="term" role="region" aria-label="Contact terminal">
@@ -507,7 +490,7 @@
         <span class="ln out">
           <a href="https://github.com/LeCaseus" target="_blank" rel="noopener">github</a> ·
           <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener">linkedin</a> ·
-          <a href="assets/CVargas_CV.pdf" target="_blank" rel="noopener">cv.pdf</a>
+          <a href="/assets/CVargas_CV.pdf" target="_blank" rel="noopener">cv.pdf</a>
         </span>
       </div>
     </section>
@@ -521,19 +504,18 @@
   </footer>
 
   <script>
-    // Theme toggle — localStorage works even when server is down
     const root = document.documentElement;
-    const btn  = document.getElementById('theme-toggle');
-    const stored = localStorage.getItem('cv.theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initial = stored || (prefersDark ? 'dark' : 'light');
-    root.setAttribute('data-theme', initial);
-    btn.textContent = initial === 'dark' ? '☼ LIGHT' : '☾ DARK';
-    btn.addEventListener('click', () => {
-      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      localStorage.setItem('cv.theme', next);
-      btn.textContent = next === 'dark' ? '☼ LIGHT' : '☾ DARK';
+    const theme_button = document.getElementById('theme-toggle');
+    const stored_theme = localStorage.getItem('cv.theme');
+    const prefers_dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initial_theme = stored_theme || (prefers_dark ? 'dark' : 'light');
+    root.setAttribute('data-theme', initial_theme);
+    theme_button.textContent = initial_theme === 'dark' ? '☼ LIGHT' : '☾ DARK';
+    theme_button.addEventListener('click', () => {
+      const next_theme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next_theme);
+      localStorage.setItem('cv.theme', next_theme);
+      theme_button.textContent = next_theme === 'dark' ? '☼ LIGHT' : '☾ DARK';
     });
   </script>
 

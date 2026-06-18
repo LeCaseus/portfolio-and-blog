@@ -1,267 +1,273 @@
-/* =========================================================================
-   Chezter Vargas — interactivity
-   ECG line, typewriter, clock, theme toggle, scroll-reveal, rail highlight
-   ========================================================================= */
+import { init_theme_toggle, start_clock } from './shared.js';
 
-(() => {
-  // ── Theme ─────────────────────────────────────────────────────────────
-  const root = document.documentElement;
-  const storedTheme = localStorage.getItem('cv.theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const initialTheme = storedTheme || (prefersDark ? 'dark' : 'light');
-  root.setAttribute('data-theme', initialTheme);
+init_theme_toggle();
+start_clock();
 
-  const themeBtn = document.querySelector('[data-theme-toggle]');
-  const setTheme = (t) => {
-    root.setAttribute('data-theme', t);
-    localStorage.setItem('cv.theme', t);
-    if (themeBtn) themeBtn.textContent = t === 'dark' ? '☼ LIGHT' : '☾ DARK';
+function init_hero_ecg() {
+  const ecg_svg = document.querySelector('.ecg svg');
+  const ecg_wrap = document.querySelector('.ecg');
+  const bpm_el = document.querySelector('[data-bpm]');
+  if (!ecg_svg) return;
+
+  const width = 1200;
+  const height = 96;
+  const baseline_y = height * 0.55;
+  const base_speed = 80;
+
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  ecg_svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  ecg_svg.setAttribute('preserveAspectRatio', 'none');
+  ecg_svg.appendChild(path);
+
+  let intensity = 1;
+  let pointer_inside = false;
+  let stress_until = 0;
+  let scroll_energy = 0;
+  let last_scroll_y = window.scrollY;
+  let last_scroll_time = performance.now();
+  let points = [];
+  let cursor_x = 0;
+  let scroll_offset = 0;
+  let last_frame_time = performance.now();
+
+  const heartbeat_offsets = intensity_factor => [
+    [10, 0], [4, -2 * intensity_factor], [6, 2 * intensity_factor], [4, 0],
+    [10, 0],
+    [3, -4 * intensity_factor], [3, 14 * intensity_factor], [3, -42 * intensity_factor], [3, 32 * intensity_factor], [3, -4 * intensity_factor],
+    [10, 0],
+    [6, -2 * intensity_factor], [10, 6 * intensity_factor], [6, -4 * intensity_factor],
+    [Math.max(8, 40 / Math.max(1, intensity_factor)), 0],
+  ];
+
+  const add_heartbeat = () => {
+    let x = cursor_x;
+    let y = baseline_y;
+    for (const [delta_x, delta_y] of heartbeat_offsets(intensity)) {
+      x += delta_x;
+      y += delta_y;
+      points.push([x, y]);
+    }
+    cursor_x = x + Math.random() * 14 / Math.max(1, intensity);
   };
-  if (themeBtn) {
-    themeBtn.textContent = initialTheme === 'dark' ? '☼ LIGHT' : '☾ DARK';
-    themeBtn.addEventListener('click', () => {
-      setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-    });
-  }
+  while (cursor_x < width * 1.2) add_heartbeat();
 
-  // ── Clock (UTC) ───────────────────────────────────────────────────────
-  const clocks = document.querySelectorAll('[data-clock]');
-  const pad = (n) => String(n).padStart(2, '0');
-  const tickClock = () => {
-    const d = new Date();
-    const s = `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())}`;
-    clocks.forEach(el => el.textContent = s);
+  const draw_path = () => {
+    let d = '';
+    for (let i = 0; i < points.length; i++) {
+      const [x, y] = points[i];
+      d += (i === 0 ? 'M' : 'L') + (x - scroll_offset).toFixed(1) + ' ' + y.toFixed(1) + ' ';
+    }
+    path.setAttribute('d', d);
   };
-  tickClock();
-  setInterval(tickClock, 1000);
 
-  // ── ECG line ──────────────────────────────────────────────────────────
-  // Continuously draws a heartbeat trace that scrolls right-to-left.
-  // REACTS to: scroll velocity (faster + taller spikes) and pointer over the
-  // strip (hovering inflates amplitude; clicking spikes the trace = "stress").
-  const ecgEl = document.querySelector('.ecg svg');
-  const ecgWrap = document.querySelector('.ecg');
-  const bpmEl = document.querySelector('[data-bpm]');
-  if (ecgEl) {
-    const W = 1200, H = 96;
-    ecgEl.setAttribute('viewBox', `0 0 ${W} ${H}`);
-    ecgEl.setAttribute('preserveAspectRatio', 'none');
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    ecgEl.appendChild(path);
+  const animate = time => {
+    const delta_seconds = (time - last_frame_time) / 1000;
+    last_frame_time = time;
 
-    const baseline = H * 0.55;
-    // Reactive state
-    let intensity = 1;      // 1.0 = calm, up to ~2.5 under stress
-    let speedMul  = 1;      // base speed multiplier
-    let lastScrollY = window.scrollY;
-    let lastScrollT = performance.now();
-    let pointerInside = false;
-    let stressUntil = 0;
+    const target_intensity =
+      performance.now() < stress_until ? 2.4 :
+      pointer_inside ? 1.6 :
+      1 + Math.min(1.2, scroll_energy * 0.012);
+    intensity += (target_intensity - intensity) * Math.min(1, delta_seconds * 4);
+    scroll_energy *= Math.max(0, 1 - delta_seconds * 2.2);
 
-    // One heartbeat as relative offsets (x advance, y delta)
-    const beatTpl = (k) => [
-      [10, 0], [4, -2*k], [6, 2*k], [4, 0],
-      [10, 0],
-      [3, -4*k], [3, 14*k], [3, -42*k], [3, 32*k], [3, -4*k],
-      [10, 0],
-      [6, -2*k], [10, 6*k], [6, -4*k],
-      [Math.max(8, 40 / Math.max(1, k)), 0],
-    ];
+    const speed_multiplier = 1 + (intensity - 1) * 0.6;
+    scroll_offset += base_speed * speed_multiplier * delta_seconds;
 
-    let pts = [];
-    let cursorX = 0;
-    const buildBeat = () => {
-      let x = cursorX, y = baseline;
-      for (const [dx, dy] of beatTpl(intensity)) {
-        x += dx; y += dy;
-        pts.push([x, y]);
-      }
-      cursorX = x + Math.random() * 14 / Math.max(1, intensity);
-    };
-    while (cursorX < W * 1.2) buildBeat();
+    while (points.length > 4 && points[1][0] - scroll_offset < -20) points.shift();
+    while (cursor_x - scroll_offset < width * 1.2) add_heartbeat();
 
-    const render = () => {
-      let d = '';
-      for (let i = 0; i < pts.length; i++) {
-        const [x, y] = pts[i];
-        d += (i === 0 ? 'M' : 'L') + (x - scroll).toFixed(1) + ' ' + y.toFixed(1) + ' ';
-      }
-      path.setAttribute('d', d);
-    };
-    let scroll = 0;
-    let last = performance.now();
-    const BASE_SPEED = 80;
-    const loop = (t) => {
-      const dt = (t - last) / 1000; last = t;
-      // decay intensity toward target
-      const target =
-        (performance.now() < stressUntil) ? 2.4 :
-        pointerInside ? 1.6 :
-        1 + Math.min(1.2, scrollEnergy * 0.012);
-      intensity += (target - intensity) * Math.min(1, dt * 4);
-      speedMul   = 1 + (intensity - 1) * 0.6;
-      // scroll energy decay
-      scrollEnergy *= Math.max(0, 1 - dt * 2.2);
+    draw_path();
+    requestAnimationFrame(animate);
+  };
 
-      scroll += BASE_SPEED * speedMul * dt;
-      while (pts.length > 4 && pts[1][0] - scroll < -20) pts.shift();
-      while (cursorX - scroll < W * 1.2) buildBeat();
-      render();
-      requestAnimationFrame(loop);
-    };
+  window.addEventListener('scroll', () => {
+    const now = performance.now();
+    const distance = Math.abs(window.scrollY - last_scroll_y);
+    const elapsed = Math.max(16, now - last_scroll_time);
+    scroll_energy = Math.min(120, scroll_energy * 0.6 + (distance / elapsed) * 60);
+    last_scroll_y = window.scrollY;
+    last_scroll_time = now;
+  }, { passive: true });
 
-    // scroll energy = |dY/dt|, smoothed
-    let scrollEnergy = 0;
-    window.addEventListener('scroll', () => {
-      const now = performance.now();
-      const dy = Math.abs(window.scrollY - lastScrollY);
-      const dt = Math.max(16, now - lastScrollT);
-      scrollEnergy = Math.min(120, scrollEnergy * 0.6 + (dy / dt) * 60);
-      lastScrollY = window.scrollY;
-      lastScrollT = now;
+  if (ecg_wrap) {
+    ecg_wrap.addEventListener('pointerenter', () => { pointer_inside = true; });
+    ecg_wrap.addEventListener('pointerleave', () => { pointer_inside = false; });
+    ecg_wrap.addEventListener('pointerdown', () => { stress_until = performance.now() + 900; });
+    ecg_wrap.addEventListener('touchstart', () => {
+      pointer_inside = true;
+      stress_until = performance.now() + 900;
     }, { passive: true });
-
-    if (ecgWrap) {
-      ecgWrap.addEventListener('pointerenter', () => { pointerInside = true; });
-      ecgWrap.addEventListener('pointerleave', () => { pointerInside = false; });
-      ecgWrap.addEventListener('pointerdown', () => {
-        stressUntil = performance.now() + 900;
-      });
-      // touch
-      ecgWrap.addEventListener('touchstart', () => {
-        pointerInside = true;
-        stressUntil = performance.now() + 900;
-      }, { passive: true });
-      ecgWrap.addEventListener('touchend', () => { pointerInside = false; });
-    }
-
-    requestAnimationFrame(loop);
-
-    // animated BPM number — scales with intensity
-    if (bpmEl) {
-      const update = () => {
-        const base = 64 + (intensity - 1) * 42;
-        const bpm = Math.round(base + Math.sin(Date.now() / 4200) * 3 + Math.random() * 2);
-        bpmEl.textContent = Math.max(58, Math.min(168, bpm));
-      };
-      update();
-      setInterval(update, 700);
-    }
+    ecg_wrap.addEventListener('touchend', () => { pointer_inside = false; });
   }
 
-  // ── Typewriter ────────────────────────────────────────────────────────
-  const twEl = document.querySelector('[data-typewriter]');
-  if (twEl) {
-    const lines = JSON.parse(twEl.getAttribute('data-typewriter'));
-    const cursor = '<span class="cursor"></span>';
-    let li = 0, ci = 0, mode = 'type', pause = 0;
-    const tick = () => {
-      const cur = lines[li];
-      if (mode === 'type') {
-        ci++;
-        if (ci > cur.length) { mode = 'hold'; pause = 38; }
-      } else if (mode === 'hold') {
-        pause--;
-        if (pause <= 0) mode = (li === lines.length - 1) ? 'done' : 'erase';
-      } else if (mode === 'erase') {
-        ci--;
-        if (ci <= 0) { mode = 'type'; li = (li + 1) % lines.length; }
-      }
-      twEl.innerHTML = cur.slice(0, ci) + cursor;
-      if (mode !== 'done') {
-        const d = mode === 'type' ? 32 + Math.random() * 30
-              : mode === 'erase' ? 14
-              : 60;
-        setTimeout(tick, d);
-      } else {
-        twEl.innerHTML = cur + cursor;
-      }
+  requestAnimationFrame(animate);
+
+  if (bpm_el) {
+    const update_bpm = () => {
+      const base_bpm = 64 + (intensity - 1) * 42;
+      const wobble = Math.sin(Date.now() / 4200) * 3 + Math.random() * 2;
+      bpm_el.textContent = Math.max(58, Math.min(168, Math.round(base_bpm + wobble)));
     };
-    tick();
+    update_bpm();
+    setInterval(update_bpm, 700);
   }
+}
 
-  // ── Scroll-reveal ─────────────────────────────────────────────────────
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        obs.unobserve(e.target);
+function init_typewriter() {
+  const typewriter_el = document.querySelector('[data-typewriter]');
+  if (!typewriter_el) return;
+
+  const lines = JSON.parse(typewriter_el.getAttribute('data-typewriter'));
+  const cursor_html = '<span class="cursor"></span>';
+  let line_index = 0;
+  let char_index = 0;
+  let mode = 'typing';
+  let hold_ticks = 0;
+
+  const tick = () => {
+    const current_line = lines[line_index];
+
+    if (mode === 'typing') {
+      char_index++;
+      if (char_index > current_line.length) { mode = 'holding'; hold_ticks = 38; }
+    } else if (mode === 'holding') {
+      hold_ticks--;
+      if (hold_ticks <= 0) mode = (line_index === lines.length - 1) ? 'finished' : 'erasing';
+    } else if (mode === 'erasing') {
+      char_index--;
+      if (char_index <= 0) { mode = 'typing'; line_index = (line_index + 1) % lines.length; }
+    }
+
+    typewriter_el.innerHTML = current_line.slice(0, char_index) + cursor_html;
+
+    if (mode === 'finished') {
+      typewriter_el.innerHTML = current_line + cursor_html;
+      return;
+    }
+
+    const delay = mode === 'typing' ? 32 + Math.random() * 30
+      : mode === 'erasing' ? 14
+      : 60;
+    setTimeout(tick, delay);
+  };
+
+  tick();
+}
+
+function init_scroll_reveal() {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-  // ── Rail active channel highlight ─────────────────────────────────────
-  const railLinks = document.querySelectorAll('.rail a');
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+function init_rail_highlight() {
+  const rail_links = document.querySelectorAll('.rail a');
   const sections = [...document.querySelectorAll('section[id]')];
-  const onScroll = () => {
-    const y = window.scrollY + window.innerHeight * 0.35;
-    let active = sections[0]?.id;
-    for (const s of sections) {
-      if (s.offsetTop <= y) active = s.id;
+  if (!sections.length) return;
+
+  const update_active_link = () => {
+    const scroll_y = window.scrollY + window.innerHeight * 0.35;
+    let active_id = sections[0].id;
+    for (const section of sections) {
+      if (section.offsetTop <= scroll_y) active_id = section.id;
     }
-    railLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + active));
+    rail_links.forEach(link => link.classList.toggle('on', link.getAttribute('href') === '#' + active_id));
   };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-})();
 
-/* =========================================================================
-   Dynamic content loaders
-   Readings from posts/index.json · Notes from notes/index.json
-   ========================================================================= */
+  window.addEventListener('scroll', update_active_link, { passive: true });
+  update_active_link();
+}
 
-// ── Readings (CH-03) ──────────────────────────────────────────────────
-(async () => {
-  const strip = document.querySelector('.readings .strip');
-  if (!strip) return;
+async function load_readings() {
+  const strip_el = document.querySelector('.readings .strip');
+  if (!strip_el) return;
+
   try {
-    const posts = await fetch('/api/posts').then(r => r.json());
-    strip.innerHTML = posts.map(p => `
-      <a class="read" href="blog.html#/${p.slug}">
-        <span class="date">${p.date}</span>
-        <span class="tag">${p.tags}</span>
-        <span class="ttl">${p.title}</span>
+    const posts = await fetch('/api/posts').then(response => response.json());
+    strip_el.innerHTML = posts.map(post => `
+      <a class="read" href="blog.html#/${post.slug}">
+        <span class="date">${post.date}</span>
+        <span class="tag">${post.tags}</span>
+        <span class="ttl">${post.title}</span>
         <span class="arrow">↗</span>
       </a>
     `).join('');
   } catch {
-    strip.innerHTML = '<div class="note">// no readings found.</div>';
+    strip_el.innerHTML = '<div class="note">// no readings found.</div>';
   }
-})();
+}
 
-// ── Notes (CH-05) ─────────────────────────────────────────────────────
-(async () => {
-  const log = document.querySelector('.notes .log');
-  if (!log) return;
+async function load_notes() {
+  const log_el = document.querySelector('.notes .log');
+  if (!log_el) return;
+
+  const page_size = 5;
+  let notes = [];
+  let page = 0;
+
   try {
-    const notes = await fetch('/api/notes').then(r => r.json());
-
-    // update entry count in the log bar
-    const countEl = log.querySelector('[data-note-count]');
-    if (countEl) countEl.textContent = String(notes.length).padStart(3, '0');
-
-    const foot = log.querySelector('.log-foot');
-    const entries = notes.map(n => {
-      const tags = n.tags?.length
-        ? `<div class="tags">${n.tags.map(t => `<span>${t}</span>`).join('')}</div>`
-        : '';
-      // use marked.parseInline if available, otherwise treat as plain text
-      const msg = typeof marked !== 'undefined'
-        ? marked.parseInline(n.msg)
-        : n.msg;
-      return `
-        <div class="entry-row">
-          <div class="ts">${n.ts}</div>
-          <div class="lvl" data-lvl="${n.lvl}">${n.label}</div>
-          <div class="msg">${msg}${tags}</div>
-        </div>
-      `;
-    }).join('');
-
-    // insert entries before the footer line
-    foot.insertAdjacentHTML('beforebegin', entries);
-  } catch (e) {
-    console.error('[notes] load failed:', e);
+    notes = await fetch('/api/notes').then(response => response.json());
+  } catch (error) {
+    console.error('[notes] load failed:', error);
+    return;
   }
-})();
+
+  const count_el = log_el.querySelector('[data-note-count]');
+  if (count_el) count_el.textContent = String(notes.length).padStart(3, '0');
+
+  const entries_wrap = document.createElement('div');
+  entries_wrap.className = 'log-entries';
+  log_el.querySelector('.log-bar').insertAdjacentElement('afterend', entries_wrap);
+
+  const range_el = log_el.querySelector('[data-page-range]');
+  const total_el = log_el.querySelector('[data-page-total]');
+  const prev_button = log_el.querySelector('[data-log-prev]');
+  const next_button = log_el.querySelector('[data-log-next]');
+  const total_pages = Math.max(1, Math.ceil(notes.length / page_size));
+
+  const render_entry = note => {
+    const tags_html = note.tags?.length
+      ? `<div class="tags">${note.tags.map(tag => `<span>${tag}</span>`).join('')}</div>`
+      : '';
+    const message_html = typeof marked !== 'undefined' ? marked.parseInline(note.msg) : note.msg;
+    return `
+      <div class="entry-row">
+        <div class="ts">${note.ts}</div>
+        <div class="lvl" data-lvl="${note.lvl}">${note.label}</div>
+        <div class="msg">${message_html}${tags_html}</div>
+      </div>
+    `;
+  };
+
+  const render_page = () => {
+    const start = page * page_size;
+    const page_notes = notes.slice(start, start + page_size);
+
+    entries_wrap.innerHTML = page_notes.map(render_entry).join('');
+
+    range_el.textContent = notes.length ? `${start + 1}–${Math.min(start + page_size, notes.length)}` : '0';
+    total_el.textContent = notes.length;
+    prev_button.disabled = page === 0;
+    next_button.disabled = page >= total_pages - 1;
+  };
+
+  prev_button.addEventListener('click', () => { if (page > 0) { page--; render_page(); } });
+  next_button.addEventListener('click', () => { if (page < total_pages - 1) { page++; render_page(); } });
+
+  render_page();
+}
+
+init_hero_ecg();
+init_typewriter();
+init_scroll_reveal();
+init_rail_highlight();
+load_readings();
+load_notes();

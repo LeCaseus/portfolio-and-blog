@@ -13,12 +13,11 @@
 
 <body>
 
-  <!-- top status bar (re-used vocabulary) -->
   <header class="status" role="banner">
     <div class="left">
       <span class="dot" aria-hidden="true"></span>READING SESSION ACTIVE
     </div>
-    <div class="center">CH-03 · READINGS LOG · <span data-post-count>5</span> ENTRIES</div>
+    <div class="center">CH-03 · READINGS LOG · <span data-post-count>—</span> ENTRIES</div>
     <div class="right">
       <span>UTC <span data-clock>00:00:00</span></span>
       <button class="theme" data-theme-toggle type="button" aria-label="Toggle theme">☾ DARK</button>
@@ -36,9 +35,8 @@
 
     <div class="blog-grid">
 
-      <!-- Sidebar index -->
       <aside class="idx" aria-label="Post index">
-        <div class="ttl-row"><span>INDEX</span><b data-visible-count>5 / 5</b></div>
+        <div class="ttl-row"><span>INDEX</span><b data-visible-count>— / —</b></div>
 
         <div class="filters" role="tablist" data-filters>
           <button class="on" data-filter="all">all</button>
@@ -53,9 +51,8 @@
         <ul class="idx-list" data-list></ul>
       </aside>
 
-      <!-- Reader -->
       <article class="reader" id="reader" aria-live="polite">
-        <!-- Hamburger toggle (mobile only) -->
+
         <button class="idx-toggle" id="idx-toggle" aria-label="Open post index">
           <span class="burger"><span></span><span></span><span></span></span>
           INDEX
@@ -72,252 +69,14 @@
   </div>
 
   <footer>
-    <div>SYS:OK · READING LOG</div>
-    <div class="c">// see ya later! <a href="https://github.com/LeCaseus/LeCaseus.github.io" target="_blank"
-        rel="noopener">source on github</a> if you want to poke around.</div>
+    <div>SYS:OK · fully selfhosted by me</div>
+    <div class="c">// see ya later! <a href="https://github.com/LeCaseus/portfolio-and-blog.git" target="_blank"
+        rel="noopener">source on
+        github</a> if you want to poke around.</div>
     <div>UTC <span data-clock>00:00:00</span></div>
   </footer>
 
-  <script type="module">
-    /* ──────────────────────────────────────────────────────────────────────
-       Posts data — keep these in one place so the index + reader stay in sync.
-       Body content is a structural preview; live posts on the canonical blog.
-       ────────────────────────────────────────────────────────────────────── */
-    const res = await fetch('/api/posts');
-    const index = await res.json();
-
-    const POSTS = await Promise.all(index.map(async p => {
-      const md = await fetch(`/api/posts/${p.slug}`).then(r => r.text());
-      return {...p, body: md};
-    }));
-
-    const POST_BY_SLUG = Object.fromEntries(POSTS.map(p => [p.slug, p]));
-
-    /* ──────────────────────────────────────────────────────────────────────
-       Theme + clock (lightweight, mirrored from main.js)
-       ────────────────────────────────────────────────────────────────────── */
-    const root = document.documentElement;
-    const storedTheme = localStorage.getItem('cv.theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    root.setAttribute('data-theme', storedTheme || (prefersDark ? 'dark' : 'light'));
-    const themeBtn = document.querySelector('[data-theme-toggle]');
-    const refreshThemeBtn = () => {
-      if (!themeBtn) return;
-      themeBtn.textContent = root.getAttribute('data-theme') === 'dark' ? '☼ LIGHT' : '☾ DARK';
-    };
-    refreshThemeBtn();
-    themeBtn?.addEventListener('click', () => {
-      const t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', t);
-      localStorage.setItem('cv.theme', t);
-      refreshThemeBtn();
-    });
-
-    const tickClock = () => {
-      const d = new Date();
-      const pad = (n) => String(n).padStart(2, '0');
-      const s = `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())}`;
-      document.querySelectorAll('[data-clock]').forEach(el => el.textContent = s);
-    };
-    tickClock();
-    setInterval(tickClock, 1000);
-
-    /* ──────────────────────────────────────────────────────────────────────
-       List rendering + filter + search
-       ────────────────────────────────────────────────────────────────────── */
-    const listEl = document.querySelector('[data-list]');
-    const visibleCountEl = document.querySelector('[data-visible-count]');
-    let currentFilter = 'all';
-    let currentSearch = '';
-    let currentSlug = null;
-
-    const renderList = () => {
-      const q = currentSearch.trim().toLowerCase();
-      const filtered = POSTS.filter(p => {
-        if (currentFilter !== 'all' && p.tags !== currentFilter) return false;
-        if (q && !(p.title.toLowerCase().includes(q) || p.summary.toLowerCase().includes(q))) return false;
-        return true;
-      });
-      listEl.innerHTML = filtered.map((p, i) => `
-    <li>
-      <a class="entry ${p.slug === currentSlug ? 'active' : ''}" href="#/${p.slug}" data-slug="${p.slug}">
-        <div>
-          <div class="meta-row"><span>${p.date}</span><span class="tag">${p.tags}</span></div>
-          <div class="ttl">${p.title}</div>
-        </div>
-        <div class="n">${String(POSTS.indexOf(p) + 1).padStart(2, '0')}</div>
-      </a>
-    </li>
-  `).join('') || '<li class="empty">no entries</li>';
-
-      visibleCountEl.textContent = `${filtered.length} / ${POSTS.length}`;
-    };
-
-    document.querySelectorAll('[data-filters] button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('[data-filters] button').forEach(b => b.classList.remove('on'));
-        btn.classList.add('on');
-        currentFilter = btn.dataset.filter;
-        renderList();
-      });
-    });
-    document.querySelector('[data-search]').addEventListener('input', (e) => {
-      currentSearch = e.target.value;
-      renderList();
-    });
-
-    /* ──────────────────────────────────────────────────────────────────────
-       Reader rendering
-       ────────────────────────────────────────────────────────────────────── */
-    const readerBody = document.querySelector('[data-reader-body]');
-    const renderPost = (slug) => {
-      const post = POST_BY_SLUG[slug] || POSTS[0];
-      currentSlug = post.slug;
-
-      const idx = POSTS.indexOf(post);
-      const prev = idx > 0 ? POSTS[idx - 1] : null;
-      const next = idx < POSTS.length - 1 ? POSTS[idx + 1] : null;
-
-      readerBody.innerHTML = `
-    <header class="header">
-      <div class="meta">
-        <span>${post.date}</span>
-        <span class="dot"></span>
-        <span class="tag">${post.tags}</span>
-        <span class="dot"></span>
-        <span>${post.readTime} read</span>
-        <span class="dot"></span>
-        <span>entry ${String(idx + 1).padStart(2, '0')} / ${String(POSTS.length).padStart(2, '0')}</span>
-      </div>
-      <h1 class="post-title">${post.title}</h1>
-      <p class="lede">${post.summary}</p>
-    </header>
-    <div class="prose-body">${marked.parse(post.body)}</div>
-    <div class="post-footer">
-      <div class="prev">
-        ${prev ? `<a href="#/${prev.slug}">
-          <span class="label">← previous</span>
-          <span class="ttl">${prev.title}</span>
-        </a>` : ''}
-      </div>
-      <div class="next">
-        ${next ? `<a href="#/${next.slug}">
-          <span class="label">next →</span>
-          <span class="ttl">${next.title}</span>
-        </a>` : ''}
-      </div>
-    </div>
-  `;
-
-      renderList(); // refresh active state
-      document.getElementById('reader').scrollTo?.({top: 0});
-      window.scrollTo({top: 0, behavior: 'smooth'});
-    };
-
-    /* ──────────────────────────────────────────────────────────────────────
-       Routing — read slug from hash
-       ────────────────────────────────────────────────────────────────────── */
-    const slugFromHash = () => {
-      const h = location.hash.replace(/^#\/?/, '').trim();
-      return POST_BY_SLUG[h] ? h : POSTS[0].slug;
-    };
-    window.addEventListener('hashchange', () => renderPost(slugFromHash()));
-    listEl.addEventListener('click', (e) => {
-      const a = e.target.closest('[data-slug]');
-      if (!a) return;
-      // let the hashchange handler do the rest
-    });
-
-    /* ──────────────────────────────────────────────────────────────────────
-       Mini reader-pulse — bound to scroll velocity inside the article
-       ────────────────────────────────────────────────────────────────────── */
-    const pulsePath = document.getElementById('pulse-path');
-    const W = 600, H = 36, BASE = H * 0.55;
-    let ppts = [];
-    let pcursor = 0;
-    let pIntensity = 1;
-    let pLastY = window.scrollY, pLastT = performance.now(), pEnergy = 0;
-
-    const pBeat = (k) => [
-      [8, 0], [3, -1 * k], [5, 1 * k], [3, 0], [6, 0],
-      [2, -2 * k], [2, 6 * k], [2, -16 * k], [2, 12 * k], [2, -2 * k],
-      [6, 0], [4, -1 * k], [6, 2 * k], [Math.max(6, 18 / Math.max(1, k)), 0],
-    ];
-    const buildPBeat = () => {
-      let x = pcursor, y = BASE;
-      for (const [dx, dy] of pBeat(pIntensity)) {x += dx; y += dy; ppts.push([x, y]);}
-      pcursor = x + Math.random() * 6;
-    };
-    while (pcursor < W * 1.2) buildPBeat();
-
-    let pScroll = 0, pLast = performance.now();
-    const pLoop = (t) => {
-      const dt = (t - pLast) / 1000; pLast = t;
-      const target = 1 + Math.min(1.4, pEnergy * 0.018);
-      pIntensity += (target - pIntensity) * Math.min(1, dt * 4);
-      pEnergy *= Math.max(0, 1 - dt * 2.2);
-      pScroll += 60 * (1 + (pIntensity - 1) * 0.5) * dt;
-      while (ppts.length > 4 && ppts[1][0] - pScroll < -20) ppts.shift();
-      while (pcursor - pScroll < W * 1.2) buildPBeat();
-      let d = '';
-      for (let i = 0; i < ppts.length; i++) {
-        d += (i ? 'L' : 'M') + (ppts[i][0] - pScroll).toFixed(1) + ' ' + ppts[i][1].toFixed(1) + ' ';
-      }
-      pulsePath.setAttribute('d', d);
-      requestAnimationFrame(pLoop);
-    };
-    requestAnimationFrame(pLoop);
-
-    window.addEventListener('scroll', () => {
-      const now = performance.now();
-      const dy = Math.abs(window.scrollY - pLastY);
-      const dt = Math.max(16, now - pLastT);
-      pEnergy = Math.min(120, pEnergy * 0.6 + (dy / dt) * 60);
-      pLastY = window.scrollY; pLastT = now;
-
-      // reading-progress bar
-      const doc = document.documentElement;
-      const scrollable = doc.scrollHeight - doc.clientHeight;
-      const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
-      document.getElementById('read-progress-bar').style.height = pct + '%';
-    }, {passive: true});
-
-
-    /* ── Mobile sidebar toggle ──────────────────────────────────────────── */
-    const idxToggle = document.getElementById('idx-toggle');
-    const idxOverlay = document.getElementById('idx-overlay');
-    const idxPanel = document.querySelector('.idx');
-
-    const openIdx = () => {
-      idxPanel.classList.add('open');
-      idxOverlay.classList.add('visible');
-      idxToggle.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    };
-
-    const closeIdx = () => {
-      idxPanel.classList.remove('open');
-      idxOverlay.classList.remove('visible');
-      idxToggle.classList.remove('open');
-      document.body.style.overflow = '';
-    };
-
-    idxToggle.addEventListener('click', () => {
-      idxPanel.classList.contains('open') ? closeIdx() : openIdx();
-    });
-
-    idxOverlay.addEventListener('click', closeIdx);
-
-    // Close drawer when a post is selected
-    listEl.addEventListener('click', (e) => {
-      if (e.target.closest('[data-slug]')) closeIdx();
-    });
-
-    /* ── Boot ─────────────────────────────────────────────────────────────── */
-    renderList();
-    renderPost(slugFromHash());
-    document.querySelector('[data-post-count]').textContent = POSTS.length;
-  </script>
+  <script type="module" src="blog.js"></script>
 
 </body>
 

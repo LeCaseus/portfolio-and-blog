@@ -13,10 +13,9 @@
 
 <body>
 
-  <!-- ───────── Top status bar ───────── -->
   <header class="status" role="banner">
     <div class="left">
-      <span class="dot" aria-hidden="true"></span>ELECTRODES CONNECTED · <span style="color:var(--warn)">v4.0 · still
+      <span class="dot" aria-hidden="true"></span>ELECTRODES CONNECTED · <span class="build-tag">v4.0 · still
         cooking</span>
     </div>
     <div class="center">SIGNAL · CLEAN · LEAD II · 2000 HZ</div>
@@ -26,7 +25,6 @@
     </div>
   </header>
 
-  <!-- ───────── Side rail nav ───────── -->
   <nav class="rail" aria-label="Channels">
     <a href="#now"><i></i>CH-01 NOW</a>
     <a href="#about"><i></i>CH-02 ABOUT</a>
@@ -38,7 +36,6 @@
 
   <main>
 
-    <!-- ───────── HERO  CH-00 ───────── -->
     <section class="hero" id="top" data-screen-label="00 Hero">
       <div class="channel">
         <span class="line"></span>
@@ -46,14 +43,14 @@
         <b>SUBJECT&nbsp;001 · CHEZTER&nbsp;VARGAS</b>
       </div>
       <h1>
-        <span class="addr">0x0001 · hi i'm chezter · freedom in the digital age! </span>
+        <span class="addr">0x0001 · Your eyes can deceive you, don’t trust them. </span>
         chezter<br />
         <span class="alive">vargas_</span>
       </h1>
       <div class="meta">
         <div class="role">
           <span>BIOMEDICAL ENGINEER</span><span class="sep">/</span>
-          <span>HOBBYIST C/C++</span><span class="sep">/</span>
+          <span>C/C++ HOBBYIST</span><span class="sep">/</span>
           <span>PC GAMER</span>
         </div>
         <p class="tagline"
@@ -62,7 +59,6 @@
         </p>
       </div>
 
-      <!-- ECG strip -->
       <div class="ecg" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg">
           <path d="" />
@@ -73,7 +69,6 @@
       </div>
     </section>
 
-    <!-- ───────── NOW  CH-01 ───────── -->
     <section class="now reveal" id="now" data-screen-label="01 Now">
       <div class="channel"><span class="line"></span><span>CH-01</span><b>CURRENT&nbsp;READINGS</b></div>
       <div class="panel">
@@ -81,30 +76,29 @@
           <div class="key"><i></i>STATUS</div>
           <div class="v"><em>SABBATICAL</em></div>
           <div class="sub">post-grad, exploring what's next</div>
-          <div class="bar"><i style="width:42%"></i></div>
+          <div class="bar"><i style="--fill_pct:42%"></i></div>
         </div>
         <div class="cell">
           <div class="key"><i></i>BUILDING</div>
-          <div class="v">HOMELAB</div>
+          <div class="v"><em>HOMELAB</em></div>
           <div class="sub">self-hosting everything I can</div>
-          <div class="bar"><i style="width:18%"></i></div>
+          <div class="bar"><i style="--fill_pct:18%"></i></div>
         </div>
         <div class="cell">
           <div class="key"><i></i>LEARNING</div>
-          <div class="v">C / C++</div>
+          <div class="v"><em>C / C++</em></div>
           <div class="sub">slowly, from first principles</div>
-          <div class="bar"><i style="width:31%"></i></div>
+          <div class="bar"><i style="--fill_pct:31%"></i></div>
         </div>
         <div class="cell">
           <div class="key"><i></i>LOCATION</div>
-          <div class="v">EARTH / 2026</div>
+          <div class="v"><em>EARTH / 2026</em></div>
           <div class="sub">last sync UTC <span data-clock>00:00:00</span></div>
-          <div class="bar"><i style="width:78%"></i></div>
+          <div class="bar"><i style="--fill_pct:78%"></i></div>
         </div>
       </div>
     </section>
 
-    <!-- ───────── ABOUT  CH-02 ───────── -->
     <section class="about reveal" id="about" data-screen-label="02 About">
       <div class="channel"><span class="line"></span><span>CH-02</span><b>ABOUT</b></div>
       <div class="grid">
@@ -123,16 +117,16 @@
               work</em>.</span>
           <p>// recently graduated bme by the end of 2025 and doing side quests first.<br />// exploring the world,
             figuring out what comes next.</p>
-          <p>// this site is fully self-hosted. If its offline, then my laptop is sleeping.<br />// occasionally writing
+          <p>// this site is fully self-hosted. If it's offline, then my laptop is sleeping.<br />// occasionally
+            writing
             at the <a href="blog.html">./blog</a> when something's on my mind.</p>
-          <p>// formal version: <a href="assets/CVargas_CV.pdf" target="_blank" rel="noopener">CVargas_CV.pdf</a> and
+          <p>// formal version: <a href="/assets/CVargas_CV.pdf" target="_blank" rel="noopener">CVargas_CV.pdf</a> and
             i'm also
             on <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener">linkedin</a>.</p>
         </div>
       </div>
     </section>
 
-    <!-- ───────── READINGS  CH-03 ───────── -->
     <section class="readings reveal" id="readings" data-screen-label="03 Readings">
       <div class="channel"><span class="line"></span><span>CH-03</span><b>LATEST&nbsp;READINGS</b></div>
       <div class="head">
@@ -142,21 +136,20 @@
       <div class="strip"></div>
     </section>
 
-    <!-- ───────── PROJECTS  CH-04 ───────── -->
     <section class="projects reveal" id="projects" data-screen-label="04 Projects">
       <div class="channel"><span class="line"></span><span>CH-04</span><b>SPECIMENS</b></div>
       <div class="head">
         <h2>Projects, on the <em>slide</em></h2>
-        <div class="note">// awaiting samples — drop project details when ready</div>
+        <div class="note">// samples isolated to individual repositories</div>
       </div>
       <div class="slides">
         <article class="slide">
           <div class="frosted"></div>
           <div class="body">
-            <div class="label" style="position:absolute;top:14px;left:16px;right:14px;z-index:2;">
-              <span>SPEC-001</span><b>eM-BRACE</b>
+            <div class="card-head">
+              <div class="label"><span>SPEC-001</span><b>eM-BRACE</b></div>
+              <span class="status-pill" data-s="wip">WIP</span>
             </div>
-            <span class="status-pill" data-s="wip">WIP</span>
             <div class="specimen" data-s="wip" aria-hidden="true"></div>
             <div>
               <div class="ttl">e<em>M</em>-Brace</div>
@@ -169,10 +162,10 @@
           <article class="slide">
             <div class="frosted"></div>
             <div class="body">
-              <div class="label" style="position:absolute;top:14px;left:16px;right:14px;z-index:2;">
-                <span>SPEC-002</span><b>DOTFILES</b>
+              <div class="card-head">
+                <div class="label"><span>SPEC-002</span><b>DOTFILES</b></div>
+                <span class="status-pill" data-s="active">ACTIVE</span>
               </div>
-              <span class="status-pill" data-s="active">ACTIVE</span>
               <div class="specimen" data-s="active" aria-hidden="true"></div>
               <div>
                 <div class="ttl">dot<em>files</em></div>
@@ -184,10 +177,10 @@
         <article class="slide">
           <div class="frosted"></div>
           <div class="body">
-            <div class="label" style="position:absolute;top:14px;left:16px;right:14px;z-index:2;">
-              <span>SPEC-003</span><b>CH3SH1RE</b>
+            <div class="card-head">
+              <div class="label"><span>SPEC-003</span><b>CH3SH1RE</b></div>
+              <span class="status-pill" data-s="wip">WIP</span>
             </div>
-            <span class="status-pill" data-s="wip">WIP</span>
             <div class="specimen" data-s="wip" aria-hidden="true"></div>
             <div>
               <div class="ttl">CH3SH<em>1</em>RE</div>
@@ -198,7 +191,6 @@
       </div>
     </section>
 
-    <!-- ───────── NOTES  CH-05 ───────── -->
     <section class="notes reveal" id="notes" data-screen-label="05 Notes">
       <div class="channel"><span class="line"></span><span>CH-05</span><b>NOTES&nbsp;·&nbsp;dmesg</b></div>
       <div class="head">
@@ -208,16 +200,16 @@
       <div class="log">
         <div class="log-bar">
           <div class="stream"><b>STREAM</b> <span>chezter@notes</span> <span class="ok">live</span></div>
-          <div>kernel: v0.1 · entries=<span data-note-count>000</span></div>
+          <div>kernel: v4.3 · entries=<span data-note-count>000</span></div>
         </div>
         <div class="log-foot">
-          <span>EOF · <span class="blink">_</span></span>
-          <span>// more transmissions incoming.</span>
+          <button class="log-nav" data-log-prev type="button" aria-label="Older entries">‹ prev</button>
+          <span class="log-page">entries <span data-page-range>0–0</span> / <span data-page-total>0</span></span>
+          <button class="log-nav" data-log-next type="button" aria-label="Newer entries">next ›</button>
         </div>
       </div>
     </section>
 
-    <!-- ───────── CONTACT  CH-06 ───────── -->
     <section class="contact reveal" id="contact" data-screen-label="06 Contact">
       <div class="channel"><span class="line"></span><span>CH-06</span><b>CONTACT</b></div>
       <div class="term" role="region" aria-label="Contact terminal">
@@ -230,7 +222,7 @@
           <a href="https://github.com/LeCaseus" target="_blank" rel="noopener">github</a> ·
           <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener">linkedin</a> ·
           <a href="blog.html">blog</a> ·
-          <a href="assets/CVargas_CV.pdf" target="_blank" rel="noopener">cv.pdf</a>
+          <a href="/assets/CVargas_CV.pdf" target="_blank" rel="noopener">cv.pdf</a>
         </span>
         <span class="ln"><span class="prompt">$</span> <span class="blink"></span></span>
       </div>
@@ -239,12 +231,13 @@
   </main>
 
   <footer>
-    <div>SYS:OK · hardcoded by me</div>
-    <div class="c">// see ya later! got lots more to do. </div>
+    <div>SYS:OK · fully selfhosted by me</div>
+    <div class="c">// see ya later! <a href="https://github.com/LeCaseus/portfolio-and-blog.git" target="_blank"
+        rel="noopener">source on github</a> if you want to poke around.</div>
     <div>UTC <span data-clock>00:00:00</span></div>
   </footer>
 
-  <script src="main.js"></script>
+  <script type="module" src="main.js"></script>
 
 </body>
 

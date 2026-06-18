@@ -1,9 +1,5 @@
-/* =========================================================================
-   blog.css — Readings page styles
-   Linked from blog.html alongside styles.css
-   ========================================================================= */
 
-/* ── Layout shell ────────────────────────────────────────────────────────── */
+
 .blog-shell {
   max-width: var(--maxw);
   margin: 0 auto;
@@ -45,7 +41,7 @@
 .blog-hd .crumbs a {
   color: inherit;
   text-decoration: none;
-  border-bottom: 1px dotted var(--mute-2);
+  border-bottom: 1px dotted var(--mute_2);
 }
 
 .blog-hd .crumbs a:hover {
@@ -60,7 +56,6 @@
   align-items: start;
 }
 
-/* ── Index sidebar ───────────────────────────────────────────────────────── */
 .idx {
   position: sticky;
   top: 56px;
@@ -135,7 +130,7 @@
 }
 
 .idx .search input:focus { border-color: var(--signal); }
-.idx .search input::placeholder { color: var(--mute-2); }
+.idx .search input::placeholder { color: var(--mute_2); }
 
 .idx .search::before {
   content: "/";
@@ -175,12 +170,12 @@
 
 .idx-list .entry:hover {
   padding-left: 12px;
-  background: var(--signal-soft);
+  background: var(--signal_soft);
 }
 
 .idx-list .entry.active {
   padding-left: 14px;
-  background: var(--signal-soft);
+  background: var(--signal_soft);
 }
 
 .idx-list .entry.active::before {
@@ -215,15 +210,14 @@
 .idx-list .entry .n {
   font-family: var(--mono);
   font-size: 10px;
-  color: var(--mute-2);
+  color: var(--mute_2);
   align-self: start;
   padding-top: 2px;
 }
 
-/* ── Reader ──────────────────────────────────────────────────────────────── */
 .reader {
   border: 1px solid var(--rule);
-  background: var(--paper-2);
+  background: var(--paper_2);
   border-radius: 4px;
   padding: clamp(28px, 4vw, 64px) clamp(24px, 4vw, 72px);
   position: relative;
@@ -263,7 +257,7 @@
 .reader .meta .tag { color: var(--signal); }
 .reader .meta .dot {
   width: 4px; height: 4px; border-radius: 50%;
-  background: var(--mute-2);
+  background: var(--mute_2);
   align-self: center;
 }
 
@@ -289,7 +283,6 @@
   margin: 0;
 }
 
-/* ── Prose body ──────────────────────────────────────────────────────────── */
 .prose-body {
   max-width: 64ch;
   font-family: var(--serif);
@@ -373,14 +366,13 @@
   display: block;
   text-align: center;
   margin-top: -10px;
-  background: var(--paper-2);
+  background: var(--paper_2);
   width: 28px;
   margin-left: auto;
   margin-right: auto;
-  color: var(--mute-2);
+  color: var(--mute_2);
 }
 
-/* ── Reading progress bar ────────────────────────────────────────────────── */
 .read-progress {
   position: fixed;
   right: 0; top: 0; bottom: 0;
@@ -398,7 +390,6 @@
   transition: height .08s linear;
 }
 
-/* ── Reader footer ───────────────────────────────────────────────────────── */
 .reader .post-footer {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -426,10 +417,10 @@
 
 .reader .post-footer a:hover {
   border-color: var(--signal);
-  background: var(--signal-soft);
+  background: var(--signal_soft);
 }
 
-.reader .post-footer .label { color: var(--mute-2); }
+.reader .post-footer .label { color: var(--mute_2); }
 .reader .post-footer .next { text-align: right; }
 .reader .post-footer .next a { align-items: flex-end; }
 
@@ -441,7 +432,6 @@
   letter-spacing: 0;
 }
 
-/* ── Empty state ─────────────────────────────────────────────────────────── */
 .empty {
   text-align: center;
   padding: 80px 20px;
@@ -452,7 +442,6 @@
   text-transform: uppercase;
 }
 
-/* ── Mini ECG at top of reader ───────────────────────────────────────────── */
 .reader-pulse {
   height: 36px;
   margin: 0 0 24px;
@@ -462,7 +451,7 @@
 }
 
 .reader-pulse svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.reader-pulse svg path { stroke: var(--signal); stroke-width: 1.4; fill: none; filter: drop-shadow(0 0 4px var(--signal-soft)); }
+.reader-pulse svg path { stroke: var(--signal); stroke-width: 1.4; fill: none; filter: drop-shadow(0 0 4px var(--signal_soft)); }
 
 .reader-pulse .label {
   position: absolute;
@@ -474,20 +463,15 @@
   color: var(--mute);
 }
 
-/* ── Hamburger button (mobile only, hidden on desktop) ───────────────────── */
 .idx-toggle {
   display: none;
   margin-bottom: 16px;
 }
 
-/* ── Dim overlay ─────────────────────────────────────────────────────────── */
 .idx-overlay {
   display: none;
 }
 
-/* =========================================================================
-   Tablet — collapse sidebar above reader
-   ========================================================================= */
 @media (max-width: 900px) {
   .blog-grid { grid-template-columns: 1fr; }
   .idx { position: static; max-height: none; }
@@ -495,9 +479,6 @@
   .reader { padding: 28px 22px; }
 }
 
-/* =========================================================================
-   Mobile — hamburger drawer
-   ========================================================================= */
 @media (max-width: 600px) {
 
   .blog-shell { padding-top: 20px; }
@@ -510,13 +491,13 @@
   }
   .blog-hd h1 { font-size: clamp(36px, 10vw, 54px); }
 
-  /* Single column, sidebar hidden by default */
+  .idx .filters button { font-size: 9.5px; padding: 3px 8px; }
+
   .blog-grid {
     grid-template-columns: 1fr;
     gap: 0;
   }
 
-  /* Hamburger button — sits above the reader */
   .idx-toggle {
     display: flex;
     align-items: center;
@@ -538,7 +519,6 @@
 
   .idx-toggle:hover { color: var(--ink); border-color: var(--ink); }
 
-  /* Three-line icon */
   .idx-toggle .burger {
     display: flex;
     flex-direction: column;
@@ -553,12 +533,10 @@
     transition: transform .2s, opacity .2s;
   }
 
-  /* Animate to X when open */
   .idx-toggle.open .burger span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
   .idx-toggle.open .burger span:nth-child(2) { opacity: 0; }
   .idx-toggle.open .burger span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
 
-  /* Dim overlay */
   .idx-overlay {
     display: block;
     position: fixed;
@@ -575,7 +553,6 @@
     pointer-events: all;
   }
 
-  /* Sidebar drawer — slides in from left */
   .idx{
   display: none;
   position: fixed;
