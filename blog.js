@@ -87,6 +87,8 @@ function render_post(slug) {
   render_list();
   document.getElementById('reader').scrollTo?.({ top: 0 });
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  window.umami?.track(props => ({ ...props, url: `/blog/${post.slug}`, title: post.title }));
 }
 
 function slug_from_hash() {
