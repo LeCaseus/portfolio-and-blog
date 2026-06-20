@@ -58,10 +58,13 @@
           INDEX
         </button>
         <div class="reader-pulse" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 36" preserveAspectRatio="none">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 36" preserveAspectRatio="none" aria-hidden="true">
             <path d="" id="pulse-path" />
           </svg>
-          <div class="label">READ-PULSE · SYNC</div>
+          <button class="pulse-react" data-react-btn aria-label="React to this post">
+            <span class="heart">♥</span>
+            <span class="count" data-react-count>-</span>
+          </button>
         </div>
         <div data-reader-body></div>
       </article>
