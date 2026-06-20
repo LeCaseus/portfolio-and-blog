@@ -11,6 +11,41 @@ async function load_posts() {
   }));
 }
 
+async function init_reaction_widget(slug) {
+  const button = document.querySelector('[data-react-btn]');
+  const count_el = document.querySelector('[data-react-count]');
+  if (!button || !count_el) return;
+
+  // const already_reacted = localStorage.getItem(`reacted:${slug}`) === 'true';
+  // button.classList.toggle('reacted', already_reacted);
+  // button.disabled = already_reacted;
+
+  try {
+    const response = await fetch(`/api/reactions/${slug}`);
+    const data = await response.json();
+    count_el.textContent = data.count;
+    button.classList.toggle('reacted', data.reacted);
+  } catch {
+    count_el.textContent = '—';
+  }
+
+  button.addEventListener('click', async () => {
+    if (button.disabled) return;
+    button.disabled = true;
+    try {
+      const response = await fetch(`/api/reactions/${slug}`, { method: 'POST' });
+      const data = await response.json();
+      count_el.textContent = data.count;
+      button.classList.toggle('reacted', data.reacted);
+      // localStorage.setItem(`reacted:${slug}`, 'true');
+    } catch {
+      // button.disabled = false;
+    } finally {
+      button.disabled = false;
+    }
+  });
+}
+
 const posts = await load_posts();
 const post_by_slug = Object.fromEntries(posts.map(post => [post.slug, post]));
 
@@ -68,6 +103,12 @@ function render_post(slug) {
       <p class="lede">${post.summary}</p>
     </header>
     <div class="prose-body">${marked.parse(post.body)}</div>
+    <div class="reactions" data-reactions>
+      <button class="react-btn" data-react-btn aria-label="React to this post">
+        <span class="heart">♥</span>
+        <span class="count" data-react-count>—</span>
+      </button>
+    </div>
     <div class="post-footer">
       <div class="prev">
         ${previous_post ? `<a href="#/${previous_post.slug}">
@@ -88,6 +129,7 @@ function render_post(slug) {
   document.getElementById('reader').scrollTo?.({ top: 0 });
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
+  init_reaction_widget(post.slug);
   window.umami?.track(props => ({ ...props, url: `/blog/${post.slug}`, title: post.title }));
 }
 
