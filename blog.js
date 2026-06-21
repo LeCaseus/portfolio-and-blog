@@ -18,14 +18,15 @@ async function refresh_reaction_count(slug) {
   try {
     const response = await fetch(`/api/reactions/${slug}`);
     const data = await response.json();
+    if (slug !== current_slug) return;
     count_el.textContent = data.count;
     button.classList.toggle('reacted', data.reacted);
   } catch {
-    count_el.textContent = '—';
+    if (slug === current_slug) count_el.textContent = '—';
   }
 }
 
-const posts = await load_posts();
+const posts = (await load_posts()).sort((a, b) => new Date(b.date) - new Date(a.date));
 const post_by_slug = Object.fromEntries(posts.map(post => [post.slug, post]));
 
 const list_el = document.querySelector('[data-list]');
@@ -51,7 +52,7 @@ function render_list() {
           <div class="meta-row"><span>${post.date}</span>${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
           <div class="ttl">${post.title}</div>
         </div>
-        <div class="n">${String(posts.indexOf(post) + 1).padStart(2, '0')}</div>
+        <div class="n">${String(posts.length - posts.indexOf(post)).padStart(2, '0')}</div>
       </a>
     </li>
   `).join('') || '<li class="empty">no entries</li>';
@@ -76,7 +77,7 @@ function render_post(slug) {
         <span class="dot"></span>
         <span>${post.readTime} read</span>
         <span class="dot"></span>
-        <span>entry ${String(post_index + 1).padStart(2, '0')} / ${String(posts.length).padStart(2, '0')}</span>
+        <span>entry ${String(posts.length - post_index).padStart(2, '0')} / ${String(posts.length).padStart(2, '0')}</span>
       </div>
       <h1 class="post-title">${post.title}</h1>
       <p class="lede">${post.summary}</p>

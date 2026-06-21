@@ -192,7 +192,9 @@ async function load_readings() {
 
   try {
     const posts = await fetch('/api/posts').then(response => response.json());
-    strip_el.innerHTML = posts.map(post => `
+    const sorted_posts = posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const recent_posts = sorted_posts.slice(0,5);
+    strip_el.innerHTML = recent_posts.map(post => `
       <a class="read" href="blog.html#/${post.slug}">
         <span class="date">${post.date}</span>
         <span class="tag">${post.tags}</span>
