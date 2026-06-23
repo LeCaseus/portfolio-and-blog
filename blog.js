@@ -47,7 +47,7 @@ function render_list() {
 
   list_el.innerHTML = filtered_posts.map(post => `
     <li>
-      <a class="entry ${post.slug === current_slug ? 'active' : ''}" href="#/${post.slug}" data-slug="${post.slug}">
+      <a class="entry ${post.slug === current_slug ? 'active' : ''}" href="/blog/${post.slug}" data-slug="${post.slug}">
         <div>
           <div class="meta-row"><span>${post.date}</span>${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
           <div class="ttl">${post.title}</div>
@@ -85,13 +85,13 @@ function render_post(slug) {
     <div class="prose-body">${marked.parse(post.body)}</div>
     <div class="post-footer">
       <div class="prev">
-        ${previous_post ? `<a href="#/${previous_post.slug}">
+        ${previous_post ? `<a href="/blog/${previous_post.slug}">
           <span class="label">← previous</span>
           <span class="ttl">${previous_post.title}</span>
         </a>` : ''}
       </div>
       <div class="next">
-        ${next_post ? `<a href="#/${next_post.slug}">
+        ${next_post ? `<a href="/blog/${next_post.slug}">
           <span class="label">next →</span>
           <span class="ttl">${next_post.title}</span>
         </a>` : ''}
@@ -107,9 +107,9 @@ function render_post(slug) {
   window.umami?.track(props => ({ ...props, url: `/blog/${post.slug}`, title: post.title }));
 }
 
-function slug_from_hash() {
-  const hash_slug = location.hash.replace(/^#\/?/, '').trim();
-  return post_by_slug[hash_slug] ? hash_slug : posts[0].slug;
+function slug_from_path() {
+  const hash_slug = location.hash.replace(/^\/blog\/?/, '').trim();
+  return post_by_slug[path_slug] ? path_slug : posts[0].slug;
 }
 
 const filters_el = document.querySelector('[data-filters]');
@@ -132,7 +132,16 @@ document.querySelector('[data-search]').addEventListener('input', event => {
   render_list();
 });
 
-window.addEventListener('hashchange', () => render_post(slug_from_hash()));
+window.addEventListener('popstate', () => render_post(slug_from_path()));
+
+document.addEventListener('click', event => {
+  const link = event.target.closest('a[href^="/blog/"]');
+  if (!link) return;
+  event.preventDefault();
+  const slug = link.getAttribute('href').replace('/blog/', '');
+  history.pushState({}, '', link.getAttribute('href'));
+  render_post(slug);
+});
 
 function init_reader_pulse() {
   const pulse_path = document.getElementById('pulse-path');
@@ -267,5 +276,5 @@ init_reading_progress();
 init_mobile_sidebar();
 
 render_list();
-render_post(slug_from_hash());
+render_post(slug_from_path());
 document.querySelector('[data-post-count]').textContent = posts.length;
