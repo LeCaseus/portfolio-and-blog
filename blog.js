@@ -108,7 +108,8 @@ function render_post(slug) {
 }
 
 function slug_from_path() {
-  const hash_slug = location.hash.replace(/^\/blog\/?/, '').trim();
+  const match = location.pathname.match(/^\/blog\/(.+)$/);
+  const path_slug = match ? match[1].replace(/\/$/, '') : '';
   return post_by_slug[path_slug] ? path_slug : posts[0].slug;
 }
 
