@@ -133,18 +133,13 @@ function init_typewriter() {
       if (char_index > current_line.length) { mode = 'holding'; hold_ticks = 38; }
     } else if (mode === 'holding') {
       hold_ticks--;
-      if (hold_ticks <= 0) mode = (line_index === lines.length - 1) ? 'finished' : 'erasing';
+      if (hold_ticks <= 0) mode = 'erasing';
     } else if (mode === 'erasing') {
       char_index--;
       if (char_index <= 0) { mode = 'typing'; line_index = (line_index + 1) % lines.length; }
     }
 
     typewriter_el.innerHTML = current_line.slice(0, char_index) + cursor_html;
-
-    if (mode === 'finished') {
-      typewriter_el.innerHTML = current_line + cursor_html;
-      return;
-    }
 
     const delay = mode === 'typing' ? 32 + Math.random() * 30
       : mode === 'erasing' ? 14
