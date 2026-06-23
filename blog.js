@@ -20,7 +20,7 @@ async function refresh_reaction_count(slug) {
     const data = await response.json();
     if (slug !== current_slug) return;
     count_el.textContent = data.count;
-    button.classList.toggle('reacted', data.reacted);
+    button.classList.toggle('reacted', Boolean(data.reacted));
   } catch {
     if (slug === current_slug) count_el.textContent = '—';
   }
@@ -212,7 +212,7 @@ function init_reaction_widget() {
       const response = await fetch(`/api/reactions/${current_slug}`, { method: 'POST' });
       const data = await response.json();
       document.querySelector('[data-react-count]').textContent = data.count;
-      button.classList.toggle('reacted', data.reacted);
+      button.classList.toggle('reacted', Boolean(data.reacted));
     } finally {
       button.disabled = false;
     }
