@@ -13,18 +13,6 @@
 
 <body>
 
-  <div class="h-card" hidden>
-    <a href="https://cheztervargas.xyz/" class="p-name u-url" rel="me">Chezter Vargas</a>
-    <a href="https://github.com/LeCaseus" class="u-url" rel="me">github</a>
-    <a href="https://www.linkedin.com/in/cheztervargas/" class="u-url" rel="me">linkedin</a>
-    <a href="https://www.instagram.com/cheeshire_/" target="_blank" rel="me">instagram</a>
-    <a href="mailto:cheztervargas353@gmail.com" class="u-email" rel="me">email</a>
-    <p class="p-note">Biomedical Engineer, hobbyist C/C++ programmer.</p>
-    <a href="https://xn--sr8hvo.ws/previous">←</a>
-    An <a href="https://xn--sr8hvo.ws">IndieWeb Webring</a> 🕸💍
-    <a href="https://xn--sr8hvo.ws/next">→</a>
-  </div>
-
   <header class="status" role="banner">
     <div class="left">
       <span class="dot" aria-hidden="true"></span>ELECTRODES CONNECTED · <span class="build-tag">v4.0 · still
@@ -224,18 +212,29 @@
 
     <section class="contact reveal" id="contact" data-screen-label="06 Contact">
       <div class="channel"><span class="line"></span><span>CH-06</span><b>CONTACT</b></div>
-      <div class="term" role="region" aria-label="Contact terminal">
+      <div class="term h-card" role="region" aria-label="Contact terminal">
+        <a href="https://cheztervargas.xyz/" class="p-name u-url" hidden>Chezter Vargas</a>
+        <p class="p-note" hidden>Biomedical Engineer, hobbyist C/C++ programmer.</p>
+        <img class="u-photo" src="/assets/face.jpg" alt="" hidden />
         <span class="ln"><span class="prompt">$</span> whoami</span>
         <span class="ln out">chezter — biomedical engineer, hobbyist programmer</span>
         <span class="ln"><span class="prompt">$</span> want_to_talk()</span>
-        <span class="ln out">→ <a href="mailto:cheztervargas353@gmail.com">email me here!</a></span>
+        <span class="ln out">→ <a href="mailto:cheztervargas353@gmail.com" class="u-email" rel="me">email me
+            here!</a></span>
         <span class="ln"><span class="prompt">$</span> ls ./elsewhere</span>
         <span class="ln out">
-          <a href="https://github.com/LeCaseus" target="_blank" rel="noopener">github</a> ·
-          <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener">linkedin</a> ·
+          <a href="https://github.com/LeCaseus" target="_blank" rel="noopener me" class="u-url">github</a> ·
+          <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener me"
+            class="u-url">linkedin</a> ·
           <a href="/blog.html">blog</a> ·
           <a href="/assets/CVargas_CV.pdf" target="_blank" rel="noopener">cv.pdf</a> ·
-          <a href="https://www.instagram.com/cheeshire_/" target="_blank" rel="noopener">instagram</a>
+          <a href="https://www.instagram.com/cheeshire_/" target="_blank" rel="noopener me" class="u-url">instagram</a>
+        </span>
+        <span class="ln"><span class="prompt">$</span> ring --webring</span>
+        <span class="ln out">
+          <a href="https://xn--sr8hvo.ws/previous">←</a>
+          <a href="https://xn--sr8hvo.ws">indieweb webring</a> 🕸💍
+          <a href="https://xn--sr8hvo.ws/next">→</a>
         </span>
         <span class="ln"><span class="prompt">$</span> <span class="blink"></span></span>
       </div>

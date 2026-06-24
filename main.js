@@ -190,7 +190,7 @@ async function load_readings() {
     const sorted_posts = posts.sort((a, b) => new Date(b.date) - new Date(a.date));
     const recent_posts = sorted_posts.slice(0,5);
     strip_el.innerHTML = recent_posts.map(post => `
-      <a class="read" href="blog.html#/${post.slug}">
+      <a class="read" href="/blog/${post.slug}">
         <span class="date">${post.date}</span>
         <span class="tag">${post.tags}</span>
         <span class="ttl">${post.title}</span>
