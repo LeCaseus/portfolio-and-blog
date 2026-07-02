@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chezter Vargas — Offline</title>
   <meta name="description"
-    content="Site is currently offline. Chezter Vargas — Biomedical Engineer, Hobbyist C/C++, PC Gamer." />
+    content="Site is currently offline. Chezter Vargas — Biomedical Engineer, Hobbyist C/C++, Tech Enthusiast." />
   <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fira+Code:wght@400;500&display=swap');
@@ -26,6 +26,7 @@
       --mono: "Fira Code", ui-monospace, "JetBrains Mono", Menlo, monospace;
       --pad: clamp(20px, 4vw, 64px);
       --maxw: 1240px;
+      --col_gap: clamp(16px, 2.5vw, 40px);
     }
 
     [data-theme="dark"] {
@@ -138,6 +139,53 @@
       color: var(--paper);
     }
 
+    .rail {
+      position: fixed;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      z-index: 30;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--mute_2);
+    }
+
+    .rail a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: inherit;
+      text-decoration: none;
+      padding: 4px 2px;
+      transition: color .2s;
+    }
+
+    .rail a i {
+      display: inline-block;
+      width: 18px;
+      height: 1px;
+      background: currentColor;
+      opacity: .55;
+      transition: width .25s, background .25s;
+    }
+
+    .rail a:hover,
+    .rail a.on {
+      color: var(--ink);
+    }
+
+    .rail a:hover i,
+    .rail a.on i {
+      width: 30px;
+      background: var(--signal);
+      opacity: 1;
+    }
+
     main {
       max-width: var(--maxw);
       margin: 0 auto;
@@ -209,6 +257,7 @@
       color: var(--mute_2);
       text-transform: uppercase;
       margin-bottom: 14px;
+      font-style: normal;
     }
 
     .hero h1 .alive {
@@ -223,7 +272,7 @@
       margin-top: 36px;
       display: grid;
       grid-template-columns: 1.4fr 1fr;
-      gap: clamp(16px, 2.5vw, 40px);
+      gap: var(--col_gap);
       align-items: end;
     }
 
@@ -367,18 +416,11 @@
       color: var(--mute_2);
     }
 
-    .now .cell .bar {
-      margin-top: 14px;
-      height: 4px;
-      border-radius: 2px;
-      background: var(--rule);
-    }
-
     .about .grid {
       margin-top: 28px;
       display: grid;
       grid-template-columns: 1fr 2.1fr;
-      gap: clamp(16px, 2.5vw, 40px);
+      gap: var(--col_gap);
     }
 
     .about .marginalia {
@@ -453,6 +495,326 @@
       color: var(--signal);
     }
 
+    .readings .head,
+    .notes .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin: 24px 0 18px;
+    }
+
+    .readings .head h2,
+    .notes .head h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+
+    .readings .head h2 em,
+    .notes .head h2 em {
+      font-style: italic;
+      color: var(--signal);
+    }
+
+    .readings .head a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--mute);
+      text-decoration: none;
+      padding: 6px 10px;
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      transition: color .2s, border-color .2s;
+    }
+
+    .readings .head a:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .notes .head .note {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--mute);
+    }
+
+    .strip {
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+      padding: 4px 0;
+    }
+
+    .offline-note {
+      margin: 16px 4px;
+      padding: 18px 20px;
+      border: 1px dashed var(--warn);
+      border-radius: 3px;
+      background: var(--paper_2);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .04em;
+      color: var(--mute);
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .offline-note .tag {
+      color: var(--warn);
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      border: 1px solid var(--warn);
+      padding: 2px 6px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .projects .head {
+      margin: 24px 0 28px;
+    }
+
+    .projects .head h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+
+    .projects .head .note {
+      margin-top: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--mute);
+    }
+
+    .slides {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .slide {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      background: var(--paper_2);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .slide .frosted {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: repeating-linear-gradient(45deg, var(--paper) 0 4px, var(--paper_2) 4px 6px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .slide .card-head {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      right: 14px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .slide .label {
+      flex: 1;
+      min-width: 0;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--mute);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .slide .label b {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .slide .body {
+      position: relative;
+      padding-top: 60px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .slide .specimen {
+      flex: 1;
+      margin: 12px 0;
+      border-radius: 50%;
+      position: relative;
+      border: 1px dashed var(--rule);
+    }
+
+    .slide .specimen[data-s="wip"] {
+      background:
+        repeating-linear-gradient(45deg, var(--warn) 0 1px, transparent 1px 12px),
+        radial-gradient(circle at 50% 50%, var(--paper) 0%, var(--paper_2) 80%);
+      border-color: var(--warn);
+      opacity: .85;
+    }
+
+    .slide .specimen[data-s="active"] {
+      background:
+        radial-gradient(circle at 50% 50%, var(--signal) 0%, var(--signal_soft) 60%, transparent 80%),
+        var(--paper_2);
+      border-color: var(--signal);
+    }
+
+    .slide .specimen[data-s="wip"]::after,
+    .slide .specimen[data-s="active"]::after {
+      content: "";
+      position: absolute;
+      inset: auto;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: inline-block;
+      z-index: 2;
+      white-space: nowrap;
+      font-size: 9.5px;
+      letter-spacing: .18em;
+      padding: 4px 8px;
+      border-radius: 2px;
+    }
+
+    .slide .specimen[data-s="wip"]::after {
+      content: "UNDER CONSTRUCTION";
+      color: var(--warn);
+      background: var(--paper_2);
+      border: 1px solid var(--warn);
+    }
+
+    .slide .specimen[data-s="active"]::after {
+      content: "ACTIVE • v1.0";
+      color: var(--paper);
+      background: var(--signal);
+    }
+
+    .slide .status-pill {
+      flex-shrink: 0;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: 2px;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      color: var(--mute);
+    }
+
+    .slide .status-pill[data-s="wip"] {
+      color: var(--warn);
+      border-color: var(--warn);
+    }
+
+    .slide .status-pill[data-s="wip"]::before {
+      content: "⚠ ";
+      color: var(--warn);
+    }
+
+    .slide .status-pill[data-s="active"] {
+      color: var(--signal);
+      border-color: var(--signal);
+    }
+
+    .slide .status-pill[data-s="active"]::before {
+      content: "● ";
+      color: var(--signal);
+    }
+
+    .slide .ttl {
+      font-family: var(--mono);
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-weight: 500;
+    }
+
+    .slide .ttl em {
+      font-style: normal;
+      color: var(--signal);
+    }
+
+    .slide .desc {
+      font-family: var(--mono);
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--mute);
+      margin-top: 6px;
+      letter-spacing: .03em;
+    }
+
+    .log {
+      margin-top: 24px;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      background: var(--paper_2);
+      overflow: hidden;
+    }
+
+    .log .log-bar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 10px 16px;
+      background: var(--paper);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--mute);
+    }
+
+    .log .log-bar .stream {
+      display: flex;
+      gap: 14px;
+    }
+
+    .log .log-bar .stream b {
+      color: var(--mute);
+      font-weight: 500;
+    }
+
+    .log .log-bar .stream .down::before {
+      content: "● ";
+      color: var(--warn);
+    }
+
+    .log .offline-note {
+      margin: 16px;
+    }
+
     .contact .term {
       margin-top: 28px;
       padding: 28px clamp(20px, 3vw, 44px);
@@ -513,7 +875,69 @@
       color: var(--warn);
     }
 
+    .reveal {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+
+      * {
+        animation-duration: 0.001s !important;
+        transition-duration: 0.001s !important;
+      }
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--signal);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
     @media (max-width: 1024px) {
+      .rail {
+        position: static;
+        flex-direction: row;
+        top: auto;
+        left: auto;
+        transform: none;
+        width: 100%;
+        overflow-x: auto;
+        scrollbar-width: thin;
+        gap: 6px;
+        padding: 10px var(--pad) 12px;
+        border-bottom: 1px solid var(--rule);
+        background: var(--paper_2);
+      }
+
+      .rail a {
+        flex-shrink: 0;
+        padding: 6px 12px;
+        border: 1px solid var(--rule);
+        border-radius: 14px;
+        transition: color .15s, border-color .15s, background .15s;
+      }
+
+      .rail a i {
+        display: none;
+      }
+
+      .rail a:hover,
+      .rail a.on {
+        border-color: var(--signal);
+        background: var(--signal_soft);
+      }
+
       .hero .meta {
         grid-template-columns: 1fr;
         align-items: start;
@@ -540,6 +964,10 @@
       .about .grid {
         grid-template-columns: 1fr;
       }
+
+      .slides {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     @media (max-width: 640px) {
@@ -560,14 +988,41 @@
         display: none;
       }
 
+      .channel {
+        top: 16px;
+        font-size: 9px;
+        letter-spacing: .1em;
+        gap: 8px;
+      }
+
+      .channel .line {
+        width: 16px;
+      }
+
       .hero {
         padding-top: 48px;
         padding-bottom: 32px;
       }
 
+      .hero .channel {
+        position: static;
+        margin-bottom: 20px;
+      }
+
       .hero h1 {
         font-size: clamp(72px, 22vw, 96px);
         line-height: .86;
+      }
+
+      .hero h1 .addr {
+        font-size: 9px;
+        letter-spacing: .08em;
+        margin-bottom: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        display: block;
       }
 
       .hero .meta {
@@ -615,6 +1070,25 @@
         padding: 8px 0;
       }
 
+      .readings .head,
+      .notes .head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .slides {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .log .log-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 10px 14px;
+      }
+
       .contact .term {
         padding: 20px 16px;
         font-size: 13px;
@@ -639,13 +1113,23 @@
     </div>
     <div class="center">SIGNAL · LOST · LEAD II · — HZ</div>
     <div class="right">
+      <span>UTC <span data-clock>00:00:00</span></span>
       <button class="theme" id="theme-toggle" type="button" aria-label="Toggle theme">☾ DARK</button>
     </div>
   </header>
 
+  <nav class="rail" aria-label="Channels">
+    <a href="#now"><i></i>CH-01 NOW</a>
+    <a href="#about"><i></i>CH-02 ABOUT</a>
+    <a href="#readings"><i></i>CH-03 READINGS</a>
+    <a href="#projects"><i></i>CH-04 PROJECTS</a>
+    <a href="#notes"><i></i>CH-05 NOTES</a>
+    <a href="#contact"><i></i>CH-06 CONTACT</a>
+  </nav>
+
   <main>
 
-    <section class="hero">
+    <section class="hero" id="top">
       <div class="channel">
         <span class="line"></span>
         <span>CH-00</span>
@@ -659,12 +1143,12 @@
       <div class="meta">
         <div class="role">
           <span>BIOMEDICAL ENGINEER</span><span class="sep">/</span>
-          <span>HOBBYIST C/C++</span><span class="sep">/</span>
-          <span>PC GAMER</span>
+          <span>C/C++ HOBBYIST</span><span class="sep">/</span>
+          <span>TECH ENTHUSIAST</span>
         </div>
         <div class="offline-msg">
           server is down.<br />
-          probably my laptop sleeping.<br />
+          my laptop is probably sleeping.<br />
           links below still work.
         </div>
       </div>
@@ -679,37 +1163,33 @@
       </div>
     </section>
 
-    <section class="now">
+    <section class="now reveal" id="now">
       <div class="channel"><span class="line"></span><span>CH-01</span><b>CURRENT&nbsp;READINGS</b></div>
       <div class="panel">
         <div class="cell">
           <div class="key"><i></i>STATUS</div>
           <div class="v">OFFLINE</div>
           <div class="sub">server unreachable</div>
-          <div class="bar"></div>
         </div>
         <div class="cell">
           <div class="key"><i></i>BUILDING</div>
           <div class="v">HOMELAB</div>
           <div class="sub">self-hosting everything I can</div>
-          <div class="bar"></div>
         </div>
         <div class="cell">
           <div class="key"><i></i>LEARNING</div>
           <div class="v">C / C++</div>
           <div class="sub">slowly, from first principles</div>
-          <div class="bar"></div>
         </div>
         <div class="cell">
-          <div class="key"><i></i>LOCATION</div>
-          <div class="v">EARTH / 2026</div>
+          <div class="key"><i></i>ORIGIN</div>
+          <div class="v">PHL / 2026</div>
           <div class="sub">last sync — unknown</div>
-          <div class="bar"></div>
         </div>
       </div>
     </section>
 
-    <section class="about">
+    <section class="about reveal" id="about">
       <div class="channel"><span class="line"></span><span>CH-02</span><b>ABOUT</b></div>
       <div class="grid">
         <aside class="marginalia" aria-label="Vitals">
@@ -718,17 +1198,17 @@
             <li><span>GRAD</span><b>2025</b></li>
             <li><span>FIELD</span><b>Biomedical Eng.</b></li>
             <li><span>STACK</span><b>C / C++</b></li>
-            <li><span>OFF-HOURS</span><b>PC Gaming</b></li>
+            <li><span>OFF-HOURS</span><b>Jedi Training</b></li>
             <li><span>OPEN</span><b>This site →</b></li>
           </ul>
         </aside>
         <div class="prose">
-          <span class="lead">I tinker with a bunch of hardware and softwares to understand <em>how they
+          <span class="lead">I tinker with a bunch of hardware and software to understand <em>how they
               work</em>.</span>
-          <p>// recently graduated bme by the end of 2025 and doing side quests first.<br />// exploring the world,
+          <p>// i recently graduated bme by the end of 2025 and doing side quests first.<br />// exploring the world,
             figuring out what comes next.</p>
-          <p>// this site is fully self-hosted. If it's offline, then my laptop is sleeping.<br />// occasionally
-            writing at the <a href="blog.html">./blog</a> when something's on my mind.</p>
+          <p>// this site is fully self-hosted. if it's offline, then my laptop is sleeping.<br />// i'm occasionally
+            writing at the <a href="/blog/">./blog</a> when something's on my mind.</p>
           <p>// formal version: <a href="/assets/CVargas_CV.pdf" target="_blank" rel="noopener">CVargas_CV.pdf</a> and
             i'm also on <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank"
               rel="noopener">linkedin</a>.</p>
@@ -736,31 +1216,133 @@
       </div>
     </section>
 
-    <section class="contact">
+    <section class="readings reveal" id="readings">
+      <div class="channel"><span class="line"></span><span>CH-03</span><b>LATEST&nbsp;READINGS</b></div>
+      <div class="head">
+        <h2>Latest <em>readings</em></h2>
+        <a href="/blog.html">all readings →</a>
+      </div>
+      <div class="strip">
+        <div class="offline-note">
+          <span class="tag">ERR</span> database offline — readings index unavailable
+        </div>
+      </div>
+    </section>
+
+    <section class="projects reveal" id="projects">
+      <div class="channel"><span class="line"></span><span>CH-04</span><b>SPECIMENS</b></div>
+      <div class="head">
+        <h2>Projects, on the <em>slide</em></h2>
+        <div class="note">// samples isolated to individual repositories</div>
+      </div>
+      <div class="slides">
+        <article class="slide">
+          <div class="frosted"></div>
+          <div class="body">
+            <div class="card-head">
+              <div class="label"><span>SPEC-001</span><b>eM-BRACE</b></div>
+              <span class="status-pill" data-s="wip">WIP</span>
+            </div>
+            <div class="specimen" data-s="wip" aria-hidden="true"></div>
+            <div>
+              <div class="ttl">e<em>M</em>-Brace</div>
+              <div class="desc">// wearable — capstone biomed device<br />// page under construction</div>
+            </div>
+          </div>
+        </article>
+        <a href="https://github.com/LeCaseus/.dotfiles" target="_blank" rel="noopener"
+          style="text-decoration:none;color:inherit;">
+          <article class="slide">
+            <div class="frosted"></div>
+            <div class="body">
+              <div class="card-head">
+                <div class="label"><span>SPEC-002</span><b>DOTFILES</b></div>
+                <span class="status-pill" data-s="active">ACTIVE</span>
+              </div>
+              <div class="specimen" data-s="active" aria-hidden="true"></div>
+              <div>
+                <div class="ttl">dot<em>files</em></div>
+                <div class="desc">// linux setup — fedora + niri<br />// my .dotfiles repository</div>
+              </div>
+            </div>
+          </article>
+        </a>
+        <article class="slide">
+          <div class="frosted"></div>
+          <div class="body">
+            <div class="card-head">
+              <div class="label"><span>SPEC-003</span><b>CH3SH1RE</b></div>
+              <span class="status-pill" data-s="wip">WIP</span>
+            </div>
+            <div class="specimen" data-s="wip" aria-hidden="true"></div>
+            <div>
+              <div class="ttl">CH3SH<em>1</em>RE</div>
+              <div class="desc">// local ai assistant<br />// page under construction</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="notes reveal" id="notes">
+      <div class="channel"><span class="line"></span><span>CH-05</span><b>NOTES&nbsp;·&nbsp;dmesg</b></div>
+      <div class="head">
+        <h2>Notes <em>// log</em></h2>
+        <div class="note">// short transmissions — newest first</div>
+      </div>
+      <div class="log">
+        <div class="log-bar">
+          <div class="stream"><b>STREAM</b> <span>chezter@notes</span> <span class="down">down</span></div>
+          <div>kernel: v4.3 · entries=<span>—</span></div>
+        </div>
+        <div class="offline-note">
+          <span class="tag">ERR</span> database offline — notes log unavailable
+        </div>
+      </div>
+    </section>
+
+    <section class="contact reveal" id="contact">
       <div class="channel"><span class="line"></span><span>CH-06</span><b>CONTACT</b></div>
-      <div class="term" role="region" aria-label="Contact terminal">
+      <div class="term h-card" role="region" aria-label="Contact terminal">
+        <a href="https://cheztervargas.xyz/" class="p-name u-url" hidden>Chezter Vargas</a>
+        <p class="p-note" hidden>Biomedical Engineer, hobbyist C/C++ programmer.</p>
+        <img class="u-photo" src="/assets/face.jpg" alt="" hidden />
         <span class="ln"><span class="prompt">$</span> whoami</span>
         <span class="ln out">chezter — biomedical engineer, hobbyist programmer</span>
         <span class="ln"><span class="prompt">$</span> want_to_talk()</span>
-        <span class="ln out">→ <a href="mailto:cheztervargas353@gmail.com">email me here!</a></span>
+        <span class="ln out">→ <a href="mailto:cheztervargas353@gmail.com" class="u-email" rel="me">email me
+            here!</a></span>
         <span class="ln"><span class="prompt">$</span> ls ./elsewhere</span>
         <span class="ln out">
-          <a href="https://github.com/LeCaseus" target="_blank" rel="noopener">github</a> ·
-          <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener">linkedin</a> ·
-          <a href="/assets/CVargas_CV.pdf" target="_blank" rel="noopener">cv.pdf</a>
+          <a href="https://github.com/LeCaseus" target="_blank" rel="noopener me" class="u-url">github</a> ·
+          <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener me"
+            class="u-url">linkedin</a> ·
+          <a href="/blog.html">blog</a> ·
+          <a href="/assets/CVargas_CV.pdf" target="_blank" rel="noopener">cv.pdf</a> ·
+          <a href="https://www.instagram.com/cheeshire_/" target="_blank" rel="noopener me" class="u-url">instagram</a>
         </span>
+        <span class="ln"><span class="prompt">$</span> ring --webring</span>
+        <span class="ln out">
+          <a href="https://xn--sr8hvo.ws/previous">←</a>
+          <a href="https://xn--sr8hvo.ws">indieweb webring</a> 🕸💍
+          <a href="https://xn--sr8hvo.ws/next">→</a>
+        </span>
+        <span class="ln"><span class="prompt">$</span> <span class="blink"></span></span>
       </div>
     </section>
 
   </main>
 
   <footer>
-    <div>SYS:OFFLINE · hardcoded by me</div>
+    <div>SYS:OFFLINE · fully selfhosted by me</div>
     <div class="c">// server is sleeping. check back soon.</div>
-    <div>cheztervargas.xyz</div>
+    <div>UTC <span data-clock>00:00:00</span></div>
   </footer>
 
   <script>
+    // Self-contained — no /shared.js, /main.js, or /styles.css imports.
+    // If this page is being served, the origin those live on may be unreachable.
+
     const root = document.documentElement;
     const theme_button = document.getElementById('theme-toggle');
     const stored_theme = localStorage.getItem('cv.theme');
@@ -774,6 +1356,39 @@
       localStorage.setItem('cv.theme', next_theme);
       theme_button.textContent = next_theme === 'dark' ? '☼ LIGHT' : '☾ DARK';
     });
+    const pad = number => String(number).padStart(2, '0');
+    const tick_clock = () => {
+      const now = new Date();
+      const formatted = `${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())}`;
+      document.querySelectorAll('[data-clock]').forEach(el => el.textContent = formatted);
+    };
+    tick_clock();
+    setInterval(tick_clock, 1000);
+
+    const reveal_observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          reveal_observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.12});
+    document.querySelectorAll('.reveal').forEach(el => reveal_observer.observe(el));
+
+    const rail_links = document.querySelectorAll('.rail a');
+    const rail_sections = [...document.querySelectorAll('section[id]')];
+    if (rail_sections.length) {
+      const update_active_link = () => {
+        const scroll_y = window.scrollY + window.innerHeight * 0.35;
+        let active_id = rail_sections[0].id;
+        for (const section of rail_sections) {
+          if (section.offsetTop <= scroll_y) active_id = section.id;
+        }
+        rail_links.forEach(link => link.classList.toggle('on', link.getAttribute('href') === '#' + active_id));
+      };
+      window.addEventListener('scroll', update_active_link, {passive: true});
+      update_active_link();
+    }
   </script>
 
 </body>

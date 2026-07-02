@@ -28,6 +28,7 @@ async function refresh_reaction_count(slug) {
 
 const posts = (await load_posts()).sort((a, b) => new Date(b.date) - new Date(a.date));
 const post_by_slug = Object.fromEntries(posts.map(post => [post.slug, post]));
+const display_order = [...posts].sort((a, b) => Number(Boolean(b.pinned)) - Number(Boolean(a.pinned)));
 
 const list_el = document.querySelector('[data-list]');
 const visible_count_el = document.querySelector('[data-visible-count]');
@@ -39,7 +40,7 @@ let current_slug = null;
 
 function render_list() {
   const query = current_search.trim().toLowerCase();
-  const filtered_posts = posts.filter(post => {
+  const filtered_posts = display_order.filter(post => {
     if (current_filter !== 'all' && !post.tags.includes(current_filter)) return false;
     if (query && !(post.title.toLowerCase().includes(query) || post.summary.toLowerCase().includes(query))) return false;
     return true;
@@ -47,7 +48,7 @@ function render_list() {
 
   list_el.innerHTML = filtered_posts.map(post => `
     <li>
-      <a class="entry ${post.slug === current_slug ? 'active' : ''}" href="/blog/${post.slug}" data-slug="${post.slug}">
+      <a class="entry ${post.slug === current_slug ? 'active' : ''}" href="/blog/${post.slug}" data-slug="${post.slug}" data-pinned="${Boolean(post.pinned)}">
         <div>
           <div class="meta-row"><span>${post.date}</span>${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
           <div class="ttl">${post.title}</div>

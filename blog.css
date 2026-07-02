@@ -154,6 +154,18 @@
 
 .idx-list li { border-top: 1px solid var(--rule); }
 .idx-list li:last-child { border-bottom: 1px solid var(--rule); }
+.idx-list li:has(.entry[data-pinned="true"]) + li:has(.entry[data-pinned="false"])::before {
+  content: "UNPINNED";
+  display: block;
+  margin: 14px 6px 8px;
+  padding-bottom: 6px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--mute_2);
+  border-bottom: 1px dashed var(--rule);
+}
 
 .idx-list .entry {
   display: grid;
