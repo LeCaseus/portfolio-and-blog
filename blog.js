@@ -66,8 +66,8 @@ function render_post(slug) {
   current_slug = post.slug;
 
   const post_index = posts.indexOf(post);
-  const previous_post = post_index > 0 ? posts[post_index - 1] : null;
-  const next_post = post_index < posts.length - 1 ? posts[post_index + 1] : null;
+  const next_post = post_index > 0 ? posts[post_index - 1] : null;
+  const previous_post = post_index < posts.length - 1 ? posts[post_index + 1] : null;
 
   reader_body_el.innerHTML = `
     <header class="header">
