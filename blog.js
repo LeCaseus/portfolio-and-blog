@@ -34,6 +34,18 @@ const list_el = document.querySelector('[data-list]');
 const visible_count_el = document.querySelector('[data-visible-count]');
 const reader_body_el = document.querySelector('[data-reader-body]');
 
+const wikilink_pattern = /\[\[([^\]|]+)(\|([^\]]+))?\]\]/g;
+
+marked.use({
+  hooks: {
+    preprocess(markdown_text) {
+      return markdown_text.replace(wikilink_pattern, (_, slug, __, display_text) =>
+        `[${display_text || slug}](/blog/${slug})`
+      );
+    }
+  }
+});
+
 let current_filter = 'all';
 let current_search = '';
 let current_slug = null;
