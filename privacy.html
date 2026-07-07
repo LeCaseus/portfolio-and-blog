@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Chezter Vargas</title>
+  <meta name="description" content="What this site collects, why, for how long, and what rights you have over it." />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
+  <style>
+    .policy-section {
+      padding-top: 24px;
+    }
+
+    .policy-section h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-style: italic;
+      font-size: clamp(24px, 2.2vw, 32px);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin: 0 0 0.6em;
+      color: var(--ink);
+    }
+
+    .policy-section h2::before {
+      content: "§ ";
+      color: var(--signal);
+      font-style: normal;
+    }
+
+    .policy-prose {
+      font-family: var(--mono);
+      font-size: clamp(13px, 1.2vw, 15px);
+      line-height: 1.7;
+      max-width: 74ch;
+      color: var(--ink);
+    }
+
+    .policy-prose p {
+      margin: 0 0 0.9em;
+    }
+
+    .policy-prose ul {
+      margin: 0 0 0.9em;
+      padding-left: 22px;
+    }
+
+    .policy-prose li {
+      margin-bottom: 0.5em;
+    }
+
+    .policy-prose code {
+      font-family: var(--mono);
+      font-size: 0.92em;
+      color: var(--signal);
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      padding: 1px 6px;
+    }
+
+    .flag-box {
+      margin: 1em 0 1.4em;
+      padding: 12px 16px;
+      border: 1px dashed var(--warn);
+      border-radius: 3px;
+      background: var(--paper_2);
+      font-size: 0.92em;
+      color: var(--warn);
+    }
+
+    .flag-box b {
+      color: var(--warn);
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="status" role="banner">
+    <div class="left">
+      <span class="dot" aria-hidden="true"></span>ELECTRODES CONNECTED
+    </div>
+    <div class="center">CH-07 · PRIVACY POLICY</div>
+    <div class="right">
+      <span>UTC <span data-clock>00:00:00</span></span>
+      <button class="theme" data-theme-toggle type="button" aria-label="Toggle theme">☾ DARK</button>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero" id="top" style="padding-top: clamp(40px, 6vh, 80px); padding-bottom: 24px;">
+      <div class="channel">
+        <span class="line"></span>
+        <span>CH-07</span>
+        <b>PRIVACY&nbsp;POLICY</b>
+      </div>
+      <h1 style="font-size: clamp(40px, 7vw, 88px);">
+        <span class="addr">0x0007 · effective 2026-07-07 · v1.0</span>
+        privacy<br />
+        <span class="alive">policy_</span>
+      </h1>
+    </section>
+
+    <section class="policy-section">
+      <h2>who this is</h2>
+      <div class="policy-prose">
+        <p>The data controller for this website is Chezter Pescadero Vargas, operating
+          <code>cheztervargas.xyz</code> as an individual, non-commercial personal website. There is no
+          company, no employees, and no data processing done on anyone's behalf but my own.
+        </p>
+        <p>Contact for anything in this policy: <a
+            href="mailto:cheztervargas353@gmail.com">cheztervargas353@gmail.com</a></p>
+      </div>
+    </section>
+
+    <section class="policy-section">
+      <h2>scope</h2>
+      <div class="policy-prose">
+        <p>This policy applies to <code>cheztervargas.xyz</code> and its subpaths, including the blog at
+          <code>/blog.html</code>. It doesn't apply to third-party sites this site links to (e.g. GitHub,
+          LinkedIn, Instagram) — those have their own privacy policies.
+        </p>
+        <p>This site does not target children, does not knowingly collect data from anyone under 16, and has
+          no age-gating because it isn't designed for or marketed to minors.</p>
+      </div>
+    </section>
+
+    <section class="policy-section">
+      <h2>what's collected, why, and on what legal basis</h2>
+      <div class="policy-prose">
+        <p>Under GDPR, every category of personal data processed needs a stated legal basis. Here's each one
+          this site actually touches:</p>
+        <ul>
+          <li><b>Analytics (self-hosted Umami):</b> page URL, referrer, browser/device type, and an
+            approximate country derived from your IP address at request time. No cookies, no persistent
+            visitor ID, no cross-site tracking. <b>Legal basis:</b> legitimate interest (Art. 6(1)(f)) —
+            understanding basic traffic to a personal site, weighed against your privacy since no
+            individual-level profile is built or retained.</li>
+          <li><b>Reactions (♥ button on posts):</b> your IP address is received and immediately hashed
+            (SHA-256) before storage; only the hash is kept, tied to the post slug, to prevent duplicate
+            reactions. <b>Legal basis:</b> legitimate interest (Art. 6(1)(f)) — abuse prevention on a public
+            feature, using the least identifying method available (a one-way hash).</li>
+          <li><b>Theme preference:</b> stored only in your browser's <code>localStorage</code>. Never
+            transmitted to this site's server. <b>Legal basis:</b> not applicable — this isn't processing by
+            me as controller, since the data never reaches me.</li>
+          <li><b>Infrastructure/security logs (Cloudflare, CrowdSec):</b> IP address and standard request
+            metadata (user agent, timestamps, request paths), logged transiently for routing, DDoS
+            mitigation, and abuse/intrusion detection. <b>Legal basis:</b> legitimate interest (Art. 6(1)(f))
+            — securing the service, a recognized legitimate interest under Recital 49.</li>
+        </ul>
+        <p>None of the above is used for advertising, profiling, or automated decision-making with legal or
+          similarly significant effects on you.</p>
+      </div>
+    </section>
+
+    <section class="policy-section">
+      <h2>how long data is kept</h2>
+      <div class="policy-prose">
+        <ul>
+          <li><b>Analytics data:</b> retained indefinitely on my own server. There is no automatic expiry —
+            data is only removed if I manually delete it from the Umami database.</li>
+          <li><b>Reaction hashes:</b> retained indefinitely, tied to the post slug, until you request
+            deletion or I manually clear the <code>reaction_log</code> table.</li>
+          <li><b>Infrastructure/security logs:</b> retention is set by Cloudflare and CrowdSec's own
+            configurations, not by me directly. See their respective policies for specifics.</li>
+        </ul>
+        <p>Indefinite retention is a deliberate choice, not an oversight — post statistics are only useful to
+          me if they're continuous rather than reset on a schedule. This is disclosed here so it's explicit
+          rather than left as "as long as necessary."</p>
+      </div>
+    </section>
+
+    <section class="policy-section">
+      <h2>who else sees data, and where it goes</h2>
+      <div class="policy-prose">
+        <p>No data is sold, rented, or shared for marketing purposes, with anyone, ever.</p>
+        <p>The following third parties process data on this site's behalf purely as infrastructure — not as
+          recipients who use your data for their own purposes:</p>
+        <ul>
+          <li><b>Cloudflare</b> — CDN, DNS, tunnel, and reverse proxy in front of the origin server.
+            Cloudflare is a global network, meaning your request may be routed through servers outside your
+            country, including outside the EU/EEA. See
+            <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare's privacy
+              policy</a>
+            for their safeguards on international transfers.
+          </li>
+          <li><b>CrowdSec</b> — self-hosted intrusion/abuse prevention running alongside the origin server,
+            used to identify and block malicious traffic patterns.</li>
+        </ul>
+        <p>Analytics (Umami) and the reactions database run entirely on hardware I own — that data does not
+          leave my own infrastructure.</p>
+      </div>
+    </section>
+
+    <section class="policy-section">
+      <h2>your rights</h2>
+      <div class="policy-prose">
+        <p>If GDPR applies to you (generally, if you're in the EU/EEA/UK), you have the right to:</p>
+        <ul>
+          <li><b>Access</b> — ask what data, if any, is held about you.</li>
+          <li><b>Rectification</b> — ask for inaccurate data to be corrected.</li>
+          <li><b>Erasure</b> — ask for your data (e.g. a reaction hash) to be deleted.</li>
+          <li><b>Restriction</b> — ask for processing of your data to be limited.</li>
+          <li><b>Objection</b> — object to processing based on legitimate interest.</li>
+          <li><b>Portability</b> — request a copy of data you've provided, in a portable format (limited
+            applicability here, since almost nothing identifiable is stored).</li>
+          <li><b>Lodge a complaint</b> — with your national data protection supervisory authority, if you
+            believe your data has been mishandled. (In the EU, find yours via the
+            <a href="https://edpb.europa.eu/about-edpb/about-edpb/members_en" target="_blank" rel="noopener">EDPB member
+              list</a>.)
+          </li>
+        </ul>
+        <p>To exercise any of these, email <a href="mailto:cheztervargas353@gmail.com">cheztervargas353@gmail.com</a>.
+          Because almost nothing on this site identifies you directly, most requests will amount to
+          confirming no identifiable record exists, or deleting a reaction hash tied to your IP.</p>
+      </div>
+    </section>
+
+    <section class="policy-section">
+      <h2>cookies</h2>
+      <div class="policy-prose">
+        <p>This site does not set any cookies. The only client-side storage is <code>localStorage</code> for
+          your theme preference, which is not a cookie, isn't sent to any server, and isn't used for
+          tracking.</p>
+      </div>
+    </section>
+
+    <section class="policy-section">
+      <h2>changes to this policy</h2>
+      <div class="policy-prose">
+        <p>If what this site collects or how it's processed changes, this page will be updated and the
+          "effective" date at the top will change accordingly. Material changes affecting your rights will
+          be reflected here before they take effect — there's no separate mailing list to notify, since this
+          site doesn't collect emails.</p>
+      </div>
+    </section>
+
+    <section class="contact policy-section" style="padding-bottom: 60px;">
+      <div class="channel"><span class="line"></span><span>CH-06</span><b>CONTACT&nbsp;/&nbsp;REQUESTS</b></div>
+      <div class="term" role="region" aria-label="Contact terminal">
+        <span class="ln"><span class="prompt">$</span> exercise_rights()</span>
+        <span class="ln out">→ email me and I'll act on access/erasure/objection requests</span>
+        <span class="ln"><span class="prompt">$</span> contact --privacy</span>
+        <span class="ln out">→ <a href="mailto:cheztervargas353@gmail.com">cheztervargas353@gmail.com</a></span>
+        <span class="ln"><span class="prompt">$</span> <span class="blink"></span></span>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>SYS:OK · fully selfhosted by me</div>
+    <div class="c">// back to <a href="/index.html">the site</a> or the <a href="/blog.html">readings log</a>.</div>
+    <div>UTC <span data-clock>00:00:00</span></div>
+  </footer>
+
+  <script type="module">
+    import {init_theme_toggle, start_clock} from '/shared.js';
+    init_theme_toggle();
+    start_clock();
+  </script>
+
+</body>
+
+</html>
