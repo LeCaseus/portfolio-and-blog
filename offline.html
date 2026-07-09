@@ -8,6 +8,7 @@
   <meta name="description"
     content="Site is currently offline. Chezter Vargas — Biomedical Engineer, Hobbyist C/C++, Tech Enthusiast." />
   <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" type="text/css" href="https://file.garden/ZrZSgsrYfQXsO7QH/ww/webmasterwebring.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fira+Code:wght@400;500&display=swap');
 
@@ -719,7 +720,8 @@
       background: var(--signal);
     }
 
-    .slide .status-pill {
+    .slide .status-pill,
+    .ring-head .status-pill {
       flex-shrink: 0;
       font-family: var(--mono);
       font-size: 9.5px;
@@ -730,6 +732,36 @@
       background: var(--paper);
       border: 1px solid var(--rule);
       color: var(--mute);
+    }
+
+    .status-pill[data-s="link"] {
+      color: var(--mute);
+      border-color: var(--rule);
+    }
+
+    .status-pill[data-s="link"]::before {
+      content: "→ ";
+      color: var(--mute_2);
+    }
+
+    .status-pill[data-s="badge"] {
+      color: var(--mute);
+      border-color: var(--rule);
+    }
+
+    .status-pill[data-s="badge"]::before {
+      content: "▣ ";
+      color: var(--mute_2);
+    }
+
+    .status-pill[data-s="script"] {
+      color: var(--mute);
+      border-color: var(--rule);
+    }
+
+    .status-pill[data-s="script"]::before {
+      content: "▤ ";
+      color: var(--mute_2);
     }
 
     .slide .status-pill[data-s="wip"] {
@@ -854,6 +886,163 @@
     .contact .term a:hover {
       background: var(--signal);
       color: var(--paper);
+    }
+
+    .webrings .head {
+      margin: 24px 0 18px;
+    }
+
+    .webrings .head h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+
+    .webrings .head h2 em {
+      font-style: italic;
+      color: var(--signal);
+    }
+
+    .webrings .head .note {
+      margin-top: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--mute);
+    }
+
+    .ringcase {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .ring-card {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      background: var(--paper_2);
+      overflow: hidden;
+      transition: transform .3s ease, border-color .3s;
+    }
+
+    .ring-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--signal);
+    }
+
+    .ring-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 14px;
+      background: repeating-linear-gradient(45deg, var(--paper) 0 4px, var(--paper_2) 4px 6px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .ring-head .label {
+      min-width: 0;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--mute);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .ring-head .label b {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .ring-body {
+      flex: 1;
+      padding: 20px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 84px;
+    }
+
+    .ring-embed {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      width: 100%;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .ring-embed--button a {
+      display: inline-flex;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .ring-embed--button img {
+      display: block;
+    }
+
+    .ring-embed--script {
+      min-height: 40px;
+    }
+
+    .ring-embed--text {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ring-embed--text .ring-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ring-embed--text .ring-nav-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ring-main {
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: .02em;
+      color: var(--ink);
+      text-decoration: none;
+      padding-bottom: 1px;
+      border-bottom: 1px solid var(--signal);
+      transition: color .2s;
+    }
+
+    .ring-main:hover {
+      color: var(--signal);
+    }
+
+    .ring-dot {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--signal);
+      box-shadow: 0 0 6px var(--signal_soft);
+      flex-shrink: 0;
+    }
+
+    a.log-nav {
+      display: inline-block;
+      text-decoration: none;
     }
 
     footer {
@@ -1125,6 +1314,7 @@
     <a href="#projects"><i></i>CH-04 PROJECTS</a>
     <a href="#notes"><i></i>CH-05 NOTES</a>
     <a href="#contact"><i></i>CH-06 CONTACT</a>
+    <a href="#webrings"><i></i>CH-07 RINGS</a>
   </nav>
 
   <main>
@@ -1321,13 +1511,160 @@
           <a href="/assets/CVargas_CV.pdf" target="_blank" rel="noopener">cv.pdf</a> ·
           <a href="https://www.instagram.com/cheeshire_/" target="_blank" rel="noopener me" class="u-url">instagram</a>
         </span>
-        <span class="ln"><span class="prompt">$</span> ring --webring</span>
-        <span class="ln out">
-          <a href="https://xn--sr8hvo.ws/previous">←</a>
-          <a href="https://xn--sr8hvo.ws">indieweb webring</a> 🕸💍
-          <a href="https://xn--sr8hvo.ws/next">→</a>
-        </span>
         <span class="ln"><span class="prompt">$</span> <span class="blink"></span></span>
+      </div>
+    </section>
+
+    <section class="webrings reveal" id="webrings">
+      <div class="channel"><span class="line"></span><span>CH-07</span><b>WEBRINGS</b></div>
+      <div class="head">
+        <h2>Web<em>rings</em></h2>
+        <div class="note">// small corners of the internet, linked together</div>
+      </div>
+      <div class="ringcase">
+
+        <article class="ring-card">
+          <div class="ring-head">
+            <div class="label"><span>RING-001</span><b>INDIEWEB</b></div>
+            <span class="status-pill" data-s="link">LINK</span>
+          </div>
+          <div class="ring-body">
+            <div class="ring-embed ring-embed--text">
+              <div class="ring-title-row">
+                <a class="ring-main" href="https://xn--sr8hvo.ws">indieweb webring 🕸💍</a>
+              </div>
+              <div class="ring-nav-row">
+                <a class="log-nav" href="https://xn--sr8hvo.ws/previous" aria-label="Previous site in ring">← prev</a>
+                <span class="ring-dot" aria-hidden="true"></span>
+                <a class="log-nav" href="https://xn--sr8hvo.ws/next" aria-label="Next site in ring">next →</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ring-card">
+          <div class="ring-head">
+            <div class="label"><span>RING-002</span><b>LITERRING</b></div>
+            <span class="status-pill" data-s="badge">BADGE</span>
+          </div>
+          <div class="ring-body">
+            <div class="ring-embed ring-embed--button">
+              <a href="https://literring.neocities.org/?action=previous" target="_top" rel="noopener">←</a>
+              <a href="https://literring.neocities.org/" target="_top" rel="noopener">
+                <img src="https://literring.neocities.org/images/literring/lt2-blue.png" alt="Literring button"
+                  width="140" loading="lazy" />
+              </a>
+              <a href="https://literring.neocities.org/?action=next" target="_top" rel="noopener">→</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="ring-card">
+          <div class="ring-head">
+            <div class="label"><span>RING-003</span><b>*NIXRING</b></div>
+            <span class="status-pill" data-s="script">SCRIPT</span>
+          </div>
+          <div class="ring-body">
+            <div class="ring-embed ring-embed--script">
+              <script defer src="https://softmachine.dev/webring/linuxring/ring.js" data-icon="fedora"></script>
+            </div>
+          </div>
+        </article>
+
+        <article class="ring-card">
+          <div class="ring-head">
+            <div class="label"><span>RING-004</span><b>STAR WARS</b></div>
+            <span class="status-pill" data-s="link">LINK</span>
+          </div>
+          <div class="ring-body">
+            <div class="ring-embed ring-embed--text">
+              <div class="ring-title-row">
+                <a class="ring-main" href="https://zacharykai.net/lists/starwars">star wars webring 🌌🔫</a>
+              </div>
+              <div class="ring-nav-row">
+                <a class="log-nav" href="https://zacharykai.net/lists/starwars?action=prev">prev</a>
+                <span class="ring-dot" aria-hidden="true"></span>
+                <a class="log-nav" href="https://zacharykai.net/lists/starwars?action=random">random</a>
+                <span class="ring-dot" aria-hidden="true"></span>
+                <a class="log-nav" href="https://zacharykai.net/lists/starwars?action=next">next</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ring-card">
+          <div class="ring-head">
+            <div class="label"><span>RING-005</span><b>HOTLINE</b></div>
+            <span class="status-pill" data-s="link">LINK</span>
+          </div>
+          <div class="ring-body">
+            <div class="ring-embed ring-embed--text">
+              <div class="ring-title-row">
+                call a <a class="ring-main" href="https://hotlinewebring.club/">hotline</a> ☎️
+              </div>
+              <div class="ring-nav-row">
+                <a class="log-nav" href="https://hotlinewebring.club/chezterv/prev" aria-label="Previous hotline">←
+                  prev</a>
+                <span class="ring-dot" aria-hidden="true"></span>
+                <a class="log-nav" href="https://hotlinewebring.club/chezterv/next" aria-label="Next hotline">next →</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ring-card">
+          <div class="ring-head">
+            <div class="label"><span>RING-006</span><b>WEBMASTER</b></div>
+            <span class="status-pill" data-s="badge">BADGE</span>
+          </div>
+          <div class="ring-body">
+            <div class="ring-embed ring-embed--button">
+              <div id="webmasteringbtn"><a href="https://webmasterwebring.netlify.app?YOURSLUG-previous">&lt;</a><a
+                  href="https://webmasterwebring.netlify.app"><img src="https://file.garden/ZrZSgsrYfQXsO7QH/ww/btn.png"
+                    width="88" height="31"></a><a href="https://webmasterwebring.netlify.app?YOURSLUG-random"
+                  style="font-size: 1.5rem;">?</a> <a href="https://webmasterwebring.netlify.app?YOURSLUG-next">&gt;</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ring-card">
+          <div class="ring-head">
+            <div class="label"><span>RING-007</span><b>NO AI</b></div>
+            <span class="status-pill" data-s="badge">BADGE</span>
+          </div>
+          <div class="ring-body">
+            <div class="ring-embed ring-embed--button">
+              <map name="noairing">
+                <area href="https://baccyflap.com/noai" target="_blank" shape="rect" coords="15,15,124,66"
+                  alt="no ai webring" title="no ai webring">
+                <area href="https://baccyflap.com/noai/?prv&s=cvv" target="_top" shape="rect" coords="15,79,34,100"
+                  alt="previous" title="previous">
+                <area href="https://baccyflap.com/noai/?rnd" target="_top" shape="rect" coords="44,71,95,108"
+                  alt="random" title="random">
+                <area href="https://baccyflap.com/noai/?nxt&s=cvv" target="_top" shape="rect" coords="105,79,125,100"
+                  alt="next" title="next">
+              </map>
+              <img usemap="#noairing" src="https://baccyflap.com/noai/widget.gif" style="width:250px;height:124px"
+                alt="an image of a little blue toy robot in a red-tinted circle made of art from all over the world. there's a red line, also made of art, running through the robot. next to it are the words NO AI WEBRING / HUMAN MADE 100% GUARANTEED and then two arrows, one pointing left, one right">
+            </div>
+          </div>
+        </article>
+
+        <article class="ring-card">
+          <div class="ring-head">
+            <div class="label"><span>RING-008</span><b>JOURNALRING</b></div>
+            <span class="status-pill" data-s="badge">BADGE</span>
+          </div>
+          <div class="ring-body">
+            <div class="ring-embed ring-embed--button">
+              <journal-ring icon="green"></journal-ring>
+              <script async
+                src="https://cdn.jsdelivr.net/gh/js044/nenrikido@main/static/js/misc/journalring.js"></script>
+            </div>
+          </div>
+        </article>
+
       </div>
     </section>
 
