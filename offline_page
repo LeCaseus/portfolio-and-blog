@@ -1,3 +1,24 @@
+export default {
+async fetch(request, env) {
+try {
+const response = await fetch(request);
+if (response.status >= 500) {
+return new Response(OFFLINE_HTML, {
+status: 200,
+headers: { 'Content-Type': 'text/html;charset=UTF-8' }
+});
+}
+return response;
+} catch {
+return new Response(OFFLINE_HTML, {
+status: 200,
+headers: { 'Content-Type': 'text/html;charset=UTF-8' }
+});
+}
+}
+};
+
+const OFFLINE_HTML = `
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1685,7 +1706,7 @@
     const pad = number => String(number).padStart(2, '0');
     const tick_clock = () => {
       const now = new Date();
-      const formatted = `${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())}`;
+      const formatted = \`\${pad(now.getUTCHours())}:\${pad(now.getUTCMinutes())}:\${pad(now.getUTCSeconds())}\`;
       document.querySelectorAll('[data-clock]').forEach(el => el.textContent = formatted);
     };
     tick_clock();
@@ -1720,3 +1741,4 @@
 </body>
 
 </html>
+`;
