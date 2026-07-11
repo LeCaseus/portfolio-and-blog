@@ -1,6 +1,6 @@
 # Portfolio & Blog
 
-This is the repository for my personal website at [cheztervargas.xyz](https://cheztervargas.xyz). Feel free to poke around, borrow what you want, or just read this for fun.
+This is the repository for my personal website at [cheztervargas.com](https://cheztervargas.com). Feel free to poke around, borrow what you want, or just read this for fun.
 
 > I plan to make a template of this soon, but for now I will fix everything first until its stable and consistent with my vision for the website.
 
@@ -20,7 +20,7 @@ This site has actually been rebuilt four times and each version was an honest re
 
 ### A better outlook on the vision for the platform
 
-**v3** was the Jekyll diagnostic redesign. I went for a Jekyll SSG because I wanted something to modularize my source code and make things easier to navigate. The site had a dark background, phosphor green accent, biosignal waveforms everywhere, posts called *readings*. The whole site read like a piece of medical equipment. I was happy with the direction. But then I'd realize that jumping across Jekyll files, especially since I've moved to helix, was just a hassle really, and jumping across files just to change one line isn't really it.
+**v3** was the Jekyll diagnostic redesign. I went for a Jekyll SSG because I wanted something to modularize my source code and make things easier to navigate. The site had a dark background, phosphor green accent, biosignal waveforms everywhere, posts called _readings_. The whole site read like a piece of medical equipment. I was happy with the direction. But then I'd realize that jumping across Jekyll files, especially since I've moved to helix, was just a hassle really, and jumping across files just to change one line isn't really it.
 
 ### Current awesome live work
 
@@ -28,12 +28,12 @@ So, **v4** is this. Plain HTML, CSS, and JS. No build step, no SSG, no framework
 
 > The plan is to eventually wire up my own C++ backend for the blog and notes, so new posts don't require editing a JS array. But that's a near future project. For now, this is it.
 
-| | |
-|---|---|
-| Hosting | Cloudflared |
-| Fonts | Instrument Serif · Inter Tight · Fira Code |
-| Styling | Vanilla CSS |
-| JS | Vanilla JS |
-| Backend | Custom C++ HTTP Server |
+|         |                                            |
+| ------- | ------------------------------------------ |
+| Hosting | Cloudflared                                |
+| Fonts   | Instrument Serif · Inter Tight · Fira Code |
+| Styling | Vanilla CSS                                |
+| JS      | Vanilla JS                                 |
+| Backend | Custom C++ HTTP Server                     |
 
 That old quote block was me one month ago and I am proud to say that I have finally finished building the backend with [cpp-httplib](https://github.com/yhirose/cpp-httplib) and I am now fully selfhosting my website, although not 24/7 because it lives on my laptop and not a dedicated homelab. (yet!)

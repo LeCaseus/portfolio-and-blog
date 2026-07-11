@@ -314,4 +314,4 @@ DisallowAITraining: /
 
 Content-Usage: ai=n
 
-Sitemap: https://cheztervargas.xyz/sitemap.xml
+Sitemap: https://cheztervargas.com/sitemap.xml

@@ -11,7 +11,7 @@ const markdown_source_dir = '/home/lecaseus/Notes/website/posts/';
 const static_output_dir = '/home/lecaseus/selfhosted/www/build/h-entries';
 // ----------------------------------------------------------------------
 
-const site_root = 'https://cheztervargas.xyz';
+const site_root = 'https://cheztervargas.com';
 const author_name = 'Chezter Vargas';
 const author_url = `${site_root}/`;
 
