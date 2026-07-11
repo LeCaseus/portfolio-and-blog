@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chezter's Sitemap</title>
+  <meta name="description" content="Every page I have on this site. I still don't see the benefit of this." />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
+  <style>
+    .sitemap-section {
+      padding-top: 24px;
+    }
+
+    .sitemap-section h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-style: italic;
+      font-size: clamp(24px, 2.2vw, 32px);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin: 0 0 0.6em;
+      color: var(--ink);
+    }
+
+    .sitemap-section h2::before {
+      content: "§ ";
+      color: var(--signal);
+      font-style: normal;
+    }
+
+    .site-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-family: var(--mono);
+      font-size: clamp(13px, 1.2vw, 15px);
+    }
+
+    .site-links li {
+      border-top: 1px solid var(--rule);
+    }
+
+    .site-links li:last-child {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .site-links a {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      padding: 10px 4px;
+      color: var(--ink);
+      text-decoration: none;
+      transition: padding .2s, background .2s, color .2s;
+    }
+
+    .site-links a:hover {
+      padding-left: 10px;
+      background: var(--signal_soft);
+      color: var(--signal);
+    }
+
+    .site-links .path {
+      color: var(--mute);
+      flex-shrink: 0;
+    }
+
+    .site-links a:hover .path {
+      color: var(--signal);
+    }
+
+    .empty-note {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--mute);
+      padding: 10px 4px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="status" role="banner">
+    <div class="left">
+      <span class="dot" aria-hidden="true"></span>ELECTRODES CONNECTED
+    </div>
+    <div class="center">CH-09 · SITEMAP</div>
+    <div class="right">
+      <span>UTC <span data-clock>00:00:00</span></span>
+      <button class="theme" data-theme-toggle type="button" aria-label="Toggle theme">☾ DARK</button>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero" id="top" style="padding-top: clamp(40px, 6vh, 80px); padding-bottom: 24px;">
+      <div class="channel">
+        <span class="line"></span>
+        <span>CH-09</span>
+        <b>SITEMAP</b>
+      </div>
+      <h1 style="font-size: clamp(40px, 7vw, 88px);">
+        <span class="addr">0x0008 · every page I have, all in one list</span>
+        site<span class="alive">map_</span>
+      </h1>
+    </section>
+
+    <section class="sitemap-section">
+      <h2>pages</h2>
+      <ul class="site-links">
+        <li><a href="/index.html"><span>home</span><span class="path">/</span></a></li>
+        <li><a href="/blog.html"><span>readings log</span><span class="path">/blog.html</span></a></li>
+        <li><a href="/privacy.html"><span>privacy policy</span><span class="path">/privacy.html</span></a></li>
+        <li><a href="/sitemap.html"><span>sitemap</span><span class="path">/sitemap.html</span></a></li>
+      </ul>
+    </section>
+
+    <section class="sitemap-section">
+      <h2>readings</h2>
+      <ul class="site-links" data-post-links>
+        <li class="empty-note">loading entries…</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>SYS:OK · fully selfhosted by me</div>
+    <div class="c">// back to <a href="/index.html">the site</a> or the <a href="/blog.html">readings log</a>.</div>
+    <div>UTC <span data-clock>00:00:00</span></div>
+  </footer>
+
+  <script type="module">
+    import {init_theme_toggle, start_clock} from '/shared.js';
+    init_theme_toggle();
+    start_clock();
+
+    const post_links_el = document.querySelector('[data-post-links]');
+
+    fetch('/api/posts')
+      .then(response => response.json())
+      .then(posts => {
+        if (!posts.length) {
+          post_links_el.innerHTML = '<li class="empty-note">no entries yet.</li>';
+          return;
+        }
+        const sorted_posts = posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        post_links_el.innerHTML = sorted_posts.map(post => `
+          <li><a href="/blog/${post.slug}"><span>${post.title}</span><span class="path">/blog/${post.slug}</span></a></li>
+        `).join('');
+      })
+      .catch(() => {
+        post_links_el.innerHTML = '<li class="empty-note">could not load entries — try the readings log directly.</li>';
+      });
+  </script>
+
+</body>
+
+</html>
