@@ -636,6 +636,30 @@ section:first-of-type { border-top: 0; }
 .contact .term .out { color: var(--ink); padding-left: 18px; }
 .contact .term .blink { display: inline-block; width: 0.55ch; height: 1em; vertical-align: -2px; background: var(--signal); animation: blink 1.05s steps(2) infinite; margin-left: 2px; }
 
+.meta-nav {
+  margin-top: 24px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.meta-nav a {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--mute);
+  text-decoration: none;
+  padding: 8px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  transition: color .2s, border-color .2s, background .2s;
+}
+.meta-nav a:hover {
+  color: var(--ink);
+  border-color: var(--signal);
+  background: var(--signal_soft);
+}
+
 .webrings .head { margin: 24px 0 18px; }
 .webrings .head h2 {
   font-family: var(--serif); font-weight: 400;
