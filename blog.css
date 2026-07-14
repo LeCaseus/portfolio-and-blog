@@ -301,7 +301,7 @@
   font-size: clamp(18px, 1.4vw, 18px);
   line-height: 1.55;
   color: var(--ink);
-  text-align: justify;
+  text-align: left;
 }
 
 .prose-body p { margin: 0 0 1.1em; text-wrap: pretty; }

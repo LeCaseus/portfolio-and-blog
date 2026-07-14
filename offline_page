@@ -1357,9 +1357,9 @@ const OFFLINE_HTML = `
           <span>TECH ENTHUSIAST</span>
         </div>
         <div class="offline-msg">
-          server is down.<br />
-          my laptop is probably sleeping.<br />
-          links below still work.
+          if you're seeing this, my server is down.<br />
+          hmmm... my laptop is probably sleeping.<br />
+          links below still work though.
         </div>
       </div>
 
@@ -1519,17 +1519,19 @@ const OFFLINE_HTML = `
         <img class="u-photo" src="/assets/face.jpg" alt="" hidden />
         <span class="ln"><span class="prompt">$</span> whoami</span>
         <span class="ln out">chezter — biomedical engineer, hobbyist programmer</span>
-        <span class="ln"><span class="prompt">$</span> want_to_talk()</span>
-        <span class="ln out">→ <a href="mailto:cheztervargas353@gmail.com" class="u-email" rel="me">email me
-            here!</a></span>
-        <span class="ln"><span class="prompt">$</span> ls ./elsewhere</span>
+        <span class="ln"><span class="prompt">$</span> contact --list</span>
+        <span class="ln out">personal <a href="mailto:vargas.chez@icloud.com" class="u-email"
+            rel="me">vargas.chez@icloud.com</a></span>
+        <span class="ln out">professional <a href="mailto:chezter_vargas@outlook.ph" class="u-email"
+            rel="me">chezter_vargas@outlook.ph</a><span style="color:var(--mute_2)"> // if you're hiring</span></span>
+        <span class="ln"><span class="prompt">$</span> ls ./socials</span>
         <span class="ln out">
           <a href="https://github.com/LeCaseus" target="_blank" rel="noopener me" class="u-url">github</a> ·
           <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener me"
             class="u-url">linkedin</a> ·
-          <a href="/blog.html">blog</a> ·
-          <a href="/assets/CVargas_CV.pdf" target="_blank" rel="noopener">cv.pdf</a> ·
           <a href="https://www.instagram.com/cheeshire_/" target="_blank" rel="noopener me" class="u-url">instagram</a>
+          ·
+          <a href="https://www.youtube.com/@lecaseus" target="_blank" rel="noopener me" class="u-url">youtube</a>
         </span>
         <span class="ln"><span class="prompt">$</span> <span class="blink"></span></span>
       </div>
@@ -1583,19 +1585,7 @@ const OFFLINE_HTML = `
 
         <article class="ring-card">
           <div class="ring-head">
-            <div class="label"><span>RING-003</span><b>*NIXRING</b></div>
-            <span class="status-pill" data-s="script">SCRIPT</span>
-          </div>
-          <div class="ring-body">
-            <div class="ring-embed ring-embed--script">
-              <script defer src="https://softmachine.dev/webring/linuxring/ring.js" data-icon="fedora"></script>
-            </div>
-          </div>
-        </article>
-
-        <article class="ring-card">
-          <div class="ring-head">
-            <div class="label"><span>RING-004</span><b>STAR WARS</b></div>
+            <div class="label"><span>RING-003</span><b>STAR WARS</b></div>
             <span class="status-pill" data-s="link">LINK</span>
           </div>
           <div class="ring-body">
@@ -1616,7 +1606,7 @@ const OFFLINE_HTML = `
 
         <article class="ring-card">
           <div class="ring-head">
-            <div class="label"><span>RING-005</span><b>HOTLINE</b></div>
+            <div class="label"><span>RING-004</span><b>HOTLINE</b></div>
             <span class="status-pill" data-s="link">LINK</span>
           </div>
           <div class="ring-body">
@@ -1640,7 +1630,7 @@ const OFFLINE_HTML = `
 
         <article class="ring-card">
           <div class="ring-head">
-            <div class="label"><span>RING-006</span><b>NO AI</b></div>
+            <div class="label"><span>RING-005</span><b>NO AI</b></div>
             <span class="status-pill" data-s="badge">BADGE</span>
           </div>
           <div class="ring-body">
@@ -1657,20 +1647,6 @@ const OFFLINE_HTML = `
               </map>
               <img usemap="#noairing" src="https://baccyflap.com/noai/widget.gif" style="width:250px;height:124px"
                 alt="an image of a little blue toy robot in a red-tinted circle made of art from all over the world. there's a red line, also made of art, running through the robot. next to it are the words NO AI WEBRING / HUMAN MADE 100% GUARANTEED and then two arrows, one pointing left, one right">
-            </div>
-          </div>
-        </article>
-
-        <article class="ring-card">
-          <div class="ring-head">
-            <div class="label"><span>RING-007</span><b>JOURNALRING</b></div>
-            <span class="status-pill" data-s="badge">SCRIPT</span>
-          </div>
-          <div class="ring-body">
-            <div class="ring-embed ring-embed--button">
-              <journal-ring icon="green"></journal-ring>
-              <script async
-                src="https://cdn.jsdelivr.net/gh/js044/nenrikido@main/static/js/misc/journalring.js"></script>
             </div>
           </div>
         </article>
