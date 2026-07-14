@@ -37,3 +37,23 @@ export function start_clock() {
   tick();
   setInterval(tick, 1000);
 }
+
+export function format_post_date(iso_string, include_time = false) {
+  const date = new Date(iso_string);
+  const date_part = date
+    .toLocaleDateString('en-GB', {
+      timeZone: 'Pacific/Auckland'
+    })
+    .replace(/\//g, '-');
+
+  if (!include_time) return date_part;
+
+  const time_part = date.toLocaleTimeString('en-GB', {
+    timeZone: 'Pacific/Auckland',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+
+  return `${date_part} ${time_part}`;
+}

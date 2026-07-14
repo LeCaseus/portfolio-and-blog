@@ -1,4 +1,4 @@
-import { init_theme_toggle, start_clock } from './shared.js';
+import { init_theme_toggle, start_clock, format_post_date } from './shared.js';
 
 init_theme_toggle();
 start_clock();
@@ -198,7 +198,7 @@ async function load_readings() {
     const recent_posts = sorted_posts.slice(0,5);
     strip_el.innerHTML = recent_posts.map(post => `
       <a class="read" href="/blog/${post.slug}">
-        <span class="date">${post.date}</span>
+        <span class="date">${format_post_date(post.date)}</span>
         <span class="tag">${post.tags}</span>
         <span class="ttl">${post.title}</span>
         <span class="arrow">↗</span>

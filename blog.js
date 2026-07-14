@@ -1,4 +1,4 @@
-import { init_theme_toggle, start_clock } from './shared.js';
+import { init_theme_toggle, start_clock, format_post_date } from './shared.js';
 
 init_theme_toggle();
 start_clock();
@@ -62,7 +62,7 @@ function render_list() {
     <li>
       <a class="entry ${post.slug === current_slug ? 'active' : ''}" href="/blog/${post.slug}" data-slug="${post.slug}" data-pinned="${Boolean(post.pinned)}">
         <div>
-          <div class="meta-row"><span>${post.date}</span>${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
+          <div class="meta-row"><span>${format_post_date(post.date)}</span>${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
           <div class="ttl">${post.title}</div>
         </div>
         <div class="n">${String(posts.length - posts.indexOf(post)).padStart(2, '0')}</div>
@@ -84,7 +84,7 @@ function render_post(slug) {
   reader_body_el.innerHTML = `
     <header class="header">
       <div class="meta">
-        <span>${post.date}</span>
+        <span>${format_post_date(post.date, true)}</span>
         <span class="dot"></span>
         ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
         <span class="dot"></span>
