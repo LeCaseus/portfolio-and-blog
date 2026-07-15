@@ -244,14 +244,22 @@ function init_reaction_widget() {
 
 function init_reading_progress() {
   const progress_bar = document.getElementById('read-progress-bar');
-  if (!progress_bar) return;
+  const reader_el = document.getElementById('reader');
+  if (!progress_bar || !reader_el) return;
 
-  window.addEventListener('scroll', () => {
-    const doc = document.documentElement;
-    const scrollable_height = doc.scrollHeight - doc.clientHeight;
-    const percent = scrollable_height > 0 ? (window.scrollY / scrollable_height) * 100 : 0;
+  const update_progress = () => {
+    const reader_is_scroll_container = reader_el.scrollHeight > reader_el.clientHeight;
+    const scroll_top = reader_is_scroll_container ? reader_el.scrollTop : window.scrollY;
+    const scrollable_height = reader_is_scroll_container
+      ? reader_el.scrollHeight - reader_el.clientHeight
+      : document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const percent = scrollable_height > 0 ? (scroll_top / scrollable_height) * 100 : 0;
     progress_bar.style.height = percent + '%';
-  }, { passive: true });
+  };
+
+  reader_el.addEventListener('scroll', update_progress, {passive: true});
+  window.addEventListener('scroll', update_progress, {passive: true});
+  window.addEventListener('resize', update_progress, {passive: true});
 }
 
 function init_mobile_sidebar() {

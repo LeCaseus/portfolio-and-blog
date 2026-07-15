@@ -527,6 +527,51 @@
   display: none;
 }
 
+@media (min-width: 1025px) {
+  body[data-scroll-mode="split"] {
+    height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  body[data-scroll-mode="split"] .blog-shell {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  body[data-scroll-mode="split"] .blog-hd {
+    flex-shrink: 0;
+  }
+
+  body[data-scroll-mode="split"] .blog-grid {
+    flex: 1;
+    min-height: 0;
+    align-items: stretch;
+  }
+
+  body[data-scroll-mode="split"] .idx {
+    position: static;
+    max-height: none;
+    height: 100%;
+    min-height: 0;
+  }
+
+  body[data-scroll-mode="split"] .reader {
+    min-height: 0;
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  body[data-scroll-mode="split"] footer {
+    flex-shrink: 0;
+  }
+}
+
 @media (max-width: 1024px) {
   .blog-grid { grid-template-columns: minmax(0, 1fr); }
   .idx { position: static; max-height: none; }
