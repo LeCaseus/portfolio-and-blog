@@ -665,12 +665,13 @@
   padding: 24px 18px;
   transform: translateX(-105%);
   transition: transform .28s ease;
-  max-height: none;
+  height: 100dvh;
+  max-height: 100dvh;
   overflow-y: auto;
 }
 
 .idx.open {
-  display: block;
+  display: flex;
   position: fixed;
   transform: translateX(0);
 }
