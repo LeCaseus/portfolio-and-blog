@@ -573,13 +573,6 @@
 }
 
 @media (max-width: 1024px) {
-  .blog-grid { grid-template-columns: minmax(0, 1fr); }
-  .idx { position: static; max-height: none; }
-  .idx-list { max-height: 40vh; }
-  .reader { padding: 28px 22px; }
-}
-
-@media (max-width: 640px) {
 
   .blog-shell { padding-top: 20px; }
 
