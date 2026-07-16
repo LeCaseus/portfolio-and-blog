@@ -301,10 +301,16 @@
   font-size: clamp(18px, 1.4vw, 18px);
   line-height: 1.55;
   color: var(--ink);
-  text-align: left;
+  text-align: justify;
 }
 
-.prose-body p { margin: 0 0 1.1em; text-wrap: pretty; }
+.prose-body p {
+  margin: 0 0 1.1em;
+  text-wrap: pretty;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+}
 
 .prose-body p:first-of-type::first-letter {
   font-family: var(--serif);
