@@ -682,3 +682,9 @@
 
   .reader { padding: 20px 16px; min-height: 50vh; }
 }
+
+@media (max-width: 640px) {
+  .prose-body {
+    font-size: 14px;
+  }
+}
