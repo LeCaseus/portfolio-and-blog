@@ -236,6 +236,7 @@ function init_reaction_widget() {
       const data = await response.json();
       document.querySelector('[data-react-count]').textContent = data.count;
       button.classList.toggle('reacted', Boolean(data.reacted));
+      window.umami?.track('reaction', { slug: current_slug, reacted: Boolean(data.reacted) });
     } finally {
       button.disabled = false;
     }
