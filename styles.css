@@ -118,7 +118,7 @@ main {
   margin: 0 auto;
   padding: 0 var(--pad);
 }
-section { position: relative; padding: clamp(72px, 12vh, 140px) 0; border-top: 1px solid var(--rule); }
+section { position: relative; padding: clamp(40px, 6vh, 84px) 0; border-top: 1px solid var(--rule); }
 section:first-of-type { border-top: 0; }
 
 .channel {
