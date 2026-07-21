@@ -18,7 +18,8 @@
 
   <header class="status" role="banner">
     <div class="left">
-      <span class="dot" aria-hidden="true"></span>ELECTRODES CONNECTED · <span class="build-tag">v5.5 · stable</span>
+      <span class="dot" aria-hidden="true"></span>ELECTRODES CONNECTED · <span class="build-tag">v5.5 · under
+        construction</span>
     </div>
     <div class="center">SIGNAL · CLEAN · LEAD II · 2000 HZ</div>
     <div class="right">
@@ -30,11 +31,14 @@
   <nav class="rail" aria-label="Channels">
     <a href="#now"><i></i>CH-01 NOW</a>
     <a href="#about"><i></i>CH-02 ABOUT</a>
-    <a href="#readings"><i></i>CH-03 READINGS</a>
-    <a href="#projects"><i></i>CH-04 PROJECTS</a>
-    <a href="#notes"><i></i>CH-05 NOTES</a>
-    <a href="#contact"><i></i>CH-06 CONTACT</a>
-    <a href="#webrings"><i></i>CH-07 RINGS</a>
+    <a href="#blog"><i></i>CH-03 BLOG</a>
+    <a href="#guestbook"><i></i>CH-04 GUESTBOOK</a>
+    <a href="#projects"><i></i>CH-05 PROJECTS</a>
+    <a href="#notes"><i></i>CH-06 NOTES</a>
+    <a href="#contact"><i></i>CH-07 CONTACT</a>
+    <a href="#webrings"><i></i>CH-08 RINGS</a>
+    <a href="/sitemap.html"><i></i>CH-09 SITEMAP</a>
+    <a href="/privacy.html"><i></i>CH-10 PRIVACY</a>
   </nav>
 
   <main>
@@ -64,8 +68,6 @@
 
       <div class="meta-nav">
         <a href="/guestbook.html">→ sign the guestbook</a>
-        <a href="/sitemap.html">→ view sitemap</a>
-        <a href="/feed.xml">→ rss feed</a>
       </div>
 
       <div class="ecg" aria-hidden="true">
@@ -79,7 +81,7 @@
     </section>
 
     <section class="now reveal" id="now" data-screen-label="01 Now">
-      <div class="channel"><span class="line"></span><span>CH-01</span><b>CURRENT&nbsp;READINGS</b></div>
+      <div class="channel"><span class="line"></span><span>CH-01</span><b>NOW</b></div>
       <div class="panel">
         <div class="cell">
           <div class="key"><i></i>STATUS</div>
@@ -118,37 +120,45 @@
             <li><span>FIELD</span><b>Biomedical Eng.</b></li>
             <li><span>STACK</span><b>C / C++</b></li>
             <li><span>OFF-HOURS</span><b>Jedi Training</b></li>
-            <li><span>OPEN</span><b>This site →</b></li>
+            <li><span>OPEN</span><b><a href="https://github.com/LeCaseus/portfolio-and-blog.git" target="_blank"
+                  rel="noopener me" style="text-decoration: none;">This site →</a></b></li>
           </ul>
         </aside>
         <div class="prose">
-          <span class="lead">I tinker with a bunch of hardware and software to understand <em>how they
-              work</em>.</span>
-          <p>// i recently graduated bme by the end of 2025 and am doing side quests first.<br />// exploring the world,
-            figuring out what comes next.</p>
-          <p>// this site is fully self-hosted. if it's offline, then my laptop is sleeping.<br />// i'm occasionally
-            writing
-            at the <a href="/blog/">./blog</a> when something's on my mind.</p>
-          <p>// formal version: <a href="/assets/CVargas_CV.pdf" target="_blank" rel="noopener">CVargas_CV.pdf</a> and
-            i'm also
-            on <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener">linkedin</a>.</p>
+          <span class="lead">Most nights are just me trying to mend stuff that <em>aren't even
+              broken</em>.</span>
+          <p>// I've just finished a Biomedical Engineering degree by the end of 2025 and haven't quite
+            figured out what comes after, so in the meantime I've been taking my digital life
+            apart piece by piece and putting it back together on hardware I actually own.</p>
+          <p>// My stack is fully self-hosted, so if you are seeing an offline page or just an error, then my laptop is
+            probably dead. Most nights end up with something broken and me still awake trying to understand why, which
+            is either a hobby or a diagnosis, though I haven't decided. What comes out of that, when it's
+            worth telling, ends up at my <a href="#blog">./blog</a>.</p>
         </div>
       </div>
     </section>
 
-    <section class="readings reveal" id="readings" data-screen-label="03 Readings">
-      <div class="channel"><span class="line"></span><span>CH-03</span><b>LATEST&nbsp;READINGS</b></div>
+    <section class="readings reveal" id="blog" data-screen-label="03 Blog">
+      <div class="channel"><span class="line"></span><span>CH-03</span><b>BLOG</b></div>
       <div class="head">
         <h2>Latest <em>readings</em></h2>
-        <a href="/blog.html">all readings →</a>
+        <a href="/blog.html">I wanna read everything!</a>
       </div>
-      <div class="strip"></div>
+      <div class="readings-split">
+        <div class="readings-lead-col">
+          <p class="readings-lead">Here lies my musings on everyday life, personal growth, and whatever happens to be on
+            my mind. Written to remember, reflect, and share.</p>
+        </div>
+        <div class="readings-list-col">
+          <div class="strip"></div>
+        </div>
+      </div>
     </section>
 
-    <section class="projects reveal" id="projects" data-screen-label="04 Projects">
-      <div class="channel"><span class="line"></span><span>CH-04</span><b>SPECIMENS</b></div>
+    <section class="projects reveal" id="projects" data-screen-label="05 Projects">
+      <div class="channel"><span class="line"></span><span>CH-05</span><b>PROJECTS</b></div>
       <div class="head">
-        <h2>Projects, on the <em>slide</em></h2>
+        <h2><em>Specimens</em>, on the slide</h2>
         <div class="note">// samples isolated to individual repositories</div>
       </div>
       <div class="slides">
@@ -200,8 +210,8 @@
       </div>
     </section>
 
-    <section class="notes reveal" id="notes" data-screen-label="05 Notes">
-      <div class="channel"><span class="line"></span><span>CH-05</span><b>NOTES&nbsp;·&nbsp;dmesg</b></div>
+    <section class="notes reveal" id="notes" data-screen-label="06 Notes">
+      <div class="channel"><span class="line"></span><span>CH-06</span><b>NOTES</b></div>
       <div class="head">
         <h2>Notes <em>// log</em></h2>
         <div class="note">// short transmissions — newest first</div>
@@ -219,8 +229,8 @@
       </div>
     </section>
 
-    <section class="contact reveal" id="contact" data-screen-label="06 Contact">
-      <div class="channel"><span class="line"></span><span>CH-06</span><b>CONTACT</b></div>
+    <section class="contact reveal" id="contact" data-screen-label="07 Contact">
+      <div class="channel"><span class="line"></span><span>CH-07</span><b>CONTACT</b></div>
       <div class="term h-card" role="region" aria-label="Contact terminal">
         <a href="https://cheztervargas.com/" class="p-name u-url" hidden>Chezter Vargas</a>
         <p class="p-note" hidden>Biomedical Engineer, hobbyist C/C++ programmer.</p>
@@ -232,7 +242,7 @@
             rel="me">vargas.chez@icloud.com</a></span>
         <span class="ln out">professional <a href="mailto:chezter_vargas@outlook.ph" class="u-email"
             rel="me">chezter_vargas@outlook.ph</a><span style="color:var(--mute_2)"> // if you're hiring</span></span>
-        <span class="ln"><span class="prompt">$</span> ls ./socials</span>
+        <span class="ln"><span class="prompt">$</span> ls ./elsewhere</span>
         <span class="ln out">
           <a href="https://github.com/LeCaseus" target="_blank" rel="noopener me" class="u-url">github</a> ·
           <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener me"
@@ -245,8 +255,8 @@
       </div>
     </section>
 
-    <section class="webrings reveal" id="webrings">
-      <div class="channel"><span class="line"></span><span>CH-07</span><b>WEBRINGS</b></div>
+    <section class="webrings reveal" id="webrings" data-screen-label="08 Webrings">
+      <div class="channel"><span class="line"></span><span>CH-08</span><b>WEBRINGS</b></div>
       <div class="head">
         <h2>Web<em>rings</em></h2>
         <div class="note">// small corners of the internet, linked together</div>

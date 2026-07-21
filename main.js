@@ -195,13 +195,15 @@ async function load_readings() {
   try {
     const posts = await fetch('/api/posts').then(response => response.json());
     const sorted_posts = posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-    const recent_posts = sorted_posts.slice(0,5);
+    const recent_posts = sorted_posts.slice(0,3);
     strip_el.innerHTML = recent_posts.map(post => `
       <a class="read" href="/blog/${post.slug}">
-        <span class="date">${format_post_date(post.date)}</span>
-        <span class="tag">${post.tags}</span>
+        <div class="row-top">
+          <span class="date">${format_post_date(post.date)}</span>
+          <span class="tag">${post.tags}</span>
+        </div>
         <span class="ttl">${post.title}</span>
-        <span class="arrow">↗</span>
+        <p class="summary">${post.summary}</p>
       </a>
     `).join('');
   } catch {
