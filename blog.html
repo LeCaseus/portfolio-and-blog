@@ -12,75 +12,58 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script defer src="/site_visits.js" data-website-id="0ada5184-e307-4125-b5d6-e6b37861ce7c" data-auto-track="false"
     data-performance="true"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body data-scroll-mode="split">
 
-  <header class="status" role="banner">
-    <div class="left">
-      <span class="dot" aria-hidden="true"></span>READING SESSION ACTIVE
-    </div>
-    <div class="center">CH-03 · READINGS LOG · <span data-post-count>—</span> ENTRIES</div>
-    <div class="right">
-      <span>UTC <span data-clock>00:00:00</span></span>
+  <header class="masthead" role="banner">
+    <span class="wordmark">chezter's <em>readings_</em></span>
+    <span></span>
+    <div class="masthead-right">
+      <a class="back-home" href="/index.html" aria-label="Homepage"><i data-lucide="house"></i></a>
+      <a class="back-home" href="/feed.xml" aria-label="RSS feed"><i data-lucide="rss"></i></a>
       <button class="theme" data-theme-toggle type="button" aria-label="Toggle theme">☾ DARK</button>
     </div>
   </header>
 
   <div class="read-progress" aria-hidden="true"><i id="read-progress-bar"></i></div>
-  <div class="idx-overlay" id="idx-overlay"></div>
 
-  <div class="blog-shell">
-    <div class="blog-hd">
-      <h1>Readings <em>log</em></h1>
-      <div class="crumbs"><a href="/index.html">← back to subject 001</a> · <a href="/feed.xml">rss feed ⟶</a></div>
-    </div>
+  <div class="blog-grid" id="blog-grid" data-level="channels">
 
-    <div class="blog-grid">
+    <aside class="channels" aria-label="Categories">
+      <div class="channels-head"><span>CHANNELS</span></div>
+      <ul class="channel-list" data-channel-list></ul>
+    </aside>
 
-      <aside class="idx" aria-label="Post index">
-        <div class="ttl-row"><span>INDEX</span><b data-visible-count>— / —</b></div>
+    <aside class="idx" aria-label="Post index">
+      <button class="pane-back" data-back-to-channels type="button">‹ channels</button>
+      <div class="ttl-row"><span data-channel-label>ALL ENTRIES</span><b data-visible-count>— / —</b></div>
 
-        <div class="filters" role="tablist" data-filters>
-          <button class="on" data-filter="all">all</button>
-        </div>
-
-        <div class="search">
-          <input type="text" placeholder="search posts…" data-search />
-        </div>
-
-        <ul class="idx-list" data-list></ul>
-      </aside>
-
-      <article class="reader" id="reader" aria-live="polite">
-
-        <button class="idx-toggle" id="idx-toggle" aria-label="Open post index">
-          <span class="burger"><span></span><span></span><span></span></span>
-          INDEX
-        </button>
-        <div class="reader-pulse" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 36" preserveAspectRatio="none" aria-hidden="true">
-            <path d="" id="pulse-path" />
+      <div class="search">
+        <div class="search-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+            aria-hidden="true">
+            <circle cx="11" cy="11" r="7" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
-          <button class="pulse-react" data-react-btn aria-label="React to this post">
-            <span class="heart">♥</span>
-            <span class="count" data-react-count>-</span>
-          </button>
+          <input type="text" placeholder="search posts" data-search />
         </div>
-        <div data-reader-body></div>
-      </article>
-    </div>
+      </div>
+
+      <ul class="idx-list" data-list></ul>
+    </aside>
+
+    <article class="reader" id="reader" aria-live="polite">
+      <button class="pane-back" data-back-to-posts type="button">‹ back</button>
+      <div data-reader-body></div>
+    </article>
   </div>
 
-  <footer>
-    <div>SYS:OK · fully selfhosted by me</div>
-    <div class="c">// <a href="https://github.com/LeCaseus/portfolio-and-blog.git" target="_blank" rel="noopener">source
-        on github</a> and <a href="/privacy.html">privacy policy</a> if you want to poke around.
-    </div>
-    <div>UTC <span data-clock>00:00:00</span></div>
-  </footer>
-
   <script type="module" src="/blog.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
 
 </body>
 
