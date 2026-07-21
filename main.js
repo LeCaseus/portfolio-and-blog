@@ -1,4 +1,4 @@
-import { init_theme_toggle, start_clock, format_post_date } from './shared.js';
+import { init_theme_toggle, start_clock, format_post_date, escape_html } from './shared.js';
 
 init_theme_toggle();
 start_clock();
@@ -211,6 +211,25 @@ async function load_readings() {
   }
 }
 
+async function load_guestbook_teaser() {
+  const board_el = document.querySelector('.gb-corkboard');
+  if (!board_el) return;
+  try {
+    const entries = await fetch('/api/guestbook').then(response => response.json());
+    const recent_entries = entries.slice(0, 3);
+    board_el.innerHTML = recent_entries.length
+      ? recent_entries.map(entry => `
+          <div class="gb-note">
+            <span class="gb-note-name">${entry.name?.trim() ? escape_html(entry.name.trim()) : 'anonymous'}</span>
+            <p class="gb-note-msg">${escape_html(entry.message)}</p>
+          </div>
+        `).join('')
+      : '<div class="gb-empty-note">// no entries yet — be the first.</div>';
+  } catch {
+    board_el.innerHTML = '<div class="gb-empty-note">// couldn\'t load entries.</div>';
+  }
+}
+
 async function load_notes() {
   const log_el = document.querySelector('.notes .log');
   if (!log_el) return;
@@ -276,4 +295,5 @@ init_typewriter();
 init_scroll_reveal();
 init_rail_highlight();
 load_readings();
+load_guestbook_teaser();
 load_notes();

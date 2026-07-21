@@ -57,3 +57,9 @@ export function format_post_date(iso_string, include_time = false) {
 
   return `${date_part} ${time_part}`;
 }
+
+export function escape_html(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[char]));
+}
