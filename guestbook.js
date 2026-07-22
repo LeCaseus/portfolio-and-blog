@@ -1,4 +1,4 @@
-import { init_theme_toggle, start_clock, escape_html } from '/shared.js';
+import { init_theme_toggle, start_clock, } from '/shared.js';
 
 init_theme_toggle();
 start_clock();
