@@ -116,7 +116,7 @@ function render_idle() {
   reader_body_el.innerHTML = `
     <div class="idle-state">
       <h2>no entry selected</h2>
-      <p>pick a channel, then an entry, or search from the index.</p>
+      <p>Here lies my musings on everyday life, personal growth, and whatever happens to be on my mind. Written to remember, reflect, and share.</p>
     </div>
   `;
   render_list();

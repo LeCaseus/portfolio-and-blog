@@ -269,7 +269,8 @@ section:first-of-type {
   line-height: 1.65;
   letter-spacing: 0;
   color: var(--ink);
-  min-height: 5em;
+  height: 5.2em;
+  overflow: hidden;
   max-width: 44ch;
   padding-left: 14px;
   border-left: 1px solid var(--rule);
@@ -685,15 +686,14 @@ section:first-of-type {
 }
 
 .gb-corkboard {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 28px;
   padding: 24px 0 8px;
 }
 
 .gb-note {
   position: relative;
-  width: clamp(180px, 22vw, 240px);
   padding: 22px 18px 24px;
   background: var(--paper_2);
   border: 1px solid var(--rule);
@@ -710,6 +710,10 @@ section:first-of-type {
 }
 .gb-note:nth-child(3) {
   transform: rotate(-1.5deg);
+}
+.gb-note:nth-child(4) {
+  transform: rotate(2.5deg);
+  margin-top: 8px;
 }
 .gb-note:hover {
   transform: rotate(0deg) translateY(-4px);
@@ -1508,6 +1512,10 @@ footer a:hover {
     padding-top: 20px;
     margin-top: 20px;
   }
+
+  .gb-corkboard {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .reveal {
@@ -1634,7 +1642,6 @@ footer a:hover {
     border: none;
     font-size: 13px;
     line-height: 1.7;
-    min-height: 0;
     max-width: 100%;
     overflow: hidden;
   }
@@ -1644,20 +1651,14 @@ footer a:hover {
 
   .ecg {
     height: 64px;
-    margin-top: 28px;
+    margin-top: 0px;
   }
 
   .now .panel {
     margin-top: 18px;
-    grid-template-columns: 1fr;
   }
   .now .cell {
     padding: 14px 12px 12px;
-    border-right: 0 !important;
-    border-bottom: 1px solid var(--rule);
-  }
-  .now .cell:last-child {
-    border-bottom: 0;
   }
   .now .cell .key {
     font-size: 9px;

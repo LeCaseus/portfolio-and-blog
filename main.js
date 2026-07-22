@@ -216,7 +216,7 @@ async function load_guestbook_teaser() {
   if (!board_el) return;
   try {
     const entries = await fetch('/api/guestbook').then(response => response.json());
-    const recent_entries = entries.slice(0, 3);
+    const recent_entries = entries.slice(0, 4);
     board_el.innerHTML = recent_entries.length
       ? recent_entries.map(entry => `
           <div class="gb-note">
