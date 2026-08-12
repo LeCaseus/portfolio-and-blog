@@ -163,31 +163,6 @@ function init_scroll_reveal() {
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 
-function init_rail_highlight() {
-  const rail_links = document.querySelectorAll('.rail a');
-  const sections = document.querySelectorAll('section[id]');
-  if (!sections.length) return;
-
-  const set_active_link = active_id => {
-    rail_links.forEach(link => link.classList.toggle('on', link.getAttribute('href') === '#' + active_id));
-  };
-
-  const currently_crossing_line = new Set();
-
-  const highlight_observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) currently_crossing_line.add(entry.target.id);
-      else currently_crossing_line.delete(entry.target.id);
-    });
-
-    const active_section = [...sections].find(section => currently_crossing_line.has(section.id));
-    if (active_section) set_active_link(active_section.id);
-  }, { rootMargin: '-35% 0px -65% 0px', threshold: 0 });
-
-  sections.forEach(section => highlight_observer.observe(section));
-  set_active_link(sections[0].id);
-}
-
 async function load_readings() {
   const strip_el = document.querySelector('.readings .strip');
   if (!strip_el) return;
@@ -293,7 +268,6 @@ async function load_notes() {
 init_hero_ecg();
 init_typewriter();
 init_scroll_reveal();
-init_rail_highlight();
 load_readings();
 load_guestbook_teaser();
 load_notes();
