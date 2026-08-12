@@ -255,7 +255,7 @@ body[data-shell="dashboard"] {
   height: 100dvh;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 240px 1fr 230px;
+  grid-template-columns: clamp(260px, 20vw, 320px) 1fr clamp(220px, 16vw, 300px);
   grid-template-rows: auto auto 1fr auto;
   grid-template-areas:
     "status status status"
@@ -310,19 +310,19 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
 
 /* left sidebar — Now vitals + Field spec rows */
 .spec-col {
-  padding: 16px 14px;
+  padding: 24px 20px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 20px;
 }
 .vital-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 .vital-chip {
   border: 1px solid var(--rule);
-  padding: 8px 9px;
+  padding: 14px 16px;
   background: var(--paper_2);
 }
 .vital-chip .k {
@@ -444,16 +444,16 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
 
 /* right sidebar — channel nav */
 .nav-col {
-  padding: 16px 12px;
+  padding: 24px 18px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 .nav-chip {
   display: flex;
   align-items: baseline;
   gap: 8px;
-  padding: 6px 8px;
+  padding: 10px 14px;
   border: 1px solid transparent;
   text-decoration: none;
   transition: border-color .15s, background .15s;
