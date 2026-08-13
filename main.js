@@ -209,21 +209,21 @@ async function load_readings() {
 }
 
 async function load_guestbook_teaser() {
-  const board_el = document.querySelector('.gb-corkboard');
-  if (!board_el) return;
+  const strip_el = document.querySelector('.gb-strip');
+  if (!strip_el) return;
   try {
     const entries = await fetch('/api/guestbook').then(response => response.json());
     const recent_entries = entries.slice(0, 4);
-    board_el.innerHTML = recent_entries.length
+    strip_el.innerHTML = recent_entries.length
       ? recent_entries.map(entry => `
-          <div class="gb-note">
-            <span class="gb-note-name">${entry.name?.trim() ? escape_html(entry.name.trim()) : 'anonymous'}</span>
-            <p class="gb-note-msg">${escape_html(entry.message)}</p>
-          </div>
+          <li>
+            <span class="gb-name">${entry.name?.trim() ? escape_html(entry.name.trim()) : 'anonymous'}</span>
+            <p class="gb-msg">${escape_html(entry.message)}</p>
+          </li>
         `).join('')
-      : '<div class="gb-empty-note">// no entries yet — be the first.</div>';
+      : '<li class="gb-empty-note">// no entries yet — be the first.</li>';
   } catch {
-    board_el.innerHTML = '<div class="gb-empty-note">// couldn\'t load entries.</div>';
+    strip_el.innerHTML = '<li class="gb-empty-note">// couldn\'t load entries.</li>';
   }
 }
 

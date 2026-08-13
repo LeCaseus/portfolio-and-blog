@@ -844,70 +844,43 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
   overflow: hidden;
 }
 
-.gb-corkboard {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 28px;
-  padding: 24px 0 8px;
+.gb-strip {
+  list-style: none;
+  margin: 0;
+  padding: 20px 0 4px;
 }
-
-.gb-note {
-  position: relative;
-  padding: 22px 18px 24px;
-  background: var(--paper_2);
-  border: 1px solid var(--rule);
-  border-radius: 2px;
-  box-shadow: 0 8px 20px rgba(0,0,0,.12);
-  transition: transform .25s ease, box-shadow .25s ease;
+.gb-strip li {
+  padding: 12px 0;
+  border-top: 1px dashed var(--rule);
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
 }
-.gb-note:nth-child(1) {
-  transform: rotate(-3deg);
+.gb-strip li:last-child {
+  border-bottom: 1px dashed var(--rule);
 }
-.gb-note:nth-child(2) {
-  transform: rotate(2deg);
-  margin-top: 16px;
-}
-.gb-note:nth-child(3) {
-  transform: rotate(-1.5deg);
-}
-.gb-note:nth-child(4) {
-  transform: rotate(2.5deg);
-  margin-top: 8px;
-}
-.gb-note:hover {
-  transform: rotate(0deg) translateY(-4px);
-  box-shadow: 0 14px 28px rgba(0,0,0,.18);
-  z-index: 2;
-}
-
-.gb-note::before {
-  content: "";
-  position: absolute;
-  top: -9px;
-  left: 50%;
-  transform: translateX(-50%) rotate(-2deg);
-  width: 46px;
-  height: 16px;
-  background: var(--signal_soft);
-  border: 1px dashed var(--signal);
-}
-
-.gb-note-name {
-  display: block;
+.gb-strip .gb-name {
+  flex-shrink: 0;
   font-family: var(--pixel);
-  font-size: 11px;
-  letter-spacing: .04em;
+  font-size: 10px;
+  letter-spacing: .06em;
   text-transform: uppercase;
   color: var(--signal);
-  margin-bottom: 10px;
 }
-
-.gb-note-msg {
+.gb-strip .gb-msg {
   font-family: var(--mono);
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 14px;
+  line-height: 1.55;
   color: var(--ink);
   margin: 0;
+}
+.gb-strip .gb-msg::before {
+  content: "“ ";
+  color: var(--mute_2);
+}
+.gb-strip .gb-msg::after {
+  content: " ”";
+  color: var(--mute_2);
 }
 
 .gb-empty-note {
@@ -946,8 +919,7 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
   overflow: hidden;
   transition: transform .3s ease, border-color .3s;
 }
-.slide:hover,
-.ring-card:hover {
+.slide:hover {
   transform: translateY(-3px);
   border-color: var(--signal);
 }
@@ -1208,8 +1180,7 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
   color: var(--mute_2);
 }
 
-.slide .status-pill,
-.ring-head .status-pill {
+.slide .status-pill {
   flex-shrink: 0;
   font-family: var(--mono);
   font-size: 11.5px;
@@ -1220,30 +1191,6 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
   background: var(--paper);
   border: 1px solid var(--rule);
   color: var(--mute);
-}
-.status-pill[data-s="link"] {
-  color: var(--mute);
-  border-color: var(--rule);
-}
-.status-pill[data-s="link"]::before {
-  content: "→ ";
-  color: var(--mute_2);
-}
-.status-pill[data-s="badge"] {
-  color: var(--mute);
-  border-color: var(--rule);
-}
-.status-pill[data-s="badge"]::before {
-  content: "▣ ";
-  color: var(--mute_2);
-}
-.status-pill[data-s="script"] {
-  color: var(--mute);
-  border-color: var(--rule);
-}
-.status-pill[data-s="script"]::before {
-  content: "▤ ";
-  color: var(--mute_2);
 }
 .slide .status-pill[data-s="wip"] {
   color: var(--warn);
@@ -1352,114 +1299,72 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
   margin: 24px 0 18px;
 }
 .ringcase {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 18px;
-  align-items: stretch;
-}
-
-.ring-card {
   display: flex;
-  flex-direction: column;
-  border: 1px solid var(--rule);
-  border-radius: 4px;
-  background: var(--paper_2);
-  overflow: hidden;
-  transition: transform .3s ease, border-color .3s;
-}
-
-.ring-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 10px;
-  padding: 10px 14px;
-  background: repeating-linear-gradient(45deg, var(--paper) 0 4px, var(--paper_2) 4px 6px);
-  border-bottom: 1px solid var(--rule);
 }
-.ring-head .label {
-  min-width: 0;
+
+.ring-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  background: var(--paper_2);
   font-family: var(--mono);
   font-size: 12.5px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--mute);
-  display: flex;
-  gap: 8px;
-  align-items: center;
+  transition: border-color .2s, background .2s;
 }
-.ring-head .label b {
-  font-family: var(--pixel);
-  color: var(--ink);
-  font-weight: 700;
+.ring-chip:hover {
+  border-color: var(--signal);
+  background: var(--signal_soft);
 }
-
-.ring-body {
-  flex: 1;
-  padding: 20px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 84px;
-}
-
-.ring-embed {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  width: 100%;
-  font-family: var(--mono);
-  font-size: 14px;
-}
-
-.ring-embed--button a {
-  display: inline-flex;
-  color: var(--ink);
-  text-decoration: none;
-}
-.ring-embed--button img {
-  display: block;
-}
-
-.ring-embed--text {
-  flex-direction: column;
-  gap: 8px;
-}
-.ring-embed--text .ring-title-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.ring-embed--text .ring-nav-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.ring-chip--widget {
+  padding: 4px 10px;
+  max-height: 40px;
+  overflow: hidden;
 }
 
 .ring-main {
   font-family: var(--mono);
-  font-size: 15px;
+  font-size: 12.5px;
   letter-spacing: .02em;
   color: var(--ink);
   text-decoration: none;
-  padding-bottom: 1px;
-  border-bottom: 1px solid var(--signal);
   transition: color .2s;
 }
 .ring-main:hover {
   color: var(--signal);
 }
 
-.ring-dot {
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--signal);
-  box-shadow: 0 0 6px var(--signal_soft);
-  flex-shrink: 0;
+.ring-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--mute_2);
+}
+.ring-nav a {
+  color: var(--mute);
+  text-decoration: none;
+  transition: color .2s;
+}
+.ring-nav a:hover {
+  color: var(--signal);
+}
+
+.ring-chip img {
+  display: block;
+  height: 20px;
+  width: auto;
+}
+.ring-chip img.ring-map-img {
+  height: 38px;
+}
+.ring-chip journal-ring {
+  display: block;
+  max-height: 22px;
 }
 
 a.log-nav {
@@ -1517,11 +1422,8 @@ footer a:hover {
     border-top: 1px solid var(--rule);
     margin-top: 20px;
   }
-
-  .gb-corkboard {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
+
 
 .reveal {
   opacity: 0;
