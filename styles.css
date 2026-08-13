@@ -243,14 +243,6 @@ section:first-of-type {
   border-radius: 2px;
 }
 
-/* ============================================================
-   dashboard shell — index.html only, scoped via body[data-shell].
-   status (existing shared bar) + doc-strip form the header row;
-   spec-col / app-main / nav-col form the middle row; hud-strip
-   is the bottom row. Only .app-main scrolls internally on desktop.
-   Collapses to a normal stacked page on mobile.
-   ============================================================ */
-
 body[data-shell="dashboard"] {
   height: 100dvh;
   overflow: hidden;
@@ -287,7 +279,6 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
   margin-bottom: 8px;
 }
 
-/* header row — doc-strip */
 .doc-strip {
   display: grid;
   grid-template-columns: 1.3fr 1fr 1fr 1.5fr;
@@ -316,7 +307,6 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
 .doc-field .v.signal { color: var(--signal); }
 .doc-field .v small { color: var(--mute); font-weight: 400; }
 
-/* left sidebar — Now vitals + Field spec rows */
 .spec-col {
   padding: 24px 20px;
   display: flex;
@@ -391,7 +381,6 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
   margin-top: 5px;
 }
 
-/* hero intro — first thing inside the scrollable main pane */
 .hero-intro {
   padding: 72px 0 56px;
   border-bottom: 1px solid var(--rule);
@@ -450,7 +439,6 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
   margin-left: 2px;
 }
 
-/* right sidebar — channel nav */
 .nav-col {
   padding: 24px 18px;
   display: flex;
@@ -486,7 +474,6 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
 .nav-chip:hover .idx,
 .nav-chip:hover .lbl { color: var(--signal); }
 
-/* bottom bar — ECG flanked by sync/build readouts */
 .hud-strip {
   border-top: 1px solid var(--rule);
   display: grid;
@@ -656,6 +643,7 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
   line-height: 1.6;
   letter-spacing: 0;
   margin: 0;
+  text-transform: uppercase;
 }
 .head h2 em {
   font-style: normal;
