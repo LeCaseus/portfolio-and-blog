@@ -1,0 +1,11 @@
+baseURL = 'https://cheztervargas.com/'
+languageCode = 'en'
+title = "Chezter's Records"
+uglyURLs = false
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  author = 'Chezter Vargas'
+
+[permalinks]
+  posts = "/blog/:slug/"

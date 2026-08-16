@@ -1,5 +1,6 @@
-import { init_theme_toggle, start_clock, } from '/shared.js';
+import { init_hero_ecg, init_theme_toggle, start_clock, } from '/shared.js';
 
+init_hero_ecg();
 init_theme_toggle();
 start_clock();
 
@@ -53,10 +54,10 @@ async function load_entries() {
     count_el.textContent = entries.length;
     list_el.innerHTML = entries.length
       ? entries.map(render_entry).join('')
-      : '<li class="gb-empty">no entries yet — be the first.</li>';
+      : '<li class="doc-empty">no entries yet — be the first.</li>';
   } catch {
     count_el.textContent = '—';
-    list_el.innerHTML = '<li class="gb-empty">couldn\'t load entries — refresh to try again.</li>';
+    list_el.innerHTML = '<li class="doc-empty">couldn\'t load entries — refresh to try again.</li>';
   }
 }
 

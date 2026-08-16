@@ -1,0 +1,20 @@
+<div class="doc-strip">
+  <div class="doc-field">
+    <span class="k">SUBJECT</span>
+    <span class="v signal">001 · CHEZTER VARGAS</span>
+  </div>
+  <div class="doc-field">
+    <span class="k">CLASSIFICATION</span>
+    <span class="v">{{ if .Params.classification }}{{ .Params.classification }}{{ else if eq .Section "posts" }}BLOG
+      ENTRY{{ else }}PUBLIC RECORD{{ end }}</span>
+  </div>
+  <div class="doc-field">
+    <span class="k">DOCUMENT ID</span>
+    <span class="v">{{ if .Params.docid }}{{ .Params.docid }}{{ else if not .Date.IsZero }}{{ .Date.Format "2006-01-02"
+      }}{{ end }}</span>
+  </div>
+  <div class="doc-field">
+    <span class="k">ORIGIN</span>
+    <span class="v">PHL © 2026 <small>// self-hosted, laptop-powered</small></span>
+  </div>
+</div>

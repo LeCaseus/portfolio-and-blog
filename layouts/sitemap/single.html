@@ -1,0 +1,30 @@
+{{ define "main" }}
+
+<section class="hero-intro" id="top" data-screen-label="09 Sitemap">
+  <div class="name-eyebrow">0x0009 · <span>ELECTRODES CONNECTED</span> · lead II</div>
+  <h1>EVERY&nbsp;PAGE<br /><span class="alive">I&nbsp;HAVE<span class="records-cursor">_</span></span></h1>
+</section>
+
+<section class="doc-section" id="pages">
+  <div class="channel"><span class="line"></span><span>CH-09.1</span><b>PAGES</b></div>
+  <ul class="site-links">
+    <li><a href="/"><span>home</span><span class="path">/</span></a></li>
+    <li><a href="/blog.html"><span>readings log</span><span class="path">/blog.html</span></a></li>
+    <li><a href="/privacy.html"><span>privacy policy</span><span class="path">/privacy.html</span></a></li>
+    <li><a href="/sitemap.html"><span>sitemap</span><span class="path">/sitemap.html</span></a></li>
+    <li><a href="/guestbook.html"><span>guestbook</span><span class="path">/guestbook.html</span></a></li>
+  </ul>
+</section>
+
+<section class="doc-section" id="readings">
+  <div class="channel"><span class="line"></span><span>CH-09.2</span><b>READINGS</b></div>
+  <ul class="site-links" data-post-links>
+    <li class="doc-empty">loading entries…</li>
+  </ul>
+</section>
+
+{{ end }}
+
+{{ define "scripts" }}
+<script type="module" src="/sitemap.js"></script>
+{{ end }}

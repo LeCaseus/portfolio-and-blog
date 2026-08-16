@@ -1,0 +1,20 @@
+<nav class="nav-col" aria-label="Channels">
+  <div class="col-label">// CHANNELS</div>
+  {{ $chips := slice
+  (dict "href" "/" "idx" "CH-01" "lbl" "HOME")
+  (dict "href" "" "idx" "CH-02" "lbl" "RESUME (BROKEN)")
+  (dict "href" "/#projects" "idx" "CH-03" "lbl" "PROJECTS")
+  (dict "href" "/blog.html" "idx" "CH-04" "lbl" "BLOG (BROKEN)")
+  (dict "href" "/#notes" "idx" "CH-05" "lbl" "NOTES")
+  (dict "href" "/guestbook.html" "idx" "CH-06" "lbl" "GUESTBOOK")
+  (dict "href" "/#contact" "idx" "CH-07" "lbl" "CONTACT")
+  (dict "href" "/#webrings" "idx" "CH-08" "lbl" "WEBRINGS")
+  (dict "href" "/sitemap.html" "idx" "CH-09" "lbl" "SITEMAP")
+  (dict "href" "/privacy.html" "idx" "CH-10" "lbl" "PRIVACY")
+  }}
+  {{ range $chips }}
+  <a class="nav-chip{{ if eq .href $.RelPermalink }} active{{ end }}" href="{{ .href }}">
+    <span class="idx">{{ .idx }}</span><span class="lbl">{{ .lbl }}</span>
+  </a>
+  {{ end }}
+</nav>

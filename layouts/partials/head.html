@@ -1,0 +1,9 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{{ .Title }}</title>
+{{ with .Params.description }}<meta name="description" content="{{ . }}" />{{ end }}
+<link rel="stylesheet" href="/styles.css" />
+<link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
+{{ if .IsHome }}<link rel="alternate" type="application/rss+xml" title="Chezter's Readings" href="/feed.xml" />{{ end }}
+<script defer src="https://analytics.cheztervargas.com/site_visits.js"
+  data-website-id="0ada5184-e307-4125-b5d6-e6b37861ce7c" data-performance="true"></script>

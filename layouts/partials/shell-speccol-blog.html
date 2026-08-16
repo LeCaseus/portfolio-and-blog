@@ -1,0 +1,34 @@
+<aside class="spec-col" aria-label="Readings navigation">
+  {{ $posts := (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
+  {{ $allTags := slice }}
+  {{ range $posts }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end }}
+  {{ $uniqueTags := $allTags | uniq | sort }}
+
+  <div class="blog-nav-section">
+    <div class="col-label">// CHANNELS</div>
+    <div class="blog-tag-list">
+      <span class="blog-tag-chip active">
+        <span class="lbl">all entries</span><span class="count">{{ len $posts }}</span>
+      </span>
+      {{ range $uniqueTags }}
+      <span class="blog-tag-chip">
+        <span class="lbl">{{ . }}</span><span class="count">{{ len (where $posts "Params.tags" "intersect" (slice .)) }}</span>
+      </span>
+      {{ end }}
+    </div>
+  </div>
+
+  <div class="blog-nav-section">
+    <div class="col-label">// ENTRIES</div>
+    <ul class="blog-post-list">
+      {{ range $posts }}
+      <li>
+        <a class="blog-post-item{{ if eq $.RelPermalink .RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}">
+          <span class="ttl">{{ .Title }}</span>
+          <span class="date">{{ .Date.Format "2006-01-02" }}</span>
+        </a>
+      </li>
+      {{ end }}
+    </ul>
+  </div>
+</aside>

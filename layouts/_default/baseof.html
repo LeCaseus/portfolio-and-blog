@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {{ partial "head.html" . }}
+</head>
+
+<body data-shell="dashboard">
+
+  {{ partial "shell-header.html" . }}
+  {{ partial "shell-docstrip.html" . }}
+  {{ if eq .Section "posts" }}
+  {{ partial "shell-speccol-blog.html" . }}
+  {{ else }}
+  {{ partial "shell-speccol.html" . }}
+  {{ end }}
+
+  <main class="app-main">
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  {{ partial "shell-navcol.html" . }}
+  {{ partial "shell-hudstrip.html" . }}
+
+  {{ block "scripts" . }}{{ end }}
+
+</body>
+
+</html>
