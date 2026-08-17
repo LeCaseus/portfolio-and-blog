@@ -1,4 +1,4 @@
-import { init_hero_ecg, init_theme_toggle, start_clock, format_post_date, escape_html } from './shared.js';
+import { init_hero_ecg, init_theme_toggle, start_clock, format_post_date, escape_html, fetch_feed_posts } from './shared.js';
 
 init_hero_ecg();
 init_theme_toggle();
@@ -80,17 +80,16 @@ async function load_readings() {
   if (!strip_el) return;
 
   try {
-    const posts = await fetch('/api/posts').then(response => response.json());
-    const sorted_posts = posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-    const recent_posts = sorted_posts.slice(0,3);
+    const posts = await fetch_feed_posts();
+    const recent_posts = posts.slice(0, 3);
     strip_el.innerHTML = recent_posts.map(post => `
-      <a class="read" href="/blog/${post.slug}">
+      <a class="read" href="${post.link}">
         <div class="row-top">
           <span class="date">${format_post_date(post.date)}</span>
-          <span class="tag">${post.tags}</span>
+          <span class="tag">${post.tags.map(escape_html).join(', ')}</span>
         </div>
-        <span class="ttl">${post.title}</span>
-        <p class="summary">${post.summary}</p>
+        <span class="ttl">${escape_html(post.title)}</span>
+        <p class="summary">${escape_html(post.summary)}</p>
       </a>
     `).join('');
   } catch {

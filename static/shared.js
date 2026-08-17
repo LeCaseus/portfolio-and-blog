@@ -179,3 +179,18 @@ export function escape_html(value) {
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   }[char]));
 }
+
+export async function fetch_feed_posts(feed_url = '/feed.xml') {
+  const response = await fetch(feed_url);
+  const xml_text = await response.text();
+  const doc = new DOMParser().parseFromString(xml_text, 'application/xml');
+  if (doc.querySelector('parsererror')) throw new Error('feed parse failed');
+
+  return [...doc.querySelectorAll('item')].map(item => ({
+    title: item.querySelector('title')?.textContent ?? '',
+    link: item.querySelector('link')?.textContent ?? '',
+    date: item.querySelector('pubDate')?.textContent ?? '',
+    summary: item.querySelector('description')?.textContent ?? '',
+    tags: [...item.querySelectorAll('category')].map(node => node.textContent),
+  }));
+}
