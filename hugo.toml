@@ -13,4 +13,4 @@ disableKinds = ["taxonomy", "term"]
 [outputFormats.RSS]
   baseName = "feed"
   mediaType = "application/rss+xml"
-  isPLainText = true
+  isPlainText = true
