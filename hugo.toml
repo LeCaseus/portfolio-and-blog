@@ -1,5 +1,5 @@
 baseURL = 'https://cheztervargas.com/'
-languageCode = 'en'
+locale = "en"
 title = "Chezter's Records"
 uglyURLs = false
 disableKinds = ["taxonomy", "term"]
@@ -12,3 +12,5 @@ disableKinds = ["taxonomy", "term"]
 
 [outputFormats.RSS]
   baseName = "feed"
+  mediaType = "application/rss+xml"
+  isPLainText = true
