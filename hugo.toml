@@ -9,3 +9,6 @@ disableKinds = ["taxonomy", "term"]
 
 [permalinks]
   posts = "/blog/:slug/"
+
+[outputFormats.RSS]
+  baseName = "feed"

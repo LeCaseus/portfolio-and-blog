@@ -1788,6 +1788,19 @@ footer a:hover {
   background: var(--signal_soft);
 }
 
+button.blog-tag-chip {
+  appearance: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+}
+
+button.blog-tag-chip:hover {
+  border-color: var(--signal);
+  color: var(--ink);
+}
+
 .blog-tag-chip .count {
   color: var(--mute_2);
   font-size: 11px;

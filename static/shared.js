@@ -16,11 +16,15 @@ export function init_hero_ecg() {
   ecg_svg.setAttribute('preserveAspectRatio', 'none');
   ecg_svg.appendChild(path);
 
+  const scroll_container = document.querySelector('.app-main') || window;
+  const get_scroll_position = () =>
+    scroll_container === window ? window.scrollY : scroll_container.scrollTop;
+
   let intensity = 1;
   let pointer_inside = false;
   let stress_until = 0;
   let scroll_energy = 0;
-  let last_scroll_y = window.scrollY;
+  let last_scroll_y = get_scroll_position();
   let last_scroll_time = performance.now();
   let points = [];
   let cursor_x = 0;
@@ -78,12 +82,13 @@ export function init_hero_ecg() {
     requestAnimationFrame(animate);
   };
 
-  window.addEventListener('scroll', () => {
+  scroll_container.addEventListener('scroll', () => {
     const now = performance.now();
-    const distance = Math.abs(window.scrollY - last_scroll_y);
+    const current_scroll_y = get_scroll_position();
+    const distance = Math.abs(current_scroll_y - last_scroll_y);
     const elapsed = Math.max(16, now - last_scroll_time);
     scroll_energy = Math.min(120, scroll_energy * 0.6 + (distance / elapsed) * 60);
-    last_scroll_y = window.scrollY;
+    last_scroll_y = current_scroll_y;
     last_scroll_time = now;
   }, { passive: true });
 
