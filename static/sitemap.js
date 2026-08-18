@@ -1,4 +1,4 @@
-import { init_hero_ecg, init_theme_toggle, start_clock, fetch_feed_posts } from '/shared.js';
+import { init_hero_ecg, init_theme_toggle, fetch_feed_posts, start_clock, escape_html } from '/shared.js';
 
 init_hero_ecg();
 init_theme_toggle();
