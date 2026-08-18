@@ -3,6 +3,7 @@ locale = "en"
 title = "Chezter's Records"
 uglyURLs = false
 disableKinds = ["taxonomy", "term"]
+ignoreFiles = ["notes\\.json$"]
 
 [params]
   author = 'Chezter Vargas'

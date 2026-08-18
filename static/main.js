@@ -161,7 +161,7 @@ async function load_notes() {
     return `
       <div class="entry-row">
         <div class="ts">${note.ts}</div>
-        <div class="lvl" data-lvl="${note.lvl}">${note.label}</div>
+        <div class="lvl" data-lvl="${note.lvl}">${note.lvl}</div>
         <div class="msg">${message_html}${tags_html}</div>
       </div>
     `;

@@ -3,6 +3,8 @@
 <title>{{ .Title }}</title>
 {{ with .Params.description }}<meta name="description" content="{{ . }}" />{{ end }}
 <link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/tablet.css" media="(max-width: 1024px)" />
+<link rel="stylesheet" href="/mobile.css" media="(max-width: 640px)" />
 <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
 {{ if .IsHome }}<link rel="alternate" type="application/rss+xml" title="Chezter's Readings" href="/feed.xml" />{{ end }}
 <script defer src="https://analytics.cheztervargas.com/site_visits.js"
