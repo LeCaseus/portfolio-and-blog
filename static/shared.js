@@ -126,19 +126,18 @@ export function get_preferred_theme() {
 export function apply_theme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem(theme_storage_key, theme);
-  document.querySelectorAll('[data-theme-toggle]').forEach(button => {
-    button.textContent = theme === 'dark' ? '☼ LIGHT' : '☾ DARK';
+  document.querySelectorAll('[data-theme-toggle]').forEach(checkbox => {
+    checkbox.checked = theme === 'dark';
   });
 }
 
 export function init_theme_toggle() {
   const initial_theme = get_preferred_theme();
   document.documentElement.setAttribute('data-theme', initial_theme);
-  document.querySelectorAll('[data-theme-toggle]').forEach(button => {
-    button.textContent = initial_theme === 'dark' ? '☼ LIGHT' : '☾ DARK';
-    button.addEventListener('click', () => {
-      const current_theme = document.documentElement.getAttribute('data-theme');
-      apply_theme(current_theme === 'dark' ? 'light' : 'dark');
+  document.querySelectorAll('[data-theme-toggle]').forEach(checkbox => {
+    checkbox.checked = initial_theme === 'dark';
+    checkbox.addEventListener('change', () => {
+      apply_theme(checkbox.checked ? 'dark' : 'light');
     });
   });
 }

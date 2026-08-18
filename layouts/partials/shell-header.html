@@ -5,6 +5,9 @@
   <div class="center">{{ .Params.statusline }}</div>
   <div class="right">
     <span>UTC <span data-clock>00:00:00</span></span>
-    <button class="theme" data-theme-toggle type="button" aria-label="Toggle theme">☾ DARK</button>
+    <label class="switch" aria-label="Toggle theme">
+      <input type="checkbox" class="toggle" data-theme-toggle />
+      <span class="slider"></span>
+    </label>
   </div>
 </header>

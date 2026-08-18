@@ -118,24 +118,54 @@ body {
 .status .left .build-tag {
   color: var(--signal);
 }
-.status button.theme {
-  appearance: none;
-  border: 1px solid var(--rule);
-  background: transparent;
-  color: var(--ink);
-  font: inherit;
-  font-family: var(--mono);
-  font-size: 12.5px;
-  padding: 4px 9px;
+
+.switch {
+  position: relative;
+  display: inline-flex;
+  width: 40px;
+  height: 18px;
+  flex-shrink: 0;
   cursor: pointer;
-  letter-spacing: .08em;
-  border-radius: 2px;
-  transition: background .15s, color .15s, border-color .15s;
 }
-.status button.theme:hover {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--paper);
+.switch .toggle {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.switch .slider {
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px var(--ink);
+  background: var(--paper);
+  transition: background .2s;
+}
+.switch .slider::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  left: -2px;
+  bottom: 1px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--ink);
+  border-radius: 3px;
+  background: var(--paper_2);
+  box-shadow: 0 2px 0 var(--ink);
+  transition: transform .2s, background .2s;
+}
+.switch .toggle:checked + .slider {
+  background: var(--signal_soft);
+}
+.switch .toggle:checked + .slider::before {
+  transform: translateX(22px);
+  background: var(--signal);
+}
+.switch .toggle:focus-visible + .slider {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
 }
 
 main {
