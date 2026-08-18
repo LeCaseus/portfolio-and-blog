@@ -576,6 +576,12 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
   letter-spacing: 0;
   padding: 28px 32px;
   text-wrap: pretty;
+  box-shadow: 8px 8px 0 var(--signal_soft);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.hero-intro .prose:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 12px 12px 0 var(--signal);
 }
 .hero-intro .prose .col-label { margin-bottom: 14px; }
 .hero-intro .prose .lead {
@@ -808,6 +814,12 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
   border: 1px solid var(--rule);
   background: var(--paper_2);
   font-family: var(--mono);
+  box-shadow: 8px 8px 0 var(--signal_soft);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.gb-tui:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 12px 12px 0 var(--signal);
 }
 
 .gb-tui-corner {
@@ -1161,12 +1173,13 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  transition: transform .3s ease, border-color .3s;
+  box-shadow: 8px 8px 0 var(--signal_soft);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
-.slide:hover,
-.ring-card:hover {
-  transform: translateY(-3px);
+.slide:hover {
+  transform: translate(-4px, -4px);
   border-color: var(--signal);
+  box-shadow: 12px 12px 0 var(--signal);
 }
 .slide .frosted {
   position: absolute;
@@ -1582,7 +1595,13 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
   border-radius: 4px;
   background: var(--paper_2);
   overflow: hidden;
-  transition: transform .3s ease, border-color .3s;
+  box-shadow: 8px 8px 0 var(--signal_soft);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.ring-card:hover {
+  transform: translate(-4px, -4px);
+  border-color: var(--signal);
+  box-shadow: 12px 12px 0 var(--signal);
 }
 
 .ring-head {
