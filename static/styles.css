@@ -2011,12 +2011,21 @@ button.blog-tag-chip:hover {
   color: var(--signal);
 }
 
+.reader {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr min(68ch, 100%) 64px 1fr;
+  column-gap: 24px;
+}
+
 .reader .header {
   display: flex;
   flex-direction: column;
   gap: 14px;
   max-width: 80ch;
   margin: 40px auto auto;
+  grid-column: 2;
+  grid-row: 1;
 }
 
 .reader .meta {
@@ -2064,6 +2073,8 @@ button.blog-tag-chip:hover {
   line-height: 1.6;
   color: var(--ink);
   text-align: justify;
+  grid-column: 2;
+  grid-row: 2;
 }
 
 .prose-body p {
@@ -2161,6 +2172,104 @@ button.blog-tag-chip:hover {
   color: var(--mute_2);
 }
 
+.post-heart {
+  grid-column: 3;
+  grid-row: 1 / 3;
+  position: sticky;
+  top: 140px;
+  align-self: start;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.post-heart-count {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--mute);
+}
+
+.heart-container {
+  --heart-color: var(--signal);
+  position: relative;
+  width: 42px;
+  height: 42px;
+  transition: .3s;
+}
+.heart-container .checkbox {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 20;
+  cursor: pointer;
+}
+.heart-container .svg-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.heart-container .svg-outline,
+.heart-container .svg-filled {
+  fill: var(--heart-color);
+  position: absolute;
+}
+.heart-container .svg-filled {
+  animation: keyframes-svg-filled 1s;
+  display: none;
+}
+.heart-container .svg-celebrate {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: keyframes-svg-celebrate .5s;
+  animation-fill-mode: forwards;
+  display: none;
+  stroke: var(--heart-color);
+  fill: var(--heart-color);
+  stroke-width: 2px;
+}
+.heart-container .checkbox:checked ~ .svg-container .svg-filled {
+  display: block;
+}
+.heart-container .checkbox:checked ~ .svg-container .svg-celebrate {
+  display: block;
+}
+
+@keyframes keyframes-svg-filled {
+  0% { transform: scale(0); }
+  25% { transform: scale(1.2); }
+  50% { transform: scale(1); filter: brightness(1.5); }
+}
+@keyframes keyframes-svg-celebrate {
+  0% { transform: scale(0); }
+  50% { opacity: 1; filter: brightness(1.5); }
+  100% { transform: scale(1.4); opacity: 0; display: none; }
+}
+
+@media (max-width: 1200px) {
+  .reader {
+    display: block;
+  }
+  .reader .header,
+  .prose-body,
+  .entry-footer {
+    grid-column: unset;
+    grid-row: unset;
+  }
+  .post-heart {
+    position: static;
+    flex-direction: row;
+    justify-content: center;
+    margin: 24px auto 0;
+  }
+}
+
 .entry-footer {
   margin: 48px 0 0;
   padding-top: 20px;
@@ -2173,6 +2282,8 @@ button.blog-tag-chip:hover {
   font-size: 12px;
   letter-spacing: .04em;
   color: var(--mute);
+  grid-column: 1 / -1;
+  grid-row: 3;
 }
 
 .entry-footer a {
