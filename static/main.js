@@ -98,21 +98,30 @@ async function load_readings() {
 }
 
 async function load_guestbook_teaser() {
-  const strip_el = document.querySelector('.gb-strip');
-  if (!strip_el) return;
+  const rows_el = document.querySelector('[data-gb-tui-rows]');
+  const count_el = document.querySelector('[data-gb-count]');
+  const gauge_fill_el = document.querySelector('[data-gb-gauge-fill]');
+  if (!rows_el) return;
+
   try {
     const entries = await fetch('/api/guestbook').then(response => response.json());
-    const recent_entries = entries.slice(0, 4);
-    strip_el.innerHTML = recent_entries.length
-      ? recent_entries.map(entry => `
-          <li>
-            <span class="gb-name">${entry.name?.trim() ? escape_html(entry.name.trim()) : 'anonymous'}</span>
-            <p class="gb-msg">${escape_html(entry.message)}</p>
+    const recent_entries = entries.slice(0, 6);
+
+    count_el.textContent = String(entries.length).padStart(2, '0');
+    gauge_fill_el.style.width = `${Math.min(100, (entries.length / 10) * 100)}%`;
+
+    rows_el.innerHTML = recent_entries.length
+      ? recent_entries.map((entry, index) => `
+          <li class="gb-tui-row">
+            <span class="gb-tui-idx">${String(index + 1).padStart(2, '0')}</span>
+            <span class="gb-tui-name">${entry.name?.trim() ? escape_html(entry.name.trim()) : 'anonymous'}</span>
+            <span class="gb-tui-msg">${escape_html(entry.message)}</span>
           </li>
         `).join('')
-      : '<li class="gb-empty-note">// no entries yet — be the first.</li>';
+      : '<li class="gb-tui-empty">// no entries yet — be the first.</li>';
   } catch {
-    strip_el.innerHTML = '<li class="gb-empty-note">// couldn\'t load entries.</li>';
+    count_el.textContent = '—';
+    rows_el.innerHTML = '<li class="gb-tui-empty">// couldn\'t load entries.</li>';
   }
 }
 

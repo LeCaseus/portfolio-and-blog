@@ -123,7 +123,29 @@
     <h2>Patient <em>charts</em></h2>
     <a href="/guestbook.html">This guy seems cool.</a>
   </div>
-  <div class="gb-strip"></div>
+  <div class="gb-tui" data-gb-tui>
+    <span class="gb-tui-corner tl" aria-hidden="true">┌</span>
+    <span class="gb-tui-corner tr" aria-hidden="true">┐</span>
+    <span class="gb-tui-corner bl" aria-hidden="true">└</span>
+    <span class="gb-tui-corner br" aria-hidden="true">┘</span>
+    <div class="gb-tui-bar">
+      <span class="gb-tui-app">guestbook.tui</span>
+      <span class="gb-tui-meter">
+        <span class="gb-tui-meter-label">ENTRIES</span>
+        <span class="gb-tui-gauge"><i data-gb-gauge-fill></i></span>
+        <span class="gb-tui-meter-val" data-gb-count>—</span>
+      </span>
+    </div>
+    <ul class="gb-tui-rows" data-gb-tui-rows>
+      <li class="gb-tui-empty">loading…</li>
+    </ul>
+    <div class="gb-tui-footer">
+      <span><b>F1</b>help</span>
+      <span><b>F2</b>sign</span>
+      <span><b>F3</b>random</span>
+      <span><b>F10</b>quit</span>
+    </div>
+  </div>
 </section>
 
 <section class="contact reveal" id="contact" data-screen-label="07 Contact">
