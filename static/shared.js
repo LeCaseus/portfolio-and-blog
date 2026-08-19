@@ -153,6 +153,14 @@ export function start_clock() {
   setInterval(tick, 1000);
 }
 
+export function init_mobile_nav() {
+  const toggle = document.getElementById('mobile-nav-check');
+  if (!toggle) return;
+  document.querySelectorAll('.nav-col .nav-chip').forEach(link => {
+    link.addEventListener('click', () => { toggle.checked = false; });
+  });
+}
+
 export function format_post_date(iso_string, include_time = false) {
   const date = new Date(iso_string);
   const date_part = date

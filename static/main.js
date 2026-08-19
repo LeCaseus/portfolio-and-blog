@@ -1,8 +1,9 @@
-import { init_hero_ecg, init_theme_toggle, start_clock, format_post_date, escape_html, fetch_feed_posts } from './shared.js';
+import { init_hero_ecg, init_theme_toggle, start_clock, init_mobile_nav, format_post_date, escape_html, fetch_feed_posts } from './shared.js';
 
 init_hero_ecg();
 init_theme_toggle();
 start_clock();
+init_mobile_nav();
 
 function init_typewriter() {
   const typewriter_el = document.querySelector('[data-typewriter]');

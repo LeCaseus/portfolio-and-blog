@@ -2102,4 +2102,14 @@ button.blog-tag-chip:hover {
   background: var(--mute_2);
 }
 
+.mobile-nav-toggle {
+  display: none;
+}
 
+.mobile-dropdown-toggle {
+  display: none;
+}
+
+.mobile-dropdown-summary {
+  display: none;
+}

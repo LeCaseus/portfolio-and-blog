@@ -1,8 +1,9 @@
-import { init_hero_ecg, init_theme_toggle, fetch_feed_posts, start_clock, escape_html } from '/shared.js';
+import { init_hero_ecg, init_theme_toggle, start_clock, init_mobile_nav, escape_html, fetch_feed_posts } from '/shared.js';
 
 init_hero_ecg();
 init_theme_toggle();
 start_clock();
+init_mobile_nav();
 
 const post_links_el = document.querySelector('[data-post-links]');
 

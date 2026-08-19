@@ -1,8 +1,9 @@
-import { init_theme_toggle, start_clock, init_hero_ecg } from '/shared.js';
+import { init_theme_toggle, start_clock, init_hero_ecg, init_mobile_nav } from '/shared.js';
 
 init_theme_toggle();
 start_clock();
 init_hero_ecg();
+init_mobile_nav();
 
 function init_tag_filter() {
   const tag_list = document.querySelector('[data-blog-tag-list]');

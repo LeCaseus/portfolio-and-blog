@@ -1,8 +1,9 @@
-import { init_hero_ecg, init_theme_toggle, start_clock, } from '/shared.js';
+import { init_hero_ecg, init_theme_toggle, start_clock, init_mobile_nav } from '/shared.js';
 
 init_hero_ecg();
 init_theme_toggle();
 start_clock();
+init_mobile_nav();
 
 function escape_html(value) {
   return String(value).replace(/[&<>"']/g, char => ({

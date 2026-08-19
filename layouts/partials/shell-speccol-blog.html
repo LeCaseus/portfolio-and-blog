@@ -4,9 +4,10 @@
   {{ range $posts }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end }}
   {{ $uniqueTags := $allTags | uniq | sort }}
 
+  <input type="checkbox" id="speccol-blog-toggle" class="mobile-dropdown-toggle" />
   <div class="blog-nav-section">
-    <div class="col-label">// CHANNELS</div>
-    <div class="blog-tag-list" data-blog-tag-list>
+    <label for="speccol-blog-toggle" class="col-label mobile-dropdown-summary">// CHANNELS</label>
+    <div class="blog-tag-list mobile-dropdown-content" data-blog-tag-list>
       <button type="button" class="blog-tag-chip active" data-tag="all">
         <span class="lbl">all entries</span><span class="count">{{ len $posts }}</span>
       </button>
@@ -19,7 +20,7 @@
     </div>
   </div>
 
-  <div class="blog-nav-section">
+  <div class="blog-nav-section mobile-dropdown-content">
     <div class="col-label">// ENTRIES</div>
     <ul class="blog-post-list" data-blog-post-list>
       {{ range $posts }}
