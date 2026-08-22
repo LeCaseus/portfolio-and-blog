@@ -10,13 +10,13 @@
     overflow: visible;
     border: 0;
   }
-  .spec-col { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
-  .nav-col { border-top: 1px solid var(--rule); }
+  .spec-col { border-top: 2px solid var(--signal); border-bottom: 2px solid var(--signal); }
+  .nav-col { border-top: 2px solid var(--signal); }
   .doc-strip { grid-template-columns: 1fr 1fr; }
   .doc-field:nth-child(3),
-  .doc-field:nth-child(4) { border-top: 1px solid var(--rule); }
+  .doc-field:nth-child(4) { border-top: 2px solid var(--signal); }
   .hud-strip { grid-template-columns: 1fr; }
-  .hud-side { border: 0 !important; border-top: 1px solid var(--rule) !important; flex-direction: row; justify-content: space-between; align-items: center; }
+  .hud-side { border: 0 !important; border-top: 2px solid var(--signal) !important; flex-direction: row; justify-content: space-between; align-items: center; }
 
   .read {
     grid-template-columns: 88px 1fr 18px;
@@ -37,6 +37,6 @@
   .readings-list-col {
     border-left: none;
     padding: 20px 16px 16px;
-    border-top: 1px solid var(--rule);
+    border-top: 2px solid var(--signal);
     margin-top: 20px;
   }

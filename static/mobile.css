@@ -1,5 +1,5 @@
   .doc-strip { grid-template-columns: 1fr; }
-  .doc-field { border-right: 0; border-top: 1px solid var(--rule); }
+  .doc-field { border-right: 0; border-top: 2px solid var(--signal); }
   .doc-field:first-child { border-top: 0; }
   .name-row { flex-direction: column; align-items: flex-start; }
   .hero-intro h1 { font-size: clamp(24px, 9vw, 36px); }
@@ -186,10 +186,8 @@ body[data-shell="dashboard"] {
   text-decoration: none;
   color: var(--paper);
   background-color: var(--signal);
-  border: 2px solid var(--ink);
-  border-radius: 10px;
-  box-shadow: 5px 5px 0px var(--ink);
-  transition: all 0.3s ease;
+  border: 1px solid var(--signal);
+  transition: background-color .2s, color .2s;
   cursor: pointer;
 }
 
@@ -198,17 +196,15 @@ body[data-shell="dashboard"] {
 }
 
 .hamburger-btn:hover {
-  background-color: var(--paper);
+  background-color: transparent;
   color: var(--signal);
-  border: 2px solid var(--signal);
-  box-shadow: 5px 5px 0px var(--signal);
+  border: 1px solid var(--signal);
 }
 
 .hamburger-btn:has(input:checked) {
   background-color: var(--warn);
+  border-color: var(--warn);
   color: var(--paper);
-  box-shadow: none;
-  transform: translateY(4px);
 }
 
 body:has(#mobile-nav-check:checked) {
