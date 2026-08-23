@@ -12,6 +12,8 @@
   --warn:          oklch(0.62 0.16 65);
   --grid:          rgba(12,13,12,.05);
   --hi:            rgba(12,13,12,1);
+  --scanline:      rgba(12,13,12,.09);
+  --glow-text:       0 0 3px var(--signal), 0 0 10px var(--signal_soft), 0 0 22px var(--signal_soft);
   --serif_read: "Lora", "Times New Roman", serif;
   --mono:  "Fira Code", ui-monospace, "JetBrains Mono", Menlo, monospace;
   --pixel: "Silkscreen", var(--mono);
@@ -33,6 +35,7 @@
   --warn:          oklch(0.82 0.16 75);
   --grid:          rgba(240,236,227,.06);
   --hi:            rgba(240,236,227,1);
+  --scanline:      rgba(240,236,227,.16);
 }
 
 * {
@@ -64,6 +67,37 @@ body {
   background-attachment: fixed;
   transition: background-color .35s ease, color .35s ease;
   overflow-x: hidden;
+}
+
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  pointer-events: none;
+  animation: crt-flicker 6s ease-in-out infinite;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--scanline) 0px,
+    var(--scanline) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+}
+.crt-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,.25) 80%, rgba(0,0,0,.6) 125%);
+}
+[data-theme="dark"] .crt-overlay::after {
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,.35) 80%, rgba(0,0,0,.8) 125%);
+}
+@keyframes crt-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .90; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .crt-overlay { animation: none; }
 }
 
 .status {
@@ -1701,6 +1735,29 @@ footer a:hover {
   outline: 2px solid var(--signal);
   outline-offset: 3px;
   border-radius: 2px;
+}
+
+.status .left .build-tag,
+.alive,
+.nav-chip:hover .idx,
+.nav-chip:hover .lbl,
+.nav-chip.active .idx,
+.nav-chip.active .lbl,
+.hud-side .v,
+.ecg-readout b,
+.hero-intro .prose em,
+.doc-field .v.signal,
+.head h2 em,
+.read .tag,
+.readings-lead::first-letter,
+.gb-tui-name,
+.slide .ttl em,
+.slide .status-pill[data-s="active"],
+.ring-main:hover,
+.contact .term .ln .prompt,
+.prose-body h2::before,
+.entry-row .lvl[data-lvl="info"] {
+  text-shadow: var(--glow-text);
 }
 
 /* NOTE: Blogpage CSS stuff here */
