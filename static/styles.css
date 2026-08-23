@@ -154,46 +154,40 @@ body {
 }
 
 .switch {
-  position: relative;
+  --false: var(--warn);
+  --true: var(--signal);
   display: inline-flex;
-  width: 40px;
-  height: 18px;
   flex-shrink: 0;
-  cursor: pointer;
 }
 .switch .toggle {
-  opacity: 0;
-  width: 0;
-  height: 0;
+  appearance: none;
+  height: 1.6rem;
+  width: 2.8rem;
+  background-color: var(--paper);
+  border: 1px solid var(--rule);
+  position: relative;
+  border-radius: .2em;
+  cursor: pointer;
+  margin: 0;
 }
-.switch .slider {
-  box-sizing: border-box;
+.switch .toggle::before {
+  content: '';
+  display: block;
+  height: 1.5em;
+  width: 1.5em;
+  transform: translate(-50%, -50%);
   position: absolute;
-  inset: 0;
-  border: 1px solid var(--signal);
-  background: var(--paper);
-  transition: background .2s;
+  top: 50%;
+  left: calc(1.5em/2 + .25em);
+  background-color: var(--false);
+  border-radius: .2em;
+  transition: left .3s ease, background-color .3s ease;
 }
-.switch .slider::before {
-  content: "";
-  box-sizing: border-box;
-  position: absolute;
-  left: -1px;
-  bottom: 0;
-  width: 18px;
-  height: 18px;
-  border: 1px solid var(--signal);
-  background: var(--paper_2);
-  transition: transform .2s, background .2s;
+.switch .toggle:checked::before {
+  background-color: var(--true);
+  left: calc(100% - (1.5em/2 + .25em));
 }
-.switch .toggle:checked + .slider {
-  background: var(--signal_soft);
-}
-.switch .toggle:checked + .slider::before {
-  transform: translateX(22px);
-  background: var(--signal);
-}
-.switch .toggle:focus-visible + .slider {
+.switch .toggle:focus-visible {
   outline: 2px solid var(--signal);
   outline-offset: 2px;
 }

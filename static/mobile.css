@@ -179,15 +179,15 @@ body[data-shell="dashboard"] {
 
 .comic-button {
   display: inline-block;
-  padding: 10px 20px;
-  font-size: 24px;
+  padding: 8px 14px;
+  font-size: 18px;
   font-weight: bold;
   text-align: center;
   text-decoration: none;
   color: var(--paper);
   background-color: var(--signal);
   border: 1px solid var(--signal);
-  transition: background-color .2s, color .2s;
+  box-shadow: 3px 3px 0 var(--signal_soft);
   cursor: pointer;
 }
 
@@ -195,16 +195,11 @@ body[data-shell="dashboard"] {
   display: none;
 }
 
-.hamburger-btn:hover {
-  background-color: transparent;
-  color: var(--signal);
-  border: 1px solid var(--signal);
-}
-
 .hamburger-btn:has(input:checked) {
   background-color: var(--warn);
   border-color: var(--warn);
   color: var(--paper);
+  box-shadow: 3px 3px 0 var(--signal_soft);
 }
 
 body:has(#mobile-nav-check:checked) {
