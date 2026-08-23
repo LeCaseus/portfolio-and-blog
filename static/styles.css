@@ -12,7 +12,7 @@
   --warn:          oklch(0.62 0.16 65);
   --grid:          rgba(12,13,12,.05);
   --hi:            rgba(12,13,12,1);
-  --scanline:      rgba(12,13,12,.09);
+  --scanline:      rgba(12,13,12,.05);
   --glow-text:       0 0 3px var(--signal), 0 0 10px var(--signal_soft), 0 0 22px var(--signal_soft);
   --serif_read: "Lora", "Times New Roman", serif;
   --mono:  "Fira Code", ui-monospace, "JetBrains Mono", Menlo, monospace;
@@ -35,7 +35,7 @@
   --warn:          oklch(0.82 0.16 75);
   --grid:          rgba(240,236,227,.06);
   --hi:            rgba(240,236,227,1);
-  --scanline:      rgba(240,236,227,.16);
+  --scanline:      rgba(240,236,227,.06);
 }
 
 * {
@@ -74,7 +74,7 @@ body {
   inset: 0;
   z-index: 500;
   pointer-events: none;
-  animation: crt-flicker 6s ease-in-out infinite;
+  animation: crt-flicker 7.5s linear infinite;
   background: repeating-linear-gradient(
     to bottom,
     var(--scanline) 0px,
@@ -87,14 +87,27 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,.25) 80%, rgba(0,0,0,.6) 125%);
+  background: radial-gradient(ellipse at center, transparent 65%, rgba(0,0,0,.08) 95%, rgba(0,0,0,.2) 140%);
 }
 [data-theme="dark"] .crt-overlay::after {
-  background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,.35) 80%, rgba(0,0,0,.8) 125%);
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.12) 95%, rgba(0,0,0,.28) 140%);
 }
 @keyframes crt-flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: .90; }
+  0%   { opacity: 1;   }
+  7%   { opacity: .96; }
+  8%   { opacity: 1;   }
+  22%  { opacity: 1;   }
+  23%  { opacity: .93; }
+  24%  { opacity: 1;   }
+  41%  { opacity: 1;   }
+  42%  { opacity: .97; }
+  43%  { opacity: .99; }
+  44%  { opacity: .95; }
+  45%  { opacity: 1;   }
+  68%  { opacity: 1;   }
+  69%  { opacity: .94; }
+  70%  { opacity: 1;   }
+  100% { opacity: 1;   }
 }
 @media (prefers-reduced-motion: reduce) {
   .crt-overlay { animation: none; }
