@@ -5,10 +5,12 @@
   }
   body[data-shell="dashboard"] > .spec-col,
   body[data-shell="dashboard"] > .app-main,
-  body[data-shell="dashboard"] > .nav-col,
-  body[data-shell="dashboard"] > .hud-strip {
+  body[data-shell="dashboard"] > .nav-col {
     overflow: visible;
     border: 0;
+  }
+  body[data-shell="dashboard"] > .hud-strip {
+    overflow: visible;
   }
   .spec-col { border-top: 2px solid var(--signal); border-bottom: 2px solid var(--signal); }
   .nav-col { border-top: 2px solid var(--signal); }

@@ -78,12 +78,18 @@
     font-size: clamp(15px, 4.5vw, 18px);
   }
 
-  .readings .head,
-  .guestbook .head {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 0;
+  .head {
+    flex-wrap: wrap;
+  }
+  .head h2 {
+    flex: 1 1 100%;
+    min-width: 0;
+    text-align: center;
+    white-space: nowrap;
+    font-size: clamp(9px, 4.8vw, 20px);
+  }
+  .head .note, .head a {
+    display: none;
   }
 
   .slides {
@@ -91,11 +97,6 @@
     gap: 14px;
   }
 
-  .notes .head {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
   .log {
     margin-top: 16px;
   }
@@ -148,7 +149,7 @@
   .prose-body { font-size: 14px; }
 
 .hud-strip {
-  border-top: 3px;
+  border-top: 6px double var(--signal);
   position: fixed;
   left: 0;
   right: 0;

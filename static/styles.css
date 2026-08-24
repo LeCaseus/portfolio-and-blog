@@ -129,7 +129,7 @@ body {
   color: var(--mute);
   background: color-mix(in oklab, var(--paper) 88%, transparent);
   backdrop-filter: blur(10px);
-  border-bottom: 4px double var(--signal);
+  border-bottom: 6px double var(--signal);
 }
 .status .dot {
   display: inline-block;
@@ -326,10 +326,10 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
 .doc-field .v small { color: var(--mute); font-weight: 400; }
 
 .spec-col {
-  padding: 24px 20px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
 }
 .vital-grid {
   display: grid;
@@ -337,8 +337,8 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
   gap: 12px;
 }
 .vital-chip {
-  border: 1px solid var(--signal);
-  padding: 14px 16px;
+  border: 2px solid var(--signal);
+  padding: 24px 20px;
   background: var(--paper_2);
 }
 .vital-chip .k {
@@ -492,7 +492,7 @@ body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
 .nav-chip.active .lbl { color: var(--signal); }
 
 .hud-strip {
-  border-top: 2px solid var(--signal);
+  border-top: 6px double var(--signal);
   display: grid;
   grid-template-columns: 150px 1fr 150px;
 }
@@ -1692,7 +1692,7 @@ a.log-nav {
 }
 
 footer {
-  border-top: 4px double var(--signal);
+  border-top: 6px double var(--signal);
   padding: 18px var(--pad);
   display: grid;
   grid-template-columns: auto 1fr auto;
