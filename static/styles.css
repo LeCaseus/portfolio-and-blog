@@ -81,7 +81,9 @@ body {
   inset: 0;
   z-index: 500;
   pointer-events: none;
-  animation: crt-flicker 7.5s linear infinite;
+  animation:
+    crt-flicker 7.5s linear infinite,
+    crt-jitter 0.6s steps(1) infinite;
   background: repeating-linear-gradient(
     to bottom,
     var(--scanline) 0px,
@@ -154,6 +156,29 @@ body {
   }
   100% {
     opacity: 1;
+  }
+}
+@keyframes crt-jitter {
+  0% {
+    background-position: 0 0;
+  }
+  15% {
+    background-position: 0 1px;
+  }
+  30% {
+    background-position: 0 3px;
+  }
+  45% {
+    background-position: 0 0;
+  }
+  60% {
+    background-position: 0 2px;
+  }
+  80% {
+    background-position: 0 1px;
+  }
+  100% {
+    background-position: 0 0;
   }
 }
 @media (prefers-reduced-motion: reduce) {
