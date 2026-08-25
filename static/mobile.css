@@ -1,146 +1,175 @@
 /* INFO: shell -- dashboard grid tweaks (doc-strip stacks to 1 column) */
-  .doc-strip { grid-template-columns: 1fr; }
-  .doc-field { border-right: 0; border-top: 2px solid var(--signal); }
-  .doc-field:first-child { border-top: 0; }
-  .name-row { flex-direction: column; align-items: flex-start; }
-  .hero-intro h1 { font-size: clamp(24px, 9vw, 36px); }
-  .name-sub { margin-top: 20px; }
+.doc-strip {
+  grid-template-columns: 1fr;
+}
+.doc-field {
+  border-right: 0;
+  border-top: 2px solid var(--signal);
+}
+.doc-field:first-child {
+  border-top: 0;
+}
+.name-row {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.hero-intro h1 {
+  font-size: clamp(24px, 9vw, 36px);
+}
+.name-sub {
+  margin-top: 20px;
+}
 
 /* INFO: shell -- status header + channel labels */
-  .status {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 18px;
-    font-size: 12px;
-    gap: 8px;
-  }
-  .status .left {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: clip;
-    min-width: 0;
-    max-width: 55vw;
-  }
-  .status .left .build-tag {
-    display: none;
-  }
-  .status .center {
-    display: none;
-  }
-  .status .right {
-    flex-shrink: 0;
-  }
-  .status .right > span {
-    display: none;
-  }
-  .channel {
-    top: 16px;
-    font-size: 11px;
-    letter-spacing: .1em;
-    gap: 8px;
-  }
-  .channel .line {
-    width: 16px;
-  }
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  font-size: 12px;
+  gap: 8px;
+}
+.status .left {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  min-width: 0;
+  max-width: 55vw;
+}
+.status .left .build-tag {
+  display: none;
+}
+.status .center {
+  display: none;
+}
+.status .right {
+  flex-shrink: 0;
+}
+.status .right > span {
+  display: none;
+}
+.channel {
+  top: 16px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  gap: 8px;
+}
+.channel .line {
+  width: 16px;
+}
 
 /* INFO: shared -- base layout spacing (main/section padding) */
-  main {
-    padding: 0 18px;
-  }
-  section {
-    padding: 56px 0 40px;
-  }
+main {
+  padding: 0 18px;
+}
+section {
+  padding: 56px 0 40px;
+}
 
 /* INFO: page -- hero intro */
-  .hero-intro {
-    padding: 12px 0 32px;
-  }
+.hero-intro {
+  padding: 12px 0 32px;
+}
 
-  .ecg {
-    height: 64px;
-    margin-top: 0px;
-  }
+.ecg {
+  height: 64px;
+  margin-top: 0px;
+}
 
-  .hero-intro .prose {
-    margin-top: 20px;
-    font-size: 15px;
-    padding: 18px 16px;
-  }
-  .hero-intro .prose .lead {
-    font-size: clamp(15px, 4.5vw, 18px);
-  }
+.hero-intro .prose {
+  margin-top: 20px;
+  font-size: 15px;
+  padding: 18px 16px;
+}
+.hero-intro .prose .lead {
+  font-size: clamp(15px, 4.5vw, 18px);
+}
 
 /* INFO: shared -- section heading pattern (hides note/link on small screens) */
-  .head {
-    flex-wrap: wrap;
-  }
-  .head h2 {
-    flex: 1 1 100%;
-    min-width: 0;
-    text-align: center;
-    white-space: nowrap;
-    font-size: clamp(9px, 4.8vw, 20px);
-  }
-  .head .note, .head a {
-    display: none;
-  }
+.head {
+  flex-wrap: wrap;
+}
+.head h2 {
+  flex: 1 1 100%;
+  min-width: 0;
+  text-align: center;
+  white-space: nowrap;
+  font-size: clamp(9px, 4.8vw, 20px);
+}
+.head .note,
+.head a {
+  display: none;
+}
 
 /* INFO: home -- projects slides (stack to 1 column) */
-  .slides {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
+.slides {
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
 
 /* INFO: home -- guestbook teaser (TUI widget) tweaks */
-  .gb-entry-date { margin-left: 0; }
-  .gb-tui-row { grid-template-columns: 22px auto 1fr; padding: 12px 14px; }
-  .gb-tui-name { font-size: 10px; }
-  .gb-tui-msg { font-size: 12.5px; }
-  .gb-tui-footer { gap: 10px; padding: 9px 14px; }
+.gb-entry-date {
+  margin-left: 0;
+}
+.gb-tui-row {
+  grid-template-columns: 22px auto 1fr;
+  padding: 12px 14px;
+}
+.gb-tui-name {
+  font-size: 10px;
+}
+.gb-tui-msg {
+  font-size: 12.5px;
+}
+.gb-tui-footer {
+  gap: 10px;
+  padding: 9px 14px;
+}
 
 /* INFO: home -- notes log tweaks */
-  .log {
-    margin-top: 16px;
-  }
-  .log .log-bar {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 14px;
-    font-size: 11.5px;
-  }
-  .log .log-bar > div:last-child {
-    display: none;
-  }
-  .entry-row {
-    grid-template-columns: 1fr;
-    gap: 6px;
-    padding: 12px 14px;
-    font-size: 14px;
-  }
-  .entry-row .ts,
-  .entry-row .lvl {
-    display: inline;
-    padding: 0;
-  }
-  .log .log-foot {
-    font-size: 11.5px;
-    padding: 8px 14px;
-  }
+.log {
+  margin-top: 16px;
+}
+.log .log-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 14px;
+  font-size: 11.5px;
+}
+.log .log-bar > div:last-child {
+  display: none;
+}
+.entry-row {
+  grid-template-columns: 1fr;
+  gap: 6px;
+  padding: 12px 14px;
+  font-size: 14px;
+}
+.entry-row .ts,
+.entry-row .lvl {
+  display: inline;
+  padding: 0;
+}
+.log .log-foot {
+  font-size: 11.5px;
+  padding: 8px 14px;
+}
 
 /* INFO: shared -- contact terminal tweaks */
-  .contact .term {
-    padding: 20px 16px;
-    font-size: 15px;
-    line-height: 1.8;
-    word-break: break-word;
-  }
-  .contact .term .ln.out {
-    padding-left: 12px;
-  }
+.contact .term {
+  padding: 20px 16px;
+  font-size: 15px;
+  line-height: 1.8;
+  word-break: break-word;
+}
+.contact .term .ln.out {
+  padding-left: 12px;
+}
 
 /* INFO: blog -- post reader tweaks */
-  .prose-body { font-size: 14px; }
+.prose-body {
+  font-size: 14px;
+}
 
 /* INFO: shell -- hud strip (site footer) becomes a fixed bottom bar */
 .hud-strip {
@@ -219,7 +248,9 @@ body:has(#mobile-nav-check:checked) {
   transform: translateY(12px);
   opacity: 0;
   pointer-events: none;
-  transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1), opacity 300ms ease;
+  transition:
+    transform 350ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 300ms ease;
 }
 
 body:has(#mobile-nav-check:checked) .nav-col {
