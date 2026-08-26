@@ -64,3 +64,12 @@ body[data-shell="dashboard"] > .hud-strip {
   border-top: 2px solid var(--signal);
   margin-top: 20px;
 }
+
+/* INFO: portfolio sections overrides */
+.project-block {
+  grid-template-columns: 1fr;
+}
+
+.about-grid {
+  grid-template-columns: 1fr;
+}

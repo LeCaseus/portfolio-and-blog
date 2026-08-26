@@ -1,80 +1,12 @@
-import { init_hero_ecg, init_theme_toggle, start_clock, init_mobile_nav, format_post_date, escape_html, fetch_feed_posts } from './shared.js';
+import { init_hero_ecg, init_theme_toggle, start_clock, init_mobile_nav, init_typewriter, init_scroll_reveal, format_post_date, escape_html, fetch_feed_posts } from './shared.js';
 
 init_hero_ecg();
 init_theme_toggle();
 start_clock();
 init_mobile_nav();
+init_typewriter();
+init_scroll_reveal();
 
-function init_typewriter() {
-  const typewriter_el = document.querySelector('[data-typewriter]');
-  if (!typewriter_el) return;
-
-  const lines = JSON.parse(typewriter_el.getAttribute('data-typewriter'));
-
-  const text_node = document.createTextNode('');
-  const cursor = document.createElement('span');
-
-  cursor.className = 'cursor';
-
-  typewriter_el.innerHTML = '';
-  typewriter_el.appendChild(text_node);
-  typewriter_el.appendChild(cursor);
-
-  let line_index = 0;
-  let char_index = 0;
-  let mode = 'typing';
-  let hold_ticks = 0;
-
-  const tick = () => {
-    const current_line = lines[line_index];
-
-    if (mode === 'typing') {
-      char_index++;
-
-      if (char_index > current_line.length) {
-        mode = 'holding';
-        hold_ticks = 38;
-      }
-    } else if (mode === 'holding') {
-      hold_ticks--;
-
-      if (hold_ticks <= 0) {
-        mode = 'erasing';
-      }
-    } else if (mode === 'erasing') {
-      char_index--;
-
-      if (char_index <= 0) {
-        mode = 'typing';
-        line_index = (line_index + 1) % lines.length;
-      }
-    }
-
-    text_node.nodeValue = current_line.slice(0, char_index);
-
-    const delay =
-      mode === 'typing' ? 32 + Math.random() * 30 :
-      mode === 'erasing' ? 14 :
-      60;
-
-    setTimeout(tick, delay);
-  };
-
-  tick();
-}
-
-function init_scroll_reveal() {
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-}
 
 async function load_readings() {
   const strip_el = document.querySelector('.readings .strip');
@@ -186,8 +118,6 @@ async function load_notes() {
   render_page();
 }
 
-init_typewriter();
-init_scroll_reveal();
 load_readings();
 load_guestbook_teaser();
 load_notes();

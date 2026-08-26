@@ -1,0 +1,185 @@
+{{ define "main" }}
+
+<section class="hero-intro" id="top" data-screen-label="06 Portfolio">
+  <div class="name-eyebrow">0x0011 · <span>ELECTRODES CONNECTED</span> · lead II</div>
+  <h1>CHEZTER'S<br /><span class="alive">LABORATORY<span class="records-cursor">_</span></span></h1>
+  <p class="name-sub"
+    data-typewriter='["Hi, I am formally known as Chezter Vargas, and this is my professional portfolio.","Scroll down to see what I&apos;ve built, what I know, and where I&apos;ve been.","Do you prefer a static document? Grab the PDF below instead."]'>
+    <span class="cursor"></span>
+  </p>
+  <div class="prose">
+    <div class="col-label">// LOG</div>
+    <span class="lead">Biomedical Engineering Graduate | sEMG &amp; Embedded Systems | Clinical Engineering |
+      <em>Open to Opportunities in NZ</em></span>
+    <p>// I've recently graduated with a bachelor’s degree in biomedical engineering, with a strong interest in embedded
+      systems and their applications in healthcare. My experience includes sEMG-based biosignal processing, embedded
+      systems development, and C/C++ programming. Now looking for an opportunity to build on these skills, contribute to
+      R&amp;D projects, and work with a team developing practical technologies for healthcare and medical environments.
+    </p>
+    <p>// Do you prefer a static document? grab my formal <a href="/assets/CVargas_CV.pdf" target="_blank"
+        rel="noopener">CVargas_CV.pdf</a> instead.</p>
+  </div>
+</section>
+
+<section class="projects reveal" id="projects">
+  <div class="channel">
+    <span class="line"></span>
+    <span>CH-07</span>
+    <b>PROJECTS</b>
+  </div>
+  <div class="head">
+    <h2><em>+++</em> Specimens <em>+++</em></h2>
+    <div class="note">// a portfolio isn't complete without projects to showcase</div>
+  </div>
+
+  <article class="project-block">
+    <div class="project-viewer-col">
+      <div class="specimen-viewer" data-specimen-viewer>
+        <canvas></canvas>
+        <span class="specimen-viewer-badge">PLACEHOLDER · MODEL PENDING</span>
+      </div>
+    </div>
+    <div class="project-info-col">
+      <div class="project-info-head">
+        <span class="status-pill" data-s="wip">WIP</span>
+        <h3 class="project-ttl">e<em>M</em>-Brace</h3>
+      </div>
+      <p class="project-desc">Autonomous wrist splint with an integrated myofascial-release massage system for
+        alleviating muscle weakness related to Carpal Tunnel Syndrome. Undergraduate thesis project, 2024–2025.</p>
+      <div class="project-stats">
+        <div class="vital-chip">
+          <div class="k"><i></i> CLASSIFICATION ACCURACY</div>
+          <div class="v">100%</div>
+        </div>
+        <div class="vital-chip">
+          <div class="k"><i></i> MASSAGE PRESSURE</div>
+          <div class="v">1.36 kPa</div>
+        </div>
+        <div class="vital-chip">
+          <div class="k"><i></i> SUPPORT PRESSURE</div>
+          <div class="v">~3.68 kPa</div>
+        </div>
+        <div class="vital-chip">
+          <div class="k"><i></i> GRIP IMPROVEMENT</div>
+          <div class="v">73% of 15</div>
+        </div>
+      </div>
+      <p class="project-desc">Platform: ESP32 WROOM. Biosignal pipeline: analogue signal conditioning, notch filtering,
+        digital reconstruction, and RMS threshold-based classification — evaluated by a licensed physical therapist.</p>
+    </div>
+  </article>
+
+  <div class="project-note">// this is my only project for now. if you want to poke around, my linux dotfiles and this
+    website's source codes are on <a href="https://github.com/LeCaseus" target="_blank" rel="noopener">github</a></div>
+</section>
+
+<section class="doc-section reveal" id="about">
+  <div class="channel">
+    <span class="line"></span>
+    <span>CH-08</span>
+    <b>ABOUT</b>
+  </div>
+  <div class="head">
+    <h2><em>+++</em> Background <em>+++</em></h2>
+    <div class="note">// summary, education, experience, skills</div>
+  </div>
+  <div class="about-grid">
+    <aside class="about-marginalia">
+      <ul>
+        <li><span>NAME</span> <b>Chezter Vargas</b></li>
+        <li><span>LOCATION</span> <b>Wellington, NZ</b></li>
+        <li><span>DEGREE</span> <b>BS Biomedical Eng.</b></li>
+        <li><span>GRAD</span> <b>2025</b></li>
+        <li><span>STACK</span> <b>C / C++, ESP32</b></li>
+      </ul>
+    </aside>
+    <div class="doc-prose about-prose">
+      <p>Fresh graduate with a bachelor's degree in biomedical engineering and a passion for embedded systems
+        programming. Experienced in sEMG-based biosignal processing and embedded systems development, with complementary
+        skills in C/C++ programming. Seeking to contribute to R&amp;D workspaces and healthcare/medical environments
+        within a forward-thinking organization. Open to employer-sponsored visa arrangements while processing residence
+        visa application.</p>
+
+      <h3>Education</h3>
+      <p><b>Bachelor of Science in Biomedical Engineering</b> — Ateneo de Zamboanga University <span
+          style="color: var(--mute_2)">// Aug 2021 – Dec 2025</span></p>
+      <ul>
+        <li>GPA: 3.28 / 4.00</li>
+        <li>Thesis: <em>"eM-Brace: Development of an Autonomous Wrist Splint with an Integrated Massage System for
+            Alleviating Muscle Weakness Related to Carpal Tunnel Syndrome"</em></li>
+        <li>Officer, Biomedical Engineering Society — Head of Creatives (2023–2024)</li>
+      </ul>
+
+      <h3>Experience</h3>
+      <p><b>Biomedical Engineering Intern</b> — Zamboanga City Medical Center <span style="color: var(--mute_2)">// Jun
+          2024 – Jul 2024</span></p>
+      <ul>
+        <li>Calibrated and functionally tested clinical equipment: Fluke patient simulators, defibrillator analyzers,
+          medical gas flow analyzers.</li>
+        <li>Disassembled, cleaned, and recalibrated portable devices for redeployment across hospital departments.</li>
+        <li>Completed a rotation in the ENT Medical Makerspace — FDM 3D printing, slicer workflows, basic CAD.</li>
+      </ul>
+
+      <h3>Skills</h3>
+      <ul>
+        <li><b>Embedded:</b> ESP32, sEMG acquisition &amp; processing, sensor integration</li>
+        <li><b>Biomedical:</b> Calibration &amp; preventive maintenance, clinical documentation</li>
+        <li><b>Programming:</b> C/C++ — intermediate, HTML/CSS/JS — beginner</li>
+        <li><b>Tools:</b> Git, VS Code, Arduino IDE, MATLAB, BSL Analysis</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="contact doc-section reveal" id="contact">
+  <div class="channel">
+    <span class="line"></span>
+    <span>CH-09</span>
+    <b>CONTACT</b>
+  </div>
+  <div class="head">
+    <h2><em>+++</em> References <em>+++</em></h2>
+    <div class="note">// for professionals and casuals alike</div>
+  </div>
+  <div class="term h-card" role="region" aria-label="Contact terminal">
+    <a href="https://cheztervargas.com/" class="p-name u-url" hidden>Chezter Vargas</a>
+    <p class="p-note" hidden>Hiya, I'm Chezter, half engineer half whatever I feel like at the moment. I write stuff
+      about life, books, films, anime, and my homelab. I don't have much going on in life but hopefully things will turn
+      out for the better by the end of this year.</p>
+    <img class="u-photo" src="/assets/face.jpg" alt="" hidden />
+    <span class="ln"><span class="prompt">$</span> whoami</span>
+    <span class="ln out">chezter — biomedical engineer, hobbyist programmer</span>
+    <span class="ln"><span class="prompt">$</span> contact --list</span>
+    <span class="ln out">personal <a href="mailto:vargas.chez@icloud.com" class="u-email"
+        rel="me">vargas.chez@icloud.com</a></span>
+    <span class="ln out">professional <a href="mailto:chezter_vargas@outlook.ph" class="u-email"
+        rel="me">chezter_vargas@outlook.ph</a> <span style="color: var(--mute_2)">// if you're hiring</span></span>
+    <span class="ln"><span class="prompt">$</span> ls ./professional</span>
+    <span class="ln out">
+      <a href="https://github.com/LeCaseus" target="_blank" rel="noopener me" class="u-url">github</a>
+      ·
+      <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener me" class="u-url">linkedin</a>
+      ·
+      <a href="https://nz.seek.com/profiles/chezter-vargas-DWkD6bmXDm" target="_blank" rel="noopener me"
+        class="u-url">seek</a>
+    </span>
+    <span class="ln"><span class="prompt">$</span> ls ./elsewhere</span>
+    <span class="ln out">
+      <a href="https://discord.gg/5uw3kzFN" target="_blank" rel="noopener me" class="u-url">discord</a>
+      ·
+      <a href="https://www.instagram.com/cheeshire_/" target="_blank" rel="noopener me" class="u-url">instagram</a>
+      ·
+      <a href="https://pin.it/5SxUVa4tS" target="_blank" rel="noopener me" class="u-url">pinterest</a>
+      ·
+      <a href="https://www.reddit.com/user/CestleFromage/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button"
+        target="_blank" rel="noopener me" class="u-url">reddit</a>
+      ·
+      <a href="https://www.youtube.com/@lecaseus" target="_blank" rel="noopener me" class="u-url">youtube</a>
+    </span>
+    <span class="ln"><span class="prompt">$</span> <span class="blink"></span></span>
+  </div>
+</section>
+
+{{ end }} {{ define "scripts" }}
+<script type="module" src="/portfolio.js"></script>
+{{ end }}

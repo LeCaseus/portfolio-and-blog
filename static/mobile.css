@@ -166,6 +166,11 @@ section {
   padding-left: 12px;
 }
 
+/* INFO: portfolio -- project viewer tweaks */
+.project-stats {
+  grid-template-columns: 1fr;
+}
+
 /* INFO: blog -- post reader tweaks */
 .prose-body {
   font-size: 14px;

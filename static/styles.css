@@ -14,9 +14,7 @@
   --grid: rgba(12, 13, 12, 0.05);
   --hi: rgba(12, 13, 12, 1);
   --scanline: rgba(12, 13, 12, 0.05);
-  --glow-text:
-    0 0 3px var(--signal), 0 0 10px var(--signal_soft),
-    0 0 22px var(--signal_soft);
+  --glow-text: 0 0 3px var(--signal), 0 0 10px var(--signal_soft), 0 0 22px var(--signal_soft);
   --serif_read: "Lora", "Times New Roman", serif;
   --mono: "Fira Code", ui-monospace, "JetBrains Mono", Menlo, monospace;
   --pixel: "Silkscreen", var(--mono);
@@ -435,11 +433,7 @@ body[data-shell="dashboard"] > .hud-strip {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: repeating-linear-gradient(
-    to right,
-    var(--paper_2) 0 2px,
-    transparent 2px 6px
-  );
+  background-image: repeating-linear-gradient(to right, var(--paper_2) 0 2px, transparent 2px 6px);
   pointer-events: none;
 }
 .barcode-block {
@@ -515,6 +509,29 @@ body[data-shell="dashboard"] > .hud-strip {
 .nav-chip:hover .lbl,
 .nav-chip.active .idx,
 .nav-chip.active .lbl {
+  color: var(--signal);
+}
+.nav-chip--root .idx,
+.nav-chip--root .lbl {
+  font-weight: 500;
+}
+.nav-branch {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.nav-chip--child {
+  padding-left: 34px;
+  gap: 6px;
+}
+.nav-chip--child .branch-glyph {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mute_2);
+  flex-shrink: 0;
+}
+.nav-chip--child:hover .branch-glyph,
+.nav-chip--child.active .branch-glyph {
   color: var(--signal);
 }
 
@@ -1367,127 +1384,134 @@ section:first-of-type {
   color: var(--mute);
 }
 
-/* INFO: home -- projects (specimen slides) */
-.projects .head {
-  margin: 24px 0 28px;
-}
-.head .note {
-  margin-top: 8px;
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--mute);
-}
-
-.slides {
+/* INFO: portfolio -- project specimen viewer (canvas + stats) */
+.project-block {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+  grid-template-columns: minmax(260px, 1fr) 1.3fr;
+  gap: clamp(20px, 3vw, 40px);
+  align-items: start;
+  margin-top: 28px;
 }
-.slide {
+.specimen-viewer {
   position: relative;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 3;
   border: 2px solid var(--signal);
   background: var(--paper_2);
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   overflow: hidden;
-  transition: background 0.2s ease;
 }
-.slide:hover {
-  background: var(--signal_soft);
-}
-.slide .frosted {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 56px;
-  background: repeating-linear-gradient(
-    45deg,
-    var(--paper) 0 4px,
-    var(--paper_2) 4px 6px
-  );
-  border-bottom: 2px solid var(--signal);
-}
-.slide .card-head {
-  position: absolute;
-  top: 2px;
-  left: 16px;
-  right: 14px;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.slide .label {
-  flex: 1;
-  min-width: 0;
-  font-family: var(--mono);
-  font-size: 12.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--mute);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.slide .label b {
-  color: var(--ink);
-  font-weight: 500;
-}
-.slide .body {
-  position: relative;
-  padding-top: 60px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.slide .specimen {
-  flex: 1;
-  margin: 12px 0;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 30% 30%, var(--signal_soft), transparent 60%),
-    radial-gradient(circle at 70% 60%, var(--signal_soft), transparent 50%),
-    radial-gradient(circle at 50% 50%, var(--paper) 0%, var(--paper_2) 70%);
-  border: 2px dashed var(--rule);
-  position: relative;
-}
-.slide .specimen::after {
-  content: "TBD";
+.specimen-viewer canvas {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+}
+.specimen-viewer canvas:active {
+  cursor: grabbing;
+}
+.specimen-viewer-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
   font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.2em;
-  color: var(--mute_2);
-}
-.slide .ttl {
-  font-family: var(--pixel);
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 1.5;
-  letter-spacing: 0.02em;
+  font-size: 10px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-top: 8px;
+  color: var(--warn);
+  border: 2px solid var(--warn);
+  background: var(--paper_2);
+  padding: 3px 7px;
+  border-radius: 2px;
+  pointer-events: none;
 }
-.slide .ttl em {
+.project-info-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.project-ttl {
+  font-family: var(--pixel_display);
+  font-weight: 400;
+  font-size: clamp(18px, 2.2vw, 26px);
+  line-height: 1.6;
+  margin: 0;
+}
+.project-ttl em {
   font-style: normal;
   color: var(--signal);
 }
-.slide .desc {
+.project-desc {
+  margin-top: 14px;
   font-family: var(--mono);
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.project-stats {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.project-note {
+  margin-top: 28px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
   color: var(--mute);
-  margin-top: 6px;
+}
+.project-note a {
+  color: var(--signal);
+  text-decoration: none;
+  border-bottom: 2px dotted var(--signal);
+}
+
+/* INFO: portfolio -- about grid (vitals marginalia + prose) */
+.about-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 2.1fr;
+  gap: var(--col_gap);
+}
+.about-marginalia {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.7;
   letter-spacing: 0.03em;
+  color: var(--mute);
+  text-transform: uppercase;
+}
+.about-marginalia ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.about-marginalia li {
+  padding: 8px 0;
+  border-top: 2px dotted var(--rule);
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.about-marginalia li:last-child {
+  border-bottom: 2px dotted var(--rule);
+}
+.about-marginalia li b {
+  color: var(--ink);
+  font-weight: 500;
+}
+.about-prose h3 {
+  font-family: var(--pixel);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin: 1.6em 0 0.6em;
+}
+.about-prose h3:first-child {
+  margin-top: 0;
 }
 
 /* INFO: home -- notes log */
@@ -1750,12 +1774,7 @@ section:first-of-type {
 }
 .slide .specimen[data-s="active"] {
   background:
-    radial-gradient(
-      circle at 50% 50%,
-      var(--signal) 0%,
-      var(--signal_soft) 60%,
-      transparent 80%
-    ),
+    radial-gradient(circle at 50% 50%, var(--signal) 0%, var(--signal_soft) 60%, transparent 80%),
     var(--paper_2);
   border-color: var(--signal);
 }
@@ -1769,7 +1788,7 @@ section:first-of-type {
   border-radius: 2px;
 }
 
-/* INFO: shared -- contact terminal (home + privacy) */
+/* INFO: shared -- contact terminal (portfolio + privacy) */
 .contact .term {
   margin-top: 28px;
   padding: 28px clamp(20px, 3vw, 44px);
