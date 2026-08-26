@@ -1690,8 +1690,7 @@ section:first-of-type {
 }
 
 /* INFO: shared -- status pill badges (projects + webrings) */
-.slide .status-pill,
-.ring-head .status-pill {
+.status-pill {
   flex-shrink: 0;
   font-family: var(--mono);
   font-size: 11.5px;
@@ -1727,19 +1726,19 @@ section:first-of-type {
   content: "▤ ";
   color: var(--mute_2);
 }
-.slide .status-pill[data-s="wip"] {
+.status-pill[data-s="wip"] {
   color: var(--warn);
   border-color: var(--warn);
 }
-.slide .status-pill[data-s="wip"]::before {
+.status-pill[data-s="wip"]::before {
   content: "⚠ ";
   color: var(--warn);
 }
-.slide .status-pill[data-s="active"] {
+.status-pill[data-s="active"] {
   color: var(--signal);
   border-color: var(--signal);
 }
-.slide .status-pill[data-s="active"]::before {
+.status-pill[data-s="active"]::before {
   content: "● ";
   color: var(--signal);
 }
