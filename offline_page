@@ -1,21 +1,21 @@
 export default {
-async fetch(request, env) {
-try {
-const response = await fetch(request);
-if (response.status >= 500) {
-return new Response(OFFLINE_HTML, {
-status: 200,
-headers: { 'Content-Type': 'text/html;charset=UTF-8' }
-});
-}
-return response;
-} catch {
-return new Response(OFFLINE_HTML, {
-status: 200,
-headers: { 'Content-Type': 'text/html;charset=UTF-8' }
-});
-}
-}
+  async fetch(request, env) {
+    try {
+      const response = await fetch(request);
+      if (response.status >= 500) {
+        return new Response(OFFLINE_HTML, {
+          status: 200,
+          headers: { 'Content-Type': 'text/html;charset=UTF-8' }
+        });
+      }
+      return response;
+    } catch {
+      return new Response(OFFLINE_HTML, {
+        status: 200,
+        headers: { 'Content-Type': 'text/html;charset=UTF-8' }
+      });
+    }
+  }
 };
 
 const OFFLINE_HTML = `
@@ -25,12 +25,12 @@ const OFFLINE_HTML = `
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chezter's Offline</title>
+  <title>Chezter's Records — Offline</title>
   <meta name="description"
     content="Site is currently offline. Chezter Vargas — Biomedical Engineer, Hobbyist C/C++, Tech Enthusiast." />
   <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Lora:ital,wght@0,400..700;1,400..700&family=Fira+Code:wght@400;500&display=swap');
+    @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Fira+Code:wght@400;500&family=Silkscreen:wght@400;700&family=Press+Start+2P&display=swap");
 
     :root {
       --ink: #0c0d0c;
@@ -43,12 +43,12 @@ const OFFLINE_HTML = `
       --signal_soft: oklch(0.62 0.16 145 / .14);
       --warn: oklch(0.62 0.16 65);
       --grid: rgba(12, 13, 12, .05);
-      --serif: "Instrument Serif", "Times New Roman", serif;
-      --serif_read: "Lora", "Instrument Serif", serif;
+      --scanline: rgba(12, 13, 12, .05);
+      --serif_read: "Lora", "Times New Roman", serif;
       --mono: "Fira Code", ui-monospace, "JetBrains Mono", Menlo, monospace;
+      --pixel: "Silkscreen", var(--mono);
+      --pixel_display: "Press Start 2P", var(--pixel);
       --pad: clamp(20px, 4vw, 64px);
-      --maxw: 1240px;
-      --col_gap: clamp(16px, 2.5vw, 40px);
     }
 
     [data-theme="dark"] {
@@ -62,26 +62,19 @@ const OFFLINE_HTML = `
       --signal_soft: oklch(0.78 0.17 145 / .18);
       --warn: oklch(0.82 0.16 75);
       --grid: rgba(240, 236, 227, .06);
+      --scanline: rgba(240, 236, 227, .06);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
 
     html {
       background: var(--paper);
       color: var(--ink);
       font-family: var(--mono);
-      font-size: 14px;
+      font-size: 16px;
       line-height: 1.55;
       -webkit-font-smoothing: antialiased;
-      scroll-behavior: smooth;
     }
 
     body {
@@ -94,6 +87,66 @@ const OFFLINE_HTML = `
       overflow-x: hidden;
     }
 
+    /* INFO: crt overlay -- offline copy of styles.css version, non-animated */
+    .crt-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      pointer-events: none;
+      background: repeating-linear-gradient(to bottom, var(--scanline) 0px, var(--scanline) 2px, transparent 2px, transparent 4px);
+    }
+    .crt-overlay::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 65%, rgba(0, 0, 0, .08) 95%, rgba(0, 0, 0, .2) 140%);
+    }
+    [data-theme="dark"] .crt-overlay::after {
+      background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, .12) 95%, rgba(0, 0, 0, .28) 140%);
+    }
+
+    /* INFO: dashboard shell -- grid layout (mirrors styles.css, single main section) */
+    body[data-shell="dashboard"] {
+      height: 100dvh;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: clamp(260px, 20vw, 320px) 1fr clamp(220px, 16vw, 300px);
+      grid-template-rows: auto auto 1fr auto;
+      grid-template-areas:
+        "status status status"
+        "doc    doc    doc"
+        "left   main   right"
+        "hud    hud    hud";
+    }
+    body[data-shell="dashboard"] > .status { grid-area: status; }
+    body[data-shell="dashboard"] > .doc-strip { grid-area: doc; }
+    body[data-shell="dashboard"] > .spec-col {
+      grid-area: left;
+      border-right: 2px solid var(--rule);
+      overflow-y: auto;
+      min-height: 0;
+    }
+    body[data-shell="dashboard"] > .app-main {
+      grid-area: main;
+      overflow-y: auto;
+      min-height: 0;
+      min-width: 0;
+    }
+    body[data-shell="dashboard"] > .nav-col {
+      grid-area: right;
+      border-left: 2px solid var(--rule);
+      overflow-y: auto;
+      min-height: 0;
+    }
+    body[data-shell="dashboard"] > .hud-strip { grid-area: hud; }
+
+    .app-main {
+      max-width: none;
+      margin: 0;
+      padding: 0 clamp(20px, 3vw, 48px);
+    }
+
+    /* INFO: shell -- status header, offline state (grey dot, no pulse) */
     .status {
       position: sticky;
       top: 0;
@@ -104,15 +157,14 @@ const OFFLINE_HTML = `
       gap: 24px;
       padding: 10px var(--pad);
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: 13px;
       letter-spacing: .04em;
       text-transform: uppercase;
       color: var(--mute);
       background: color-mix(in oklab, var(--paper) 88%, transparent);
       backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--rule);
+      border-bottom: 6px double var(--warn);
     }
-
     .status .dot {
       display: inline-block;
       width: 6px;
@@ -123,1249 +175,312 @@ const OFFLINE_HTML = `
       vertical-align: middle;
       opacity: .8;
     }
+    .status .left { color: var(--warn); letter-spacing: .06em; }
+    .status .center { text-align: center; opacity: .8; }
+    .status .right { display: flex; gap: 16px; align-items: center; }
 
-    .status .left {
-      color: var(--warn);
-      letter-spacing: .06em;
-    }
-
-    .status .center {
-      text-align: center;
-      opacity: .8;
-    }
-
-    .status .right {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-    }
-
-    .status button.theme {
+    /* INFO: shell -- theme switch (offline copy, functional) */
+    .switch { --false: var(--warn); --true: var(--signal); display: inline-flex; flex-shrink: 0; }
+    .switch .toggle {
       appearance: none;
-      border: 1px solid var(--rule);
-      background: transparent;
-      color: var(--ink);
-      font: inherit;
-      font-family: var(--mono);
-      font-size: 10.5px;
-      padding: 4px 9px;
+      height: 1.6rem;
+      width: 2.8rem;
+      background-color: var(--paper);
+      border: 2px solid var(--rule);
+      position: relative;
+      border-radius: .2em;
       cursor: pointer;
-      letter-spacing: .08em;
-      border-radius: 2px;
-      transition: background .15s, color .15s, border-color .15s;
-    }
-
-    .status button.theme:hover {
-      border-color: var(--ink);
-      background: var(--ink);
-      color: var(--paper);
-    }
-
-    .rail {
-      position: fixed;
-      left: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      z-index: 30;
-      font-family: var(--mono);
-      font-size: 9.5px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--mute_2);
-    }
-
-    .rail a {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: inherit;
-      text-decoration: none;
-      padding: 4px 2px;
-      transition: color .2s;
-    }
-
-    .rail a i {
-      display: inline-block;
-      width: 18px;
-      height: 1px;
-      background: currentColor;
-      opacity: .55;
-      transition: width .25s, background .25s;
-    }
-
-    .rail a:hover,
-    .rail a.on {
-      color: var(--ink);
-    }
-
-    .rail a:hover i,
-    .rail a.on i {
-      width: 30px;
-      background: var(--signal);
-      opacity: 1;
-    }
-
-    main {
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: 0 var(--pad);
-    }
-
-    section {
-      position: relative;
-      padding: clamp(72px, 12vh, 140px) 0;
-      border-top: 1px solid var(--rule);
-    }
-
-    section:first-of-type {
-      border-top: 0;
-    }
-
-    .channel {
-      position: absolute;
-      top: 28px;
-      left: 0;
-      display: flex;
-      align-items: baseline;
-      gap: 14px;
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--mute_2);
-    }
-
-    .channel b {
-      color: var(--ink);
-      font-weight: 500;
-    }
-
-    .channel .line {
-      display: inline-block;
-      width: 36px;
-      height: 1px;
-      background: var(--rule);
-    }
-
-    .hero {
-      padding-top: clamp(60px, 10vh, 120px);
-      padding-bottom: clamp(48px, 7vh, 90px);
-      border-top: 0;
-    }
-
-    .hero .channel {
-      position: static;
-      margin-bottom: 32px;
-    }
-
-    .hero h1 {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(56px, 11vw, 168px);
-      line-height: .88;
-      letter-spacing: -0.025em;
       margin: 0;
-      text-transform: lowercase;
     }
-
-    .hero h1 .addr {
+    .switch .toggle::before {
+      content: "";
       display: block;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: .15em;
-      color: var(--mute_2);
-      text-transform: uppercase;
-      margin-bottom: 14px;
-      font-style: normal;
+      height: 1.5em;
+      width: 1.5em;
+      transform: translate(-50%, -50%);
+      position: absolute;
+      top: 50%;
+      left: calc(1.5em / 2 + .25em);
+      background-color: var(--false);
+      border-radius: .2em;
+      transition: left .3s ease, background-color .3s ease;
+    }
+    .switch .toggle:checked::before {
+      background-color: var(--true);
+      left: calc(100% - (1.5em / 2 + .25em));
     }
 
-    .hero h1 .alive {
-      display: inline-block;
-      font-style: italic;
-      color: var(--signal);
-      position: relative;
-      opacity: .5;
-    }
-
-    .hero .meta {
-      margin-top: 36px;
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: var(--col_gap);
-      align-items: end;
-    }
-
-    .hero .role {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--mute);
-      line-height: 1.7;
-    }
-
-    .hero .role span {
-      color: var(--ink);
-    }
-
-    .hero .role .sep {
-      color: var(--mute_2);
-      margin: 0 8px;
-    }
-
-    .hero .offline-msg {
-      font-family: var(--mono);
-      font-size: clamp(13px, 1.3vw, 16px);
-      line-height: 1.65;
-      color: var(--warn);
-      padding-left: 14px;
-      border-left: 1px solid var(--warn);
-    }
-
-    .hero .offline-msg::before {
-      content: "// TX/RX BUFFER";
-      display: block;
+    .col-label {
+      font-family: var(--pixel);
       font-size: 10px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--mute_2);
+      letter-spacing: .14em;
+      color: var(--warn);
       margin-bottom: 8px;
     }
 
+    /* INFO: shell -- doc strip, offline record */
+    .doc-strip {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr 1.5fr;
+      border-bottom: 2px solid var(--rule);
+    }
+    .doc-field { padding: 9px 14px; border-right: 2px solid var(--rule); }
+    .doc-field:last-child { border-right: 0; }
+    .doc-field .k {
+      display: block;
+      font-family: var(--pixel);
+      font-size: 10px;
+      letter-spacing: .12em;
+      color: var(--mute_2);
+      margin-bottom: 5px;
+    }
+    .doc-field .v { font-family: var(--mono); font-weight: 500; font-size: 14px; color: var(--ink); }
+    .doc-field .v.warn { color: var(--warn); }
+    .doc-field .v small { color: var(--mute); font-weight: 400; }
+
+    /* INFO: shell -- spec column, flatlined vitals */
+    .spec-col { padding: 12px; display: flex; flex-direction: column; gap: 12px; }
+    .vital-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .vital-chip { border: 2px solid var(--rule); padding: 24px 20px; background: var(--paper_2); }
+    .vital-chip .k {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--pixel);
+      font-size: 9px;
+      letter-spacing: .08em;
+      color: var(--mute);
+      margin-bottom: 6px;
+    }
+    .vital-chip .k i {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--warn);
+      flex-shrink: 0;
+    }
+    .vital-chip .v { font-family: var(--mono); font-size: 13.5px; font-weight: 500; color: var(--mute); text-transform: uppercase; }
+    .vital-chip .bar { margin-top: 7px; height: 6px; background: var(--rule); position: relative; overflow: hidden; }
+    .vital-chip .bar i { position: absolute; inset: 0 auto 0 0; width: 0%; background: var(--mute_2); }
+    .barcode-block { margin-top: auto; }
+    .barcode {
+      height: 22px;
+      background: repeating-linear-gradient(90deg, var(--mute_2) 0px, var(--mute_2) 2px, transparent 2px, transparent 3px);
+      opacity: .4;
+    }
+    .barcode-label { font-family: var(--pixel); font-size: 9px; letter-spacing: .08em; color: var(--mute_2); margin-top: 5px; }
+
+    /* INFO: shell -- nav column, offline copy (links still resolve once origin returns) */
+    .nav-col { padding: 24px 18px; display: flex; flex-direction: column; gap: 4px; }
+    .nav-chip {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 2px solid transparent;
+      text-decoration: none;
+      transition: border-color .15s, background .15s;
+    }
+    .nav-chip:hover { border-color: var(--mute_2); background: var(--signal_soft); }
+    .nav-chip .idx { font-family: var(--pixel); font-size: 10px; color: var(--mute_2); flex-shrink: 0; }
+    .nav-chip .lbl { font-family: var(--pixel); font-size: 12px; color: var(--mute); }
+    .nav-chip:hover .idx, .nav-chip:hover .lbl { color: var(--ink); }
+    .nav-branch { display: flex; flex-direction: column; gap: 2px; margin: 2px 0 6px; }
+    .nav-chip--child { padding-left: 10px; }
+    .branch-glyph { font-family: var(--mono); font-size: 11px; color: var(--mute_2); }
+
+    /* INFO: shell -- hud strip, flatlined ecg */
+    .hud-strip {
+      border-top: 6px double var(--warn);
+      display: grid;
+      grid-template-columns: 150px 1fr 150px;
+    }
+    .hud-side {
+      padding: 10px 14px;
+      border-right: 2px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 3px;
+    }
+    .hud-side-r { border-right: 0; border-left: 2px solid var(--rule); }
+    .hud-side .k { font-family: var(--pixel); font-size: 9px; letter-spacing: .1em; color: var(--mute_2); }
+    .hud-side .v { font-family: var(--mono); font-size: 15px; color: var(--warn); font-weight: 600; }
+    .hud-strip .ecg { margin: 0; height: 64px; border: 0; }
+
+    /* INFO: shared -- ecg strip, flatlined (no animation, static center line) */
     .ecg {
       margin: 56px 0 0;
       position: relative;
       height: 96px;
-      border-top: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
+      border-top: 2px solid var(--rule);
+      border-bottom: 2px solid var(--rule);
       background:
         linear-gradient(to right, var(--rule) 1px, transparent 1px) 0 0/56px 100%,
         linear-gradient(to bottom, var(--rule) 1px, transparent 1px) 0 0/100% 24px;
       overflow: hidden;
-      opacity: .5;
     }
-
-    .ecg svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .ecg svg path {
-      stroke: var(--warn);
-      stroke-width: 1.6;
-      fill: none;
-    }
-
+    .ecg svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .ecg svg path { stroke: var(--warn); stroke-width: 1.6; fill: none; }
     .ecg .ecg-readout {
       position: absolute;
       right: 12px;
       top: 8px;
       font-family: var(--mono);
-      font-size: 10.5px;
+      font-size: 12.5px;
       letter-spacing: .1em;
       color: var(--mute);
       text-transform: uppercase;
     }
+    .ecg .ecg-readout b { color: var(--warn); font-weight: 500; }
 
-    .ecg .ecg-readout b {
-      color: var(--warn);
-      font-weight: 500;
-    }
-
-    .now .panel {
-      margin-top: 24px;
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      background: var(--paper_2);
-      overflow: hidden;
-    }
-
-    .now .cell {
-      padding: 22px 22px 18px;
-      border-right: 1px solid var(--rule);
-    }
-
-    .now .cell:last-child {
-      border-right: 0;
-    }
-
-    .now .cell .key {
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--mute);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .now .cell .key i {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--warn);
-      opacity: .6;
-    }
-
-    .now .cell .v {
-      font-family: var(--mono);
-      font-weight: 500;
-      font-size: clamp(15px, 1.5vw, 18px);
-      line-height: 1.2;
-      text-transform: uppercase;
-      color: var(--mute);
-    }
-
-    .now .cell .v::before {
-      content: "› ";
-      color: var(--warn);
-      opacity: .6;
-    }
-
-    .now .cell .sub {
-      margin-top: 10px;
-      font-family: var(--mono);
-      font-size: 10.5px;
-      color: var(--mute_2);
-    }
-
-    .about .grid {
-      margin-top: 28px;
-      display: grid;
-      grid-template-columns: 1fr 2.1fr;
-      gap: var(--col_gap);
-    }
-
-    .about .marginalia {
-      font-family: var(--mono);
+    /* INFO: page -- hero intro, single offline announcement section */
+    .hero-intro { padding: 72px 0 56px; }
+    .name-eyebrow {
+      font-family: var(--pixel);
       font-size: 11px;
-      line-height: 1.7;
-      letter-spacing: .03em;
-      color: var(--mute);
-      text-transform: uppercase;
+      letter-spacing: .16em;
+      color: var(--mute_2);
+      margin-bottom: 16px;
     }
-
-    .about .marginalia ul {
-      list-style: none;
-      padding: 0;
+    .name-eyebrow span { color: var(--warn); }
+    .hero-intro h1 {
+      font-family: var(--pixel_display);
+      font-weight: 400;
+      font-size: clamp(32px, 6vw, 64px);
+      line-height: 1.6;
       margin: 0;
     }
+    .hero-intro h1 .flat { color: var(--warn); }
+    .records-cursor { display: inline-block; animation: blink 1.05s steps(24) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
 
-    .about .marginalia li {
-      padding: 8px 0;
-      border-top: 1px solid var(--rule);
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .about .marginalia li:last-child {
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .about .marginalia li b {
-      color: var(--ink);
-      font-weight: 500;
-    }
-
-    .about .prose {
+    .hero-intro .prose {
+      margin-top: 44px;
+      border: 2px solid var(--warn);
       font-family: var(--mono);
-      font-size: clamp(13px, 1.2vw, 15px);
+      font-size: clamp(15px, 1.4vw, 17px);
+      line-height: 1.75;
+      padding: 28px 32px;
+      text-wrap: pretty;
+    }
+    .hero-intro .prose .col-label { margin-bottom: 14px; color: var(--warn); }
+    .hero-intro .prose .lead {
+      font-family: var(--pixel);
+      font-weight: 700;
+      font-size: clamp(16px, 1.8vw, 20px);
       line-height: 1.7;
-      max-width: 60ch;
-    }
-
-    .about .prose .lead {
-      font-family: var(--serif);
-      font-size: clamp(22px, 2.4vw, 32px);
-      line-height: 1.25;
-      letter-spacing: -0.01em;
       display: block;
-      margin-bottom: 1.2em;
+      margin-bottom: 1.4em;
+      color: var(--ink);
     }
-
-    .about .prose p {
-      margin: 0 0 0.85em;
-    }
-
-    .about .prose em {
-      color: var(--signal);
-      font-style: italic;
-    }
-
-    .about .prose a {
+    .hero-intro .prose p { margin: 0 0 .85em; }
+    .hero-intro .prose p:last-child { margin-bottom: 0; }
+    .hero-intro .prose a {
       color: inherit;
       text-decoration: none;
-      background-image: linear-gradient(var(--signal), var(--signal));
+      background-image: linear-gradient(var(--warn), var(--warn));
       background-size: 100% 1px;
       background-position: 0 95%;
       background-repeat: no-repeat;
       padding-bottom: .06em;
       transition: color .25s;
     }
+    .hero-intro .prose a:hover { color: var(--warn); }
 
-    .about .prose a:hover {
-      color: var(--signal);
-    }
+    :focus-visible { outline: 2px solid var(--warn); outline-offset: 3px; border-radius: 2px; }
 
-    .readings .head,
-    .notes .head,
-    .guestbook .head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin: 24px 0 18px;
-    }
-
-    .readings .head h2,
-    .notes .head h2,
-    .guestbook .head h2 {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(36px, 5vw, 64px);
-      line-height: 1;
-      letter-spacing: -0.02em;
-      margin: 0;
-    }
-
-    .readings .head h2 em,
-    .notes .head h2 em,
-    .guestbook .head h2 em {
-      font-style: italic;
-      color: var(--signal);
-    }
-
-    .readings .head a,
-    .guestbook .head a {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--mute);
-      text-decoration: none;
-      padding: 6px 10px;
-      border: 1px solid var(--rule);
-      border-radius: 2px;
-      transition: color .2s, border-color .2s;
-    }
-
-    .readings .head a:hover,
-    .guestbook .head a:hover {
-      color: var(--ink);
-      border-color: var(--ink);
-    }
-
-    .notes .head .note {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--mute);
-    }
-
-    .readings-split {
-      display: grid;
-      grid-template-columns: minmax(220px, 0.85fr) 1.15fr;
-      gap: clamp(24px, 4vw, 48px);
-      margin-top: 4px;
-      align-items: start;
-    }
-
-    .readings-lead-col {
-      position: sticky;
-      top: 96px;
-    }
-
-    .readings-list-col {
-      border-left: 1px solid var(--rule);
-      padding-left: clamp(20px, 3vw, 40px);
-    }
-
-    .readings-lead {
-      font-family: var(--serif_read);
-      font-size: clamp(16px, 1.4vw, 18px);
-      line-height: 1.6;
-      color: var(--ink);
-      margin: 0;
-      text-wrap: pretty;
-    }
-
-    .readings-lead::first-letter {
-      font-family: var(--serif);
-      font-size: 3em;
-      line-height: .8;
-      float: left;
-      padding: 4px 8px 0 0;
-      color: var(--signal);
-    }
-
-    .gb-corkboard {
-      padding: 24px 0 8px;
-    }
-
-    .offline-note {
-      margin: 16px 4px;
-      padding: 18px 20px;
-      border: 1px dashed var(--warn);
-      border-radius: 3px;
-      background: var(--paper_2);
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .04em;
-      color: var(--mute);
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-    }
-
-    .offline-note .tag {
-      color: var(--warn);
-      font-size: 10px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      border: 1px solid var(--warn);
-      padding: 2px 6px;
-      border-radius: 2px;
-      flex-shrink: 0;
-    }
-
-    .projects .head {
-      margin: 24px 0 28px;
-    }
-
-    .projects .head h2 {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(36px, 5vw, 64px);
-      line-height: 1;
-      letter-spacing: -0.02em;
-      margin: 0;
-    }
-
-    .projects .head h2 em {
-      font-style: italic;
-      color: var(--signal);
-    }
-
-    .projects .head .note {
-      margin-top: 8px;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--mute);
-    }
-
-    .slides {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .slide {
-      position: relative;
-      aspect-ratio: 3 / 4;
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      background: var(--paper_2);
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      overflow: hidden;
-    }
-
-    .slide .frosted {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 56px;
-      background: repeating-linear-gradient(45deg, var(--paper) 0 4px, var(--paper_2) 4px 6px);
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .slide .card-head {
-      position: absolute;
-      top: 14px;
-      left: 16px;
-      right: 14px;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .slide .label {
-      flex: 1;
-      min-width: 0;
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--mute);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .slide .label b {
-      color: var(--ink);
-      font-weight: 500;
-    }
-
-    .slide .body {
-      position: relative;
-      padding-top: 60px;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    .slide .specimen {
-      flex: 1;
-      margin: 12px 0;
-      border-radius: 50%;
-      position: relative;
-      border: 1px dashed var(--rule);
-    }
-
-    .slide .specimen[data-s="wip"] {
-      background:
-        repeating-linear-gradient(45deg, var(--warn) 0 1px, transparent 1px 12px),
-        radial-gradient(circle at 50% 50%, var(--paper) 0%, var(--paper_2) 80%);
-      border-color: var(--warn);
-      opacity: .85;
-    }
-
-    .slide .specimen[data-s="active"] {
-      background:
-        radial-gradient(circle at 50% 50%, var(--signal) 0%, var(--signal_soft) 60%, transparent 80%),
-        var(--paper_2);
-      border-color: var(--signal);
-    }
-
-    .slide .specimen[data-s="wip"]::after,
-    .slide .specimen[data-s="active"]::after {
-      content: "";
-      position: absolute;
-      inset: auto;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    /* INFO: shell -- mobile hamburger + full-screen nav overlay */
+    .mobile-nav-toggle { display: none; }
+    .comic-button {
       display: inline-block;
-      z-index: 2;
-      white-space: nowrap;
-      font-size: 9.5px;
-      letter-spacing: .18em;
-      padding: 4px 8px;
-      border-radius: 2px;
-    }
-
-    .slide .specimen[data-s="wip"]::after {
-      content: "UNDER CONSTRUCTION";
-      color: var(--warn);
-      background: var(--paper_2);
-      border: 1px solid var(--warn);
-    }
-
-    .slide .specimen[data-s="active"]::after {
-      content: "ACTIVE • v1.0";
-      color: var(--paper);
-      background: var(--signal);
-    }
-
-    .slide .status-pill,
-    .ring-head .status-pill {
-      flex-shrink: 0;
-      font-family: var(--mono);
-      font-size: 9.5px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      padding: 3px 7px;
-      border-radius: 2px;
-      background: var(--paper);
-      border: 1px solid var(--rule);
-      color: var(--mute);
-    }
-
-    .status-pill[data-s="link"] {
-      color: var(--mute);
-      border-color: var(--rule);
-    }
-
-    .status-pill[data-s="link"]::before {
-      content: "→ ";
-      color: var(--mute_2);
-    }
-
-    .status-pill[data-s="badge"] {
-      color: var(--mute);
-      border-color: var(--rule);
-    }
-
-    .status-pill[data-s="badge"]::before {
-      content: "▣ ";
-      color: var(--mute_2);
-    }
-
-    .status-pill[data-s="script"] {
-      color: var(--mute);
-      border-color: var(--rule);
-    }
-
-    .status-pill[data-s="script"]::before {
-      content: "▤ ";
-      color: var(--mute_2);
-    }
-
-    .slide .status-pill[data-s="wip"] {
-      color: var(--warn);
-      border-color: var(--warn);
-    }
-
-    .slide .status-pill[data-s="wip"]::before {
-      content: "⚠ ";
-      color: var(--warn);
-    }
-
-    .slide .status-pill[data-s="active"] {
-      color: var(--signal);
-      border-color: var(--signal);
-    }
-
-    .slide .status-pill[data-s="active"]::before {
-      content: "● ";
-      color: var(--signal);
-    }
-
-    .slide .ttl {
-      font-family: var(--mono);
-      font-size: 15px;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-      font-weight: 500;
-    }
-
-    .slide .ttl em {
-      font-style: normal;
-      color: var(--signal);
-    }
-
-    .slide .desc {
-      font-family: var(--mono);
-      font-size: 11px;
-      line-height: 1.5;
-      color: var(--mute);
-      margin-top: 6px;
-      letter-spacing: .03em;
-    }
-
-    .log {
-      margin-top: 24px;
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      background: var(--paper_2);
-      overflow: hidden;
-    }
-
-    .log .log-bar {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 16px;
-      align-items: center;
-      padding: 10px 16px;
-      background: var(--paper);
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--mute);
-    }
-
-    .log .log-bar .stream {
-      display: flex;
-      gap: 14px;
-    }
-
-    .log .log-bar .stream b {
-      color: var(--mute);
-      font-weight: 500;
-    }
-
-    .log .log-bar .stream .down::before {
-      content: "● ";
-      color: var(--warn);
-    }
-
-    .log .offline-note {
-      margin: 16px;
-    }
-
-    .contact .term {
-      margin-top: 28px;
-      padding: 28px clamp(20px, 3vw, 44px);
-      border: 1px solid var(--rule);
-      background:
-        linear-gradient(var(--grid) 1px, transparent 1px) 0 0/100% 22px,
-        var(--paper_2);
-      border-radius: 4px;
-      font-family: var(--mono);
-      font-size: clamp(14px, 1.4vw, 16px);
-      line-height: 1.7;
-    }
-
-    .contact .term .ln {
-      display: block;
-      color: var(--mute);
-    }
-
-    .contact .term .ln .prompt {
-      color: var(--signal);
-      margin-right: 8px;
-    }
-
-    .contact .term .out {
-      color: var(--ink);
-      padding-left: 18px;
-    }
-
-    .contact .term a {
-      color: var(--ink);
-      text-decoration: none;
-      border-bottom: 1px solid var(--signal);
-      padding-bottom: 1px;
-      transition: background .2s, color .2s;
-    }
-
-    .contact .term a:hover {
-      background: var(--signal);
-      color: var(--paper);
-    }
-
-    .webrings .head {
-      margin: 24px 0 18px;
-    }
-
-    .webrings .head h2 {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(36px, 5vw, 64px);
-      line-height: 1;
-      letter-spacing: -0.02em;
-      margin: 0;
-    }
-
-    .webrings .head h2 em {
-      font-style: italic;
-      color: var(--signal);
-    }
-
-    .webrings .head .note {
-      margin-top: 8px;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--mute);
-    }
-
-    .ringcase {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 18px;
-      align-items: stretch;
-    }
-
-    .ring-card {
-      display: flex;
-      flex-direction: column;
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      background: var(--paper_2);
-      overflow: hidden;
-      transition: transform .3s ease, border-color .3s;
-    }
-
-    .ring-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--signal);
-    }
-
-    .ring-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 10px 14px;
-      background: repeating-linear-gradient(45deg, var(--paper) 0 4px, var(--paper_2) 4px 6px);
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .ring-head .label {
-      min-width: 0;
-      font-family: var(--mono);
-      font-size: 10.5px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--mute);
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .ring-head .label b {
-      color: var(--ink);
-      font-weight: 500;
-    }
-
-    .ring-body {
-      flex: 1;
-      padding: 20px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 84px;
-    }
-
-    .ring-embed {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      width: 100%;
-      font-family: var(--mono);
-      font-size: 12px;
-    }
-
-    .ring-embed--button a {
-      display: inline-flex;
-      color: var(--ink);
-      text-decoration: none;
-    }
-
-    .ring-embed--button img {
-      display: block;
-    }
-
-    .ring-embed--script {
-      min-height: 40px;
-    }
-
-    .ring-embed--text {
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .ring-embed--text .ring-title-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .ring-embed--text .ring-nav-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .ring-main {
-      font-family: var(--mono);
-      font-size: 13px;
-      letter-spacing: .02em;
-      color: var(--ink);
-      text-decoration: none;
-      padding-bottom: 1px;
-      border-bottom: 1px solid var(--signal);
-      transition: color .2s;
-    }
-
-    .ring-main:hover {
-      color: var(--signal);
-    }
-
-    .ring-dot {
-      display: inline-block;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--signal);
-      box-shadow: 0 0 6px var(--signal_soft);
-      flex-shrink: 0;
-    }
-
-    a.log-nav {
-      display: inline-block;
-      text-decoration: none;
-    }
-
-    footer {
-      border-top: 1px solid var(--rule);
-      padding: 18px var(--pad);
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 24px;
-      align-items: center;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--mute);
-    }
-
-    footer .c {
+      padding: 8px 14px;
+      font-size: 18px;
+      font-weight: bold;
       text-align: center;
-      color: var(--warn);
+      text-decoration: none;
+      color: var(--paper);
+      background-color: var(--warn);
+      border: 2px solid var(--warn);
+      box-shadow: 3px 3px 0 var(--signal_soft);
+      cursor: pointer;
+    }
+    .comic-button input { display: none; }
+
+    @media (max-width: 1024px) {
+      body[data-shell="dashboard"] {
+        height: auto;
+        overflow: visible;
+        display: block;
+      }
+      body[data-shell="dashboard"] > .spec-col,
+      body[data-shell="dashboard"] > .app-main,
+      body[data-shell="dashboard"] > .nav-col { overflow: visible; border: 0; }
+      .spec-col { border-top: 2px solid var(--rule); border-bottom: 2px solid var(--rule); }
+      .nav-col { border-top: 2px solid var(--rule); }
+      .doc-strip { grid-template-columns: 1fr 1fr; }
+      .doc-field:nth-child(3), .doc-field:nth-child(4) { border-top: 2px solid var(--rule); }
+      .hud-strip { grid-template-columns: 1fr; }
+      .hud-side { border: 0 !important; border-top: 2px solid var(--rule) !important; flex-direction: row; justify-content: space-between; align-items: center; }
     }
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity .8s ease, transform .8s ease;
-    }
-
-    .reveal.in {
-      opacity: 1;
-      transform: none;
+    @media (max-width: 640px), (max-width: 1024px) and (orientation: portrait) {
+      .doc-strip { grid-template-columns: 1fr; }
+      .doc-field { border-right: 0; border-top: 2px solid var(--rule); }
+      .doc-field:first-child { border-top: 0; }
+      .hero-intro h1 { font-size: clamp(24px, 9vw, 36px); }
+      .status { display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; font-size: 12px; gap: 8px; }
+      .status .left { white-space: nowrap; overflow: hidden; min-width: 0; max-width: 55vw; }
+      .status .center { display: none; }
+      main { padding: 0 18px; }
+      .hero-intro { padding: 12px 0 32px; }
+      .ecg { height: 64px; margin-top: 0; }
+      .hero-intro .prose { margin-top: 20px; font-size: 15px; padding: 18px 16px; }
+      .hero-intro .prose .lead { font-size: clamp(15px, 4.5vw, 18px); }
+      .hud-strip {
+        border-top: 6px double var(--warn);
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 50;
+        background: var(--paper);
+      }
+      .hud-side { display: none; }
+      .hud-strip .ecg { margin: 0; }
+      body[data-shell="dashboard"] { padding-bottom: 64px; }
+      .mobile-nav-toggle { display: block; position: fixed; left: 18px; bottom: 78px; z-index: 70; }
+      body:has(#mobile-nav-check:checked) { overflow: hidden; }
+      .nav-col {
+        position: fixed;
+        inset: 0;
+        z-index: 65;
+        background: var(--paper);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+        padding: 24px;
+        border: 0;
+        overflow-y: auto;
+        transform: translateY(12px);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 350ms cubic-bezier(.4,0,.2,1), opacity 300ms ease;
+      }
+      body:has(#mobile-nav-check:checked) .nav-col { transform: translateY(0); opacity: 1; pointer-events: auto; }
+      .nav-chip { padding: 16px 18px; }
+      .nav-chip .lbl { font-size: 16px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .reveal {
-        opacity: 1;
-        transform: none;
-      }
-
-      * {
-        animation-duration: 0.001s !important;
-        transition-duration: 0.001s !important;
-      }
-    }
-
-    :focus-visible {
-      outline: 2px solid var(--signal);
-      outline-offset: 3px;
-      border-radius: 2px;
-    }
-
-    @media (max-width: 1024px) {
-      .rail {
-        position: static;
-        flex-direction: row;
-        top: auto;
-        left: auto;
-        transform: none;
-        width: 100%;
-        overflow-x: auto;
-        scrollbar-width: thin;
-        gap: 6px;
-        padding: 10px var(--pad) 12px;
-        border-bottom: 1px solid var(--rule);
-        background: var(--paper_2);
-      }
-
-      .rail a {
-        flex-shrink: 0;
-        padding: 6px 12px;
-        border: 1px solid var(--rule);
-        border-radius: 14px;
-        transition: color .15s, border-color .15s, background .15s;
-      }
-
-      .rail a i {
-        display: none;
-      }
-
-      .rail a:hover,
-      .rail a.on {
-        border-color: var(--signal);
-        background: var(--signal_soft);
-      }
-
-      .hero .meta {
-        grid-template-columns: 1fr;
-        align-items: start;
-      }
-
-      .now .panel {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .now .cell {
-        border-right: 0;
-        border-bottom: 1px solid var(--rule);
-      }
-
-      .now .cell:nth-child(odd) {
-        border-right: 1px solid var(--rule);
-      }
-
-      .now .cell:nth-last-child(1),
-      .now .cell:nth-last-child(2) {
-        border-bottom: 0;
-      }
-
-      .about .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .slides {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 640px) {
-      main {
-        padding: 0 18px;
-      }
-
-      section {
-        padding: 56px 0 40px;
-      }
-
-      .status {
-        gap: 12px;
-        font-size: 9.5px;
-      }
-
-      .status .center {
-        display: none;
-      }
-
-      .channel {
-        top: 16px;
-        font-size: 9px;
-        letter-spacing: .1em;
-        gap: 8px;
-      }
-
-      .channel .line {
-        width: 16px;
-      }
-
-      .hero {
-        padding-top: 48px;
-        padding-bottom: 32px;
-      }
-
-      .hero .channel {
-        position: static;
-        margin-bottom: 20px;
-      }
-
-      .hero h1 {
-        font-size: clamp(72px, 22vw, 96px);
-        line-height: .86;
-      }
-
-      .hero h1 .addr {
-        font-size: 9px;
-        letter-spacing: .08em;
-        margin-bottom: 10px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 100%;
-        display: block;
-      }
-
-      .hero .meta {
-        margin-top: 28px;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-      }
-
-      .hero .role {
-        font-size: 11px;
-        letter-spacing: .1em;
-        line-height: 1.8;
-      }
-
-      .hero .offline-msg {
-        padding-left: 0;
-        border-left: none;
-        border-top: 1px solid var(--warn);
-        padding-top: 14px;
-      }
-
-      .ecg {
-        height: 64px;
-        margin-top: 28px;
-      }
-
-      .now .cell {
-        padding: 14px 12px 12px;
-      }
-
-      .about .marginalia li {
-        display: flex;
-        justify-content: space-between;
-        padding: 8px 0;
-      }
-
-      .readings .head,
-      .notes .head,
-      .guestbook .head {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-
-      .readings-split {
-        grid-template-columns: 1fr;
-      }
-
-      .readings-lead-col {
-        position: static;
-      }
-
-      .readings-list-col {
-        border-left: none;
-        padding-left: 0;
-        border-top: 1px solid var(--rule);
-        padding-top: 20px;
-        margin-top: 20px;
-      }
-
-      .slides {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .log .log-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-        padding: 10px 14px;
-      }
-
-      .contact .term {
-        padding: 20px 16px;
-        font-size: 13px;
-        word-break: break-word;
-      }
-
-      footer {
-        grid-template-columns: 1fr;
-        text-align: center;
-        padding: 16px 18px;
-        font-size: 10px;
-      }
+      * { animation-duration: 0.001s !important; transition-duration: 0.001s !important; }
     }
   </style>
 </head>
 
-<body>
+<body data-shell="dashboard">
+  <div class="crt-overlay" aria-hidden="true"></div>
 
   <header class="status" role="banner">
     <div class="left">
@@ -1374,420 +489,164 @@ const OFFLINE_HTML = `
     <div class="center">SIGNAL · LOST · LEAD II · — HZ</div>
     <div class="right">
       <span>UTC <span data-clock>00:00:00</span></span>
-      <button class="theme" id="theme-toggle" type="button" aria-label="Toggle theme">☾ DARK</button>
+      <label class="switch" aria-label="Toggle theme">
+        <input type="checkbox" class="toggle" data-theme-toggle />
+      </label>
     </div>
   </header>
 
-  <nav class="rail" aria-label="Channels">
-    <a href="#now"><i></i>CH-01 NOW</a>
-    <a href="#about"><i></i>CH-02 ABOUT</a>
-    <a href="#blog"><i></i>CH-03 BLOG</a>
-    <a href="#guestbook"><i></i>CH-04 GUESTBOOK</a>
-    <a href="#projects"><i></i>CH-05 PROJECTS</a>
-    <a href="#notes"><i></i>CH-06 NOTES</a>
-    <a href="#contact"><i></i>CH-07 CONTACT</a>
-    <a href="#webrings"><i></i>CH-08 RINGS</a>
-  </nav>
+  <input type="checkbox" id="docstrip-toggle" class="mobile-dropdown-toggle" style="display:none" />
+  <div class="doc-strip">
+    <div class="doc-field">
+      <span class="k">SUBJECT</span>
+      <span class="v warn">001 · CHEZTER VARGAS</span>
+    </div>
+    <div class="doc-field">
+      <span class="k">CLASSIFICATION</span>
+      <span class="v">OFFLINE RECORD</span>
+    </div>
+    <div class="doc-field">
+      <span class="k">DOCUMENT ID</span>
+      <span class="v">—</span>
+    </div>
+    <div class="doc-field">
+      <span class="k">ORIGIN</span>
+      <span class="v">PHL © 2026 <small>// self-hosted, laptop-powered</small></span>
+    </div>
+  </div>
 
-  <main>
-
-    <section class="hero" id="top">
-      <div class="channel">
-        <span class="line"></span>
-        <span>CH-00</span>
-        <b>SUBJECT&nbsp;001 · CHEZTER&nbsp;VARGAS</b>
-      </div>
-      <h1>
-        <span class="addr">0x0001 · site is offline · check back later</span>
-        chezter's<br />
-        <span class="alive">records_</span>
-      </h1>
-      <div class="meta">
-        <div class="role">
-          <span>BIOMEDICAL ENGINEER</span><span class="sep">/</span>
-          <span>C/C++ HOBBYIST</span><span class="sep">/</span>
-          <span>TECH ENTHUSIAST</span>
-        </div>
-        <div class="offline-msg">
-          if you're seeing this, my server is down.<br />
-          hmmm... my laptop is probably sleeping.<br />
-          links below still work though.
-        </div>
-      </div>
-
-      <div class="ecg" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 96" preserveAspectRatio="none">
-          <path d="M0,53 L1200,53" />
-        </svg>
-        <div class="ecg-readout">
-          <b>HR</b> — BPM &nbsp;·&nbsp; NO SIGNAL
-        </div>
-      </div>
-    </section>
-
-    <section class="now reveal" id="now">
-      <div class="channel"><span class="line"></span><span>CH-01</span><b>NOW</b></div>
-      <div class="panel">
-        <div class="cell">
-          <div class="key"><i></i>STATUS</div>
+  <aside class="spec-col" aria-label="Vitals">
+    <div class="now-block">
+      <label class="col-label">// SUBJECT STATUS</label>
+      <div class="vital-grid">
+        <div class="vital-chip">
+          <div class="k"><i></i>STATUS</div>
           <div class="v">OFFLINE</div>
-          <div class="sub">server unreachable</div>
+          <div class="bar"><i style="--fill:0%"></i></div>
         </div>
-        <div class="cell">
-          <div class="key"><i></i>BUILDING</div>
-          <div class="v">HOMELAB</div>
-          <div class="sub">self-hosting everything I can</div>
+        <div class="vital-chip">
+          <div class="k"><i></i>SERVER</div>
+          <div class="v">UNREACHABLE</div>
         </div>
-        <div class="cell">
-          <div class="key"><i></i>LEARNING</div>
-          <div class="v">C / C++</div>
-          <div class="sub">slowly, from first principles</div>
+        <div class="vital-chip">
+          <div class="k"><i></i>LAST SYNC</div>
+          <div class="v">UNKNOWN</div>
         </div>
-        <div class="cell">
-          <div class="key"><i></i>ORIGIN</div>
-          <div class="v">PHL / 2026</div>
-          <div class="sub">last sync — unknown</div>
+        <div class="vital-chip">
+          <div class="k"><i></i>SIGNAL</div>
+          <div class="v">NO SIGNAL</div>
+          <div class="bar"><i style="--fill:0%"></i></div>
         </div>
+      </div>
+    </div>
+    <div class="barcode-block">
+      <div class="barcode"></div>
+      <div class="barcode-label">01201002 · CV RECORD</div>
+    </div>
+  </aside>
+
+  <main class="app-main">
+    <section class="hero-intro" id="top">
+      <div class="name-eyebrow">0x0000 · <span>ELECTRODES DISCONNECTED</span> · lead II · no carrier</div>
+      <h1>
+        CHEZTER'S<br />
+        <span class="flat">RECORDS<span class="records-cursor">_</span></span>
+      </h1>
+      <div class="prose">
+        <div class="col-label">// TX/RX BUFFER</div>
+        <span class="lead">if you're seeing this, my server is down.</span>
+        <p>hmmm... my laptop is probably sleeping. this site is fully self-hosted on my own hardware, so
+          there's no fallback host to fail over to — just me, waiting for it to wake back up.</p>
+        <p>the channels on the right still point where they should. once the origin answers again, they'll
+          load normally. check back later.</p>
       </div>
     </section>
-
-    <section class="about reveal" id="about">
-      <div class="channel"><span class="line"></span><span>CH-02</span><b>ABOUT</b></div>
-      <div class="grid">
-        <aside class="marginalia" aria-label="Vitals">
-          <ul>
-            <li><span>NAME</span><b>Chezter Vargas</b></li>
-            <li><span>GRAD</span><b>2025</b></li>
-            <li><span>FIELD</span><b>Biomedical Eng.</b></li>
-            <li><span>STACK</span><b>C / C++</b></li>
-            <li><span>OFF-HOURS</span><b>Jedi Training</b></li>
-            <li><span>OPEN</span><b>This site →</b></li>
-          </ul>
-        </aside>
-        <div class="prose">
-          <span class="lead">I tinker with a bunch of hardware and software to understand <em>how they
-              work</em>.</span>
-          <p>// i recently graduated bme by the end of 2025 and doing side quests first.<br />// exploring the world,
-            figuring out what comes next.</p>
-          <p>// this site is fully self-hosted. if it's offline, then my laptop is sleeping.<br />// i'm occasionally
-            writing at the <a href="#blog">./blog</a> when something's on my mind.</p>
-          <p>// formal version: <a href="/assets/CVargas_CV.pdf" target="_blank" rel="noopener">CVargas_CV.pdf</a> and
-            i'm also on <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank"
-              rel="noopener">linkedin</a>.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="readings reveal" id="blog">
-      <div class="channel"><span class="line"></span><span>CH-03</span><b>BLOG</b></div>
-      <div class="head">
-        <h2>Latest <em>readings</em></h2>
-        <a href="/blog.html">I wanna read everything!</a>
-      </div>
-      <div class="readings-split">
-        <div class="readings-lead-col">
-          <p class="readings-lead">Here lies my musings on everyday life, personal growth, and whatever happens to
-            be on my mind. Written to remember, reflect, and share.</p>
-        </div>
-        <div class="readings-list-col">
-          <div class="offline-note">
-            <span class="tag">ERR</span> database offline — readings index unavailable
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="guestbook reveal" id="guestbook">
-      <div class="channel"><span class="line"></span><span>CH-04</span><b>GUESTBOOK</b></div>
-      <div class="head">
-        <h2>Sign the <em>chart</em></h2>
-        <a href="/guestbook.html">This guy seems cool.</a>
-      </div>
-      <div class="gb-corkboard">
-        <div class="offline-note">
-          <span class="tag">ERR</span> database offline — guestbook unavailable
-        </div>
-      </div>
-    </section>
-
-    <section class="projects reveal" id="projects">
-      <div class="channel"><span class="line"></span><span>CH-05</span><b>PROJECTS</b></div>
-      <div class="head">
-        <h2><em>Specimens</em>, on the slide</h2>
-        <div class="note">// samples isolated to individual repositories</div>
-      </div>
-      <div class="slides">
-        <article class="slide">
-          <div class="frosted"></div>
-          <div class="body">
-            <div class="card-head">
-              <div class="label"><span>SPEC-001</span><b>eM-BRACE</b></div>
-              <span class="status-pill" data-s="wip">WIP</span>
-            </div>
-            <div class="specimen" data-s="wip" aria-hidden="true"></div>
-            <div>
-              <div class="ttl">e<em>M</em>-Brace</div>
-              <div class="desc">// wearable — capstone biomed device<br />// page under construction</div>
-            </div>
-          </div>
-        </article>
-        <a href="https://github.com/LeCaseus/.dotfiles" target="_blank" rel="noopener"
-          style="text-decoration:none;color:inherit;">
-          <article class="slide">
-            <div class="frosted"></div>
-            <div class="body">
-              <div class="card-head">
-                <div class="label"><span>SPEC-002</span><b>DOTFILES</b></div>
-                <span class="status-pill" data-s="active">ACTIVE</span>
-              </div>
-              <div class="specimen" data-s="active" aria-hidden="true"></div>
-              <div>
-                <div class="ttl">dot<em>files</em></div>
-                <div class="desc">// linux setup — fedora + niri<br />// my .dotfiles repository</div>
-              </div>
-            </div>
-          </article>
-        </a>
-        <article class="slide">
-          <div class="frosted"></div>
-          <div class="body">
-            <div class="card-head">
-              <div class="label"><span>SPEC-003</span><b>CH3SH1RE</b></div>
-              <span class="status-pill" data-s="wip">WIP</span>
-            </div>
-            <div class="specimen" data-s="wip" aria-hidden="true"></div>
-            <div>
-              <div class="ttl">CH3SH<em>1</em>RE</div>
-              <div class="desc">// local ai assistant (discontinued)<br />// page under construction</div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="notes reveal" id="notes">
-      <div class="channel"><span class="line"></span><span>CH-06</span><b>NOTES</b></div>
-      <div class="head">
-        <h2>Notes <em>// log</em></h2>
-        <div class="note">// short transmissions — newest first</div>
-      </div>
-      <div class="log">
-        <div class="log-bar">
-          <div class="stream"><b>STREAM</b> <span>chezter@notes</span> <span class="down">down</span></div>
-          <div>kernel: v4.3 · entries=<span>—</span></div>
-        </div>
-        <div class="offline-note">
-          <span class="tag">ERR</span> database offline — notes log unavailable
-        </div>
-      </div>
-    </section>
-
-    <section class="contact reveal" id="contact">
-      <div class="channel"><span class="line"></span><span>CH-07</span><b>CONTACT</b></div>
-      <div class="term h-card" role="region" aria-label="Contact terminal">
-        <a href="https://cheztervargas.com/" class="p-name u-url" hidden>Chezter Vargas</a>
-        <p class="p-note" hidden>Biomedical Engineer, hobbyist C/C++ programmer.</p>
-        <img class="u-photo" src="/assets/face.jpg" alt="" hidden />
-        <span class="ln"><span class="prompt">$</span> whoami</span>
-        <span class="ln out">chezter — biomedical engineer, hobbyist programmer</span>
-        <span class="ln"><span class="prompt">$</span> contact --list</span>
-        <span class="ln out">personal <a href="mailto:vargas.chez@icloud.com" class="u-email"
-            rel="me">vargas.chez@icloud.com</a></span>
-        <span class="ln out">professional <a href="mailto:chezter_vargas@outlook.ph" class="u-email"
-            rel="me">chezter_vargas@outlook.ph</a><span style="color:var(--mute_2)"> // if you're hiring</span></span>
-        <span class="ln"><span class="prompt">$</span> ls ./elsewhere</span>
-        <span class="ln out">
-          <a href="https://github.com/LeCaseus" target="_blank" rel="noopener me" class="u-url">github</a> ·
-          <a href="https://www.linkedin.com/in/cheztervargas/" target="_blank" rel="noopener me"
-            class="u-url">linkedin</a> ·
-          <a href="https://www.instagram.com/cheeshire_/" target="_blank" rel="noopener me" class="u-url">instagram</a>
-          ·
-          <a href="https://www.youtube.com/@lecaseus" target="_blank" rel="noopener me" class="u-url">youtube</a>
-        </span>
-        <span class="ln"><span class="prompt">$</span> <span class="blink"></span></span>
-      </div>
-    </section>
-
-    <section class="webrings reveal" id="webrings">
-      <div class="channel"><span class="line"></span><span>CH-08</span><b>WEBRINGS</b></div>
-      <div class="head">
-        <h2>Web<em>rings</em></h2>
-        <div class="note">// small corners of the internet, linked together</div>
-      </div>
-      <div class="ringcase">
-
-        <article class="ring-card">
-          <div class="ring-head">
-            <div class="label"><span>RING-001</span><b>INDIEWEB</b></div>
-            <span class="status-pill" data-s="link">LINK</span>
-          </div>
-          <div class="ring-body">
-            <div class="ring-embed ring-embed--text">
-              <div class="ring-title-row">
-                <a class="ring-main" href="https://xn--sr8hvo.ws">indieweb webring 🕸💍</a>
-              </div>
-              <div class="ring-nav-row">
-                <a class="log-nav" href="https://xn--sr8hvo.ws/previous" aria-label="Previous site in ring">prev</a>
-                <span class="ring-dot" aria-hidden="true"></span>
-                <a class="log-nav" href="https://xn--sr8hvo.ws/random" aria-label="Previous site in ring">random</a>
-                <span class="ring-dot" aria-hidden="true"></span>
-                <a class="log-nav" href="https://xn--sr8hvo.ws/next" aria-label="Next site in ring">next</a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="ring-card">
-          <div class="ring-head">
-            <div class="label"><span>RING-002</span><b>LITERRING</b></div>
-            <span class="status-pill" data-s="badge">BADGE</span>
-          </div>
-          <div class="ring-body">
-            <div class="ring-embed ring-embed--button">
-              <a href="https://literring.neocities.org/?action=previous" target="_top" rel="noopener">←</a>
-              <a href="https://literring.neocities.org/" target="_top" rel="noopener">
-                <img src="https://literring.neocities.org/images/literring/lt-blue.png" alt="Literring button"
-                  width="140" loading="lazy" />
-              </a>
-              <a href="https://literring.neocities.org/?action=next" target="_top" rel="noopener">→</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="ring-card">
-          <div class="ring-head">
-            <div class="label"><span>RING-003</span><b>STAR WARS</b></div>
-            <span class="status-pill" data-s="link">LINK</span>
-          </div>
-          <div class="ring-body">
-            <div class="ring-embed ring-embed--text">
-              <div class="ring-title-row">
-                <a class="ring-main" href="https://zacharykai.net/lists/starwars">star wars webring 🌌🔫</a>
-              </div>
-              <div class="ring-nav-row">
-                <a class="log-nav" href="https://zacharykai.net/lists/starwars?action=prev">prev</a>
-                <span class="ring-dot" aria-hidden="true"></span>
-                <a class="log-nav" href="https://zacharykai.net/lists/starwars?action=random">random</a>
-                <span class="ring-dot" aria-hidden="true"></span>
-                <a class="log-nav" href="https://zacharykai.net/lists/starwars?action=next">next</a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="ring-card">
-          <div class="ring-head">
-            <div class="label"><span>RING-004</span><b>HOTLINE</b></div>
-            <span class="status-pill" data-s="link">LINK</span>
-          </div>
-          <div class="ring-body">
-            <div class="ring-embed ring-embed--text">
-              <div class="ring-title-row">
-                call a <a class="ring-main" href="https://hotlinewebring.club/">hotline</a> ☎️
-              </div>
-              <div class="ring-nav-row">
-                <a class="log-nav" href="https://hotlinewebring.club/chezterecords/prev"
-                  aria-label="Previous hotline">prev</a>
-                <span class="ring-dot" aria-hidden="true"></span>
-                <a class="log-nav" href="https://hotlinewebring.club/chezterecords/prev"
-                  aria-label="Random hotline">random</a>
-                <span class="ring-dot" aria-hidden="true"></span>
-                <a class="log-nav" href="https://hotlinewebring.club/chezterecords/next"
-                  aria-label="Next hotline">next</a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="ring-card">
-          <div class="ring-head">
-            <div class="label"><span>RING-005</span><b>NO AI</b></div>
-            <span class="status-pill" data-s="badge">BADGE</span>
-          </div>
-          <div class="ring-body">
-            <div class="ring-embed ring-embed--button">
-              <map name="noairing">
-                <area href="https://baccyflap.com/noai" target="_blank" shape="rect" coords="15,15,124,66"
-                  alt="no ai webring" title="no ai webring">
-                <area href="https://baccyflap.com/noai/?prv&s=cvv" target="_top" shape="rect" coords="15,79,34,100"
-                  alt="previous" title="previous">
-                <area href="https://baccyflap.com/noai/?rnd" target="_top" shape="rect" coords="44,71,95,108"
-                  alt="random" title="random">
-                <area href="https://baccyflap.com/noai/?nxt&s=cvv" target="_top" shape="rect" coords="105,79,125,100"
-                  alt="next" title="next">
-              </map>
-              <img usemap="#noairing" src="https://baccyflap.com/noai/widget.gif" style="width:250px;height:124px"
-                alt="an image of a little blue toy robot in a red-tinted circle made of art from all over the world. there's a red line, also made of art, running through the robot. next to it are the words NO AI WEBRING / HUMAN MADE 100% GUARANTEED and then two arrows, one pointing left, one right">
-            </div>
-          </div>
-        </article>
-
-        <article class="ring-card">
-          <div class="ring-head">
-            <div class="label"><span>RING-006</span><b>WEBMASTER</b></div>
-            <span class="status-pill" data-s="badge">LINK</span>
-          </div>
-          <div class="ring-body">
-            <div class="ring-embed ring-embed--button">
-              <div class="ring-title-row">
-                <a class="ring-main" href="https://webmasterwebring.netlify.app">Webmaster Webring ⭐</a>
-              </div>
-              <div class="ring-nav-row">
-                <a class="log-nav" href="https://webmasterwebring.netlify.app?chezterv-previous"
-                  aria-label="Previous site in ring">prev</a>
-                <span class="ring-dot" aria-hidden="true"></span>
-                <a class="log-nav" href="https://webmasterwebring.netlify.app?chezterv-random"
-                  aria-label="Previous site in ring">random</a>
-                <span class="ring-dot" aria-hidden="true"></span>
-                <a class="log-nav" href="https://webmasterwebring.netlify.app?chezterv-next"
-                  aria-label="Next site in ring">next</a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="ring-card">
-          <div class="ring-head">
-            <div class="label"><span>RING-007</span><b>JOURNALRING</b></div>
-            <span class="status-pill" data-s="badge">BADGE</span>
-          </div>
-          <div class="ring-body">
-            <div class="ring-embed ring-embed--button">
-              <journal-ring icon="green"></journal-ring>
-              <script async
-                src="https://cdn.jsdelivr.net/gh/js044/nenrikido@main/static/js/misc/journalring.js"></script>
-            </div>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
   </main>
 
-  <footer>
-    <div>SYS:OFFLINE · fully selfhosted by me</div>
-    <div class="c">// server is sleeping. check back soon.</div>
-    <div>UTC <span data-clock>00:00:00</span></div>
-  </footer>
+  <nav class="nav-col" aria-label="Channels">
+    <div class="col-label">// CHANNELS</div>
+    <a class="nav-chip nav-chip--root" href="/">
+      <span class="idx">CH-01</span><span class="lbl">HOME/</span>
+    </a>
+    <div class="nav-branch">
+      <a class="nav-chip nav-chip--child" href="/blog.html">
+        <span class="branch-glyph">├──</span><span class="idx">CH-02</span><span class="lbl">BLOG/</span>
+      </a>
+      <a class="nav-chip nav-chip--child" href="/#notes">
+        <span class="branch-glyph">├──</span><span class="idx">CH-03</span><span class="lbl">NOTES/</span>
+      </a>
+      <a class="nav-chip nav-chip--child" href="/guestbook.html">
+        <span class="branch-glyph">├──</span><span class="idx">CH-04</span><span class="lbl">GUESTBOOK/</span>
+      </a>
+      <a class="nav-chip nav-chip--child" href="/#webrings">
+        <span class="branch-glyph">└──</span><span class="idx">CH-05</span><span class="lbl">WEBRINGS/</span>
+      </a>
+    </div>
+    <a class="nav-chip nav-chip--root" href="/portfolio.html">
+      <span class="idx">CH-06</span><span class="lbl">PORTFOLIO/</span>
+    </a>
+    <div class="nav-branch">
+      <a class="nav-chip nav-chip--child" href="/portfolio.html#projects">
+        <span class="branch-glyph">├──</span><span class="idx">CH-07</span><span class="lbl">PROJECTS/</span>
+      </a>
+      <a class="nav-chip nav-chip--child" href="/portfolio.html#about">
+        <span class="branch-glyph">├──</span><span class="idx">CH-08</span><span class="lbl">ABOUT/</span>
+      </a>
+      <a class="nav-chip nav-chip--child" href="/portfolio.html#contact">
+        <span class="branch-glyph">└──</span><span class="idx">CH-09</span><span class="lbl">CONTACT/</span>
+      </a>
+    </div>
+    <a class="nav-chip nav-chip--root" href="/sitemap.html">
+      <span class="idx">CH-10</span><span class="lbl">SITEMAP/</span>
+    </a>
+    <a class="nav-chip nav-chip--root" href="/privacy.html">
+      <span class="idx">CH-11</span><span class="lbl">PRIVACY/</span>
+    </a>
+  </nav>
+
+  <div class="hud-strip">
+    <div class="hud-side">
+      <span class="k">SYNC</span>
+      <span class="v">UTC <span data-clock>00:00:00</span></span>
+    </div>
+    <div class="ecg" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 96" preserveAspectRatio="none">
+        <path d="M0,53 L1200,53" />
+      </svg>
+      <div class="ecg-readout">
+        <b>HR</b> — BPM &nbsp;·&nbsp; NO SIGNAL
+      </div>
+    </div>
+    <div class="hud-side hud-side-r">
+      <span class="k">BUILD</span>
+      <span class="v">OFFLINE</span>
+    </div>
+  </div>
+
+  <div class="mobile-nav-toggle">
+    <label class="comic-button hamburger-btn" for="mobile-nav-check">
+      <input type="checkbox" id="mobile-nav-check" />
+      <span class="hamburger-btn-icon" aria-hidden="true">&#9776;</span>
+    </label>
+  </div>
 
   <script>
-    // Self-contained — no /shared.js, /main.js, or /styles.css imports.
+    // Self-contained -- no /shared.js, /main.js, or /styles.css imports.
     // If this page is being served, the origin those live on may be unreachable.
-
     const root = document.documentElement;
-    const theme_button = document.getElementById('theme-toggle');
     const stored_theme = localStorage.getItem('cv.theme');
     const prefers_dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const initial_theme = stored_theme || (prefers_dark ? 'dark' : 'light');
     root.setAttribute('data-theme', initial_theme);
-    theme_button.textContent = initial_theme === 'dark' ? '☼ LIGHT' : '☾ DARK';
-    theme_button.addEventListener('click', () => {
-      const next_theme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+
+    const theme_checkbox = document.querySelector('[data-theme-toggle]');
+    theme_checkbox.checked = initial_theme === 'dark';
+    theme_checkbox.addEventListener('change', () => {
+      const next_theme = theme_checkbox.checked ? 'dark' : 'light';
       root.setAttribute('data-theme', next_theme);
       localStorage.setItem('cv.theme', next_theme);
-      theme_button.textContent = next_theme === 'dark' ? '☼ LIGHT' : '☾ DARK';
     });
+
     const pad = number => String(number).padStart(2, '0');
     const tick_clock = () => {
       const now = new Date();
@@ -1797,29 +656,11 @@ const OFFLINE_HTML = `
     tick_clock();
     setInterval(tick_clock, 1000);
 
-    const reveal_observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          reveal_observer.unobserve(entry.target);
-        }
+    const mobile_toggle = document.getElementById('mobile-nav-check');
+    if (mobile_toggle) {
+      document.querySelectorAll('.nav-col .nav-chip').forEach(link => {
+        link.addEventListener('click', () => { mobile_toggle.checked = false; });
       });
-    }, {threshold: 0.12});
-    document.querySelectorAll('.reveal').forEach(el => reveal_observer.observe(el));
-
-    const rail_links = document.querySelectorAll('.rail a');
-    const rail_sections = [...document.querySelectorAll('section[id]')];
-    if (rail_sections.length) {
-      const update_active_link = () => {
-        const scroll_y = window.scrollY + window.innerHeight * 0.35;
-        let active_id = rail_sections[0].id;
-        for (const section of rail_sections) {
-          if (section.offsetTop <= scroll_y) active_id = section.id;
-        }
-        rail_links.forEach(link => link.classList.toggle('on', link.getAttribute('href') === '#' + active_id));
-      };
-      window.addEventListener('scroll', update_active_link, {passive: true});
-      update_active_link();
     }
   </script>
 
