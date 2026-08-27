@@ -28,7 +28,7 @@ const OFFLINE_HTML = `
   <title>Chezter's Records — Offline</title>
   <meta name="description"
     content="Site is currently offline. Chezter Vargas — Biomedical Engineer, Hobbyist C/C++, Tech Enthusiast." />
-  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="/assets/favicons/16x16.ico" type="image/x-icon" />
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Fira+Code:wght@400;500&family=Silkscreen:wght@400;700&family=Press+Start+2P&display=swap");
 
