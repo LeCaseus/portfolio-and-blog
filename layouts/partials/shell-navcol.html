@@ -16,14 +16,14 @@
   (dict "href" "/privacy.html" "idx" "CH-11" "lbl" "PRIVACY/")
   }}
   {{ range $tree }}
-  <a class="nav-chip nav-chip--root{{ if eq .href $.RelPermalink }}active{{ end }}" href="{{ .href }}">
+  <a class="nav-chip nav-chip--root{{ if eq .href $.RelPermalink }} active{{ end }}" href="{{ .href }}">
     <span class="idx">{{ .idx }}</span><span class="lbl">{{ .lbl }}</span>
   </a>
   {{ if .children }}
   <div class="nav-branch">
     {{ $last_index := sub (len .children) 1 }}
     {{ range $child_index, $child := .children }}
-    <a class="nav-chip nav-chip--child{{ if eq $child.href $.RelPermalink }}active{{ end }}" href="{{ $child.href }}">
+    <a class="nav-chip nav-chip--child{{ if eq $child.href $.RelPermalink }} active{{ end }}" href="{{ $child.href }}">
       <span class="branch-glyph">{{ if eq $child_index $last_index }}
         └──
         {{ else }}
