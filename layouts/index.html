@@ -62,6 +62,17 @@
       <button class="log-nav" data-log-next type="button" aria-label="Newer entries">next ›</button>
     </div>
   </div>
+  {{ $notes := slice }}
+  {{ range (where .Site.RegularPages "Section" "notes").ByDate.Reverse }}
+  {{ $notes = $notes | append (dict
+  "ts" (.Date.Format "2006-01-02 15:04")
+  "lvl" .Params.lvl
+  "msg" .Content
+  "tags" .Params.tags
+  "permalink" .RelPermalink
+  ) }}
+  {{ end }}
+  <script type="application/json" data-notes-json>{{ $notes | jsonify | safeJS }}</script>
 </section>
 
 <section class="guestbook reveal" id="guestbook" data-screen-label="04 Guestbook">

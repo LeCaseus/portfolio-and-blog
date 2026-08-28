@@ -75,13 +75,14 @@ async function load_notes() {
   if (!log_el) return;
 
   const page_size = 5;
-  let notes = [];
   let page = 0;
 
+  const data_el = document.querySelector('[data-notes-json]');
+  let notes = [];
   try {
-    notes = await fetch('/api/notes').then(response => response.json());
+    notes = data_el ? JSON.parse(data_el.textContent) : [];
   } catch (error) {
-    console.error('[notes] load failed:', error);
+    console.error('[notes] parse failed:', error);
     return;
   }
 
@@ -102,7 +103,7 @@ async function load_notes() {
     const tags_html = note.tags?.length
       ? `<div class="tags">${note.tags.map(tag => `<span>${tag}</span>`).join('')}</div>`
       : '';
-    const message_html = typeof marked !== 'undefined' ? marked.parseInline(note.msg) : note.msg;
+    const message_html = note.msg;
     return `
       <div class="entry-row">
         <div class="ts">${note.ts}</div>
@@ -130,7 +131,7 @@ async function load_notes() {
   render_page();
 }
 
-async function init_specimen_viewer(wrapper) {
+function init_specimen_viewer(wrapper) {
   const canvas = wrapper.querySelector('canvas');
   if (!canvas) return;
 

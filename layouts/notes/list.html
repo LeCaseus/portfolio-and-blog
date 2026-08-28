@@ -7,12 +7,35 @@
 
 <section class="doc-section" id="feed">
   <div class="channel"><span class="line"></span><span>CH-03.1</span><b>LIVE&nbsp;FEED</b></div>
+  {{ $notes := (where .Site.RegularPages "Section" "notes").ByDate.Reverse }}
   <div class="feed-head">
-    <span class="feed-head-count"><span data-feed-count>—</span> transmissions</span>
+    <span class="feed-head-count"><span>{{ len $notes }}</span> transmissions</span>
     <span class="feed-head-live"><span class="feed-live-dot" aria-hidden="true"></span>live</span>
   </div>
-  <ul class="feed-list" data-feed-list>
-    <li class="doc-empty">loading transmissions…</li>
+  <ul class="feed-list">
+    {{ if $notes }}
+    {{ range $notes }}
+    <li class="feed-card">
+      <div class="feed-card-head">
+        <span class="feed-card-author">@chezter</span>
+        <span class="feed-card-meta">
+          <span class="lvl" data-lvl="{{ .Params.lvl }}">{{ .Params.lvl }}</span>
+          <span class="feed-card-dot" aria-hidden="true">·</span>
+          <span class="feed-card-time">{{ .Date.Format "2 January 2006, 15:04" }}</span>
+        </span>
+      </div>
+      <div class="feed-card-body">{{ .Content }}</div>
+      {{ with .Params.tags }}
+      <div class="feed-card-tags">{{ range . }}<span>{{ . }}</span>{{ end }}</div>
+      {{ end }}
+      <div class="feed-card-foot">
+        <a class="log-nav" href="{{ .RelPermalink }}">open →</a>
+      </div>
+    </li>
+    {{ end }}
+    {{ else }}
+    <li class="doc-empty">no transmissions yet.</li>
+    {{ end }}
   </ul>
 </section>
 
