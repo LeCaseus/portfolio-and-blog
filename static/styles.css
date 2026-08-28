@@ -970,7 +970,6 @@ section:first-of-type {
   border-left: 2px solid var(--signal);
   padding: 22px clamp(20px, 3vw, 32px);
 }
-
 .readings-lead {
   font-family: var(--mono);
   font-size: clamp(15px, 1.4vw, 17px);
@@ -987,7 +986,6 @@ section:first-of-type {
   padding: 4px 10px 0 0;
   color: var(--signal);
 }
-
 .read {
   display: flex;
   flex-direction: column;
