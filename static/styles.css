@@ -1689,6 +1689,140 @@ section:first-of-type {
   color: var(--mute_2);
 }
 
+/* INFO: notes feed page -- microblog-style feed cards (cyberspace.online-inspired TUI feed) */
+.feed-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0 24px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.feed-head-count span {
+  color: var(--ink);
+}
+.feed-head-live {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--signal);
+}
+.feed-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 0 var(--signal_soft);
+  animation: pulse 1.8s ease-out infinite;
+}
+
+.feed-list {
+  list-style: none;
+  margin: 16px 5rem 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.feed-card {
+  margin: ;
+  border: 2px solid var(--signal);
+  background: var(--paper_2);
+  padding: 16px 20px;
+  transition: background 0.2s ease;
+}
+.feed-card:hover {
+  background: var(--signal_soft);
+}
+
+.feed-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px dotted var(--rule);
+}
+.feed-card-author {
+  font-family: var(--pixel);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--signal);
+}
+.feed-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.feed-card-meta .lvl {
+  font-family: var(--pixel);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+.feed-card-meta .lvl[data-lvl="info"] { color: var(--signal); }
+.feed-card-meta .lvl[data-lvl="warn"] { color: var(--warn); }
+.feed-card-meta .lvl[data-lvl="note"] { color: var(--mute); }
+.feed-card-dot {
+  color: var(--mute_2);
+}
+
+.feed-card-body {
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+.feed-card-body p {
+  margin: 0 0 0.8em;
+}
+.feed-card-body p:last-child {
+  margin-bottom: 0;
+}
+.feed-card-body code {
+  font-family: var(--mono);
+  font-size: 0.9em;
+  color: var(--signal);
+  background: var(--paper);
+  border: 2px solid var(--rule);
+  border-radius: 3px;
+  padding: 1px 6px;
+}
+.feed-card-body a {
+  color: var(--signal);
+  text-decoration: none;
+  border-bottom: 2px dotted var(--signal);
+}
+
+.feed-card-tags {
+  margin-top: 12px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.feed-card-tags span {
+  color: var(--signal);
+  border: 2px solid var(--rule);
+  padding: 1px 7px;
+  border-radius: 2px;
+}
+
 /* INFO: shared -- status pill badges (projects + webrings) */
 .status-pill {
   flex-shrink: 0;

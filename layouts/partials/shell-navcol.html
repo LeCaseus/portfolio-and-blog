@@ -3,7 +3,7 @@
   {{ $tree := slice
   (dict "href" "/" "idx" "CH-01" "lbl" "HOME/" "children" (slice
   (dict "href" "/blog.html" "idx" "CH-02" "lbl" "BLOG/")
-  (dict "href" "/#notes" "idx" "CH-03" "lbl" "NOTES/")
+  (dict "href" "/notes.html" "idx" "CH-03" "lbl" "NOTES/")
   (dict "href" "/guestbook.html" "idx" "CH-04" "lbl" "GUESTBOOK/")
   (dict "href" "/#webrings" "idx" "CH-05" "lbl" "WEBRINGS/")
   ))
@@ -12,8 +12,9 @@
   (dict "href" "/portfolio.html#about" "idx" "CH-08" "lbl" "ABOUT/")
   (dict "href" "/portfolio.html#contact" "idx" "CH-09" "lbl" "CONTACT/")
   ))
-  (dict "href" "/sitemap.html" "idx" "CH-10" "lbl" "SITEMAP/")
-  (dict "href" "/privacy.html" "idx" "CH-11" "lbl" "PRIVACY/")
+  (dict "href" "/bookmarks.html" "idx" "CH-10" "lbl" "BOOKMARKS/ (WIP)")
+  (dict "href" "/sitemap.html" "idx" "CH-11" "lbl" "SITEMAP/")
+  (dict "href" "/privacy.html" "idx" "CH-12" "lbl" "PRIVACY/")
   }}
   {{ range $tree }}
   <a class="nav-chip nav-chip--root{{ if eq .href $.RelPermalink }} active{{ end }}" href="{{ .href }}">
