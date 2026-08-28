@@ -1,9 +1,9 @@
 ---
 type: portfolio
-url: "/portfolio.html"
+url: '/portfolio.html'
 title: "Chezter's Portfolio"
-description: "Projects, background, and how to reach me — the professional side of this site."
-docid: "CV-2026-0x0011"
-statusline: "CH-06 · PORTFOLIO"
-classification: "PORTFOLIO"
+description: 'Biomedical Engineering Graduate | sEMG & Embedded Systems | Clinical Engineering | Open to Opportunities in NZ'
+docid: 'CV-2026-0x0006'
+statusline: 'CH-06 · PORTFOLIO'
+classification: 'PORTFOLIO'
 ---
