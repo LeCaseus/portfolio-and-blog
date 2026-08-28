@@ -47,6 +47,9 @@ function render_note(note) {
       </div>
       <div class="feed-card-body">${message_html}</div>
       ${tags_html}
+      <div class="feed-card-foot">
+        <a class="log-nav" href="/notes/${note.id}/">open →</a>
+      </div>
     </li>
   `;
 }

@@ -1,0 +1,23 @@
+{{ define "main" }}
+
+<section class="hero-intro" id="top" data-screen-label="03 Notes">
+  <div class="name-eyebrow">0x0003 · <span>ELECTRODES CONNECTED</span> · lead II</div>
+  <h1>CHEZTER'S<br /><span class="alive">MICRO-LOGS<span class="records-cursor">_</span></span></h1>
+</section>
+
+<section class="doc-section" id="feed">
+  <div class="channel"><span class="line"></span><span>CH-03.1</span><b>LIVE&nbsp;FEED</b></div>
+  <div class="feed-head">
+    <span class="feed-head-count"><span data-feed-count>—</span> transmissions</span>
+    <span class="feed-head-live"><span class="feed-live-dot" aria-hidden="true"></span>live</span>
+  </div>
+  <ul class="feed-list" data-feed-list>
+    <li class="doc-empty">loading transmissions…</li>
+  </ul>
+</section>
+
+{{ end }}
+
+{{ define "scripts" }}
+<script type="module" src="/notes.js"></script>
+{{ end }}

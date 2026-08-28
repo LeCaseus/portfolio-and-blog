@@ -1687,7 +1687,7 @@ section:first-of-type {
   color: var(--mute_2);
 }
 
-/* INFO: notes feed page -- microblog-style feed cards (cyberspace.online-inspired TUI feed) */
+/* INFO: notes feed page -- cyberspace.online-inspired TUI feed */
 .feed-head {
   display: flex;
   align-items: center;
@@ -1819,6 +1819,36 @@ section:first-of-type {
   border: 2px solid var(--rule);
   padding: 1px 7px;
   border-radius: 2px;
+}
+.feed-card-foot {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* INFO: single note permalink page -- full-size feed card variant + back link */
+.feed-card--full {
+  padding: 24px 28px;
+}
+.feed-card--full .feed-card-body {
+  font-size: 15px;
+}
+.entry-back {
+  margin-top: 24px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.entry-back a {
+  color: var(--mute);
+  text-decoration: none;
+  border-bottom: 2px dotted var(--mute_2);
+  transition: color 0.2s, border-color 0.2s;
+}
+.entry-back a:hover {
+  color: var(--signal);
+  border-color: var(--signal);
 }
 
 /* INFO: shared -- status pill badges (projects + webrings) */

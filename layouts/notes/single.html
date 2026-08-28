@@ -2,18 +2,28 @@
 
 <section class="hero-intro" id="top" data-screen-label="03 Notes">
   <div class="name-eyebrow">0x0003 · <span>ELECTRODES CONNECTED</span> · lead II</div>
-  <h1>CHEZTER'S<br /><span class="alive">MICRO-LOGS<span class="records-cursor">_</span></span></h1>
+  <h1>A SINGLE<br /><span class="alive">THREAD<span class="records-cursor">_</span></span></h1>
 </section>
 
-<section class="doc-section" id="feed">
-  <div class="channel"><span class="line"></span><span>CH-03.1</span><b>LIVE&nbsp;FEED</b></div>
-  <div class="feed-head">
-    <span class="feed-head-count"><span data-feed-count>—</span> transmissions</span>
-    <span class="feed-head-live"><span class="feed-live-dot" aria-hidden="true"></span>live</span>
-  </div>
-  <ul class="feed-list" data-feed-list>
-    <li class="doc-empty">loading transmissions…</li>
-  </ul>
+<section class="doc-section" id="entry">
+  <div class="channel"><span class="line"></span><span>CH-03</span><b>THREAD</b></div>
+  <article class="feed-card feed-card--full">
+    <div class="feed-card-head">
+      <span class="feed-card-author">@chezter</span>
+      <span class="feed-card-meta">
+        <span class="lvl" data-lvl="{{ .Params.lvl }}">{{ .Params.lvl }}</span>
+        <span class="feed-card-dot" aria-hidden="true">·</span>
+        <span class="feed-card-time">{{ .Date.Format "2 January 2006, 15:04" }}</span>
+      </span>
+    </div>
+    <div class="feed-card-body">
+      {{ .Content }}
+    </div>
+    {{ with .Params.tags }}
+    <div class="feed-card-tags">{{ range . }}<span>{{ . }}</span>{{ end }}</div>
+    {{ end }}
+  </article>
+  <div class="entry-back"><a href="/notes.html">← back to the feed</a></div>
 </section>
 
 {{ end }}

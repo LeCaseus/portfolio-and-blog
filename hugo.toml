@@ -10,7 +10,8 @@ ignoreFiles = ["notes\\.json$"]
 
 [permalinks]
   posts = "/blog/:slug/"
-
+  notes = "/notes/:slug"
+  
 [outputFormats.RSS]
   baseName = "feed"
   mediaType = "application/rss+xml"

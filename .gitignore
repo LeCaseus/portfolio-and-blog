@@ -5,3 +5,4 @@ Thumbs.db
 public/
 .hugo_build.lock
 content/posts/
+content/notes/
