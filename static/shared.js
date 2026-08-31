@@ -102,26 +102,25 @@ export function init_hero_ecg() {
   let scroll_offset = 0;
   let last_frame_time = performance.now();
 
-  const heartbeat_offsets = intensity_factor => [
-    [10, 0], [4, -2 * intensity_factor], [6, 2 * intensity_factor], [4, 0],
-    [10, 0],
-    [3, -4 * intensity_factor], [3, 14 * intensity_factor], [3, -42 * intensity_factor], [3, 32 * intensity_factor], [3, -4 * intensity_factor],
-    [10, 0],
-    [6, -2 * intensity_factor], [10, 6 * intensity_factor], [6, -4 * intensity_factor],
-    [Math.max(8, 40 / Math.max(1, intensity_factor)), 0],
-  ];
+  let ecg_samples = null;
+  let ecg_cursor_index = 0;
 
-  const add_heartbeat = () => {
-    let x = cursor_x;
-    let y = baseline_y;
-    for (const [delta_x, delta_y] of heartbeat_offsets(intensity)) {
-      x += delta_x;
-      y += delta_y;
-      points.push([x, y]);
-    }
-    cursor_x = x + Math.random() * 14 / Math.max(1, intensity);
+  const add_ecg_sample = () => {
+    if (!ecg_samples) return;
+    const pixels_per_sample = 2.2 / Math.min(1.6, intensity);
+    const y = baseline_y - ecg_samples[ecg_cursor_index] * 30 * Math.min(1.6, intensity);
+    points.push([cursor_x, y]);
+    cursor_x += pixels_per_sample;
+    ecg_cursor_index = (ecg_cursor_index + 1) % ecg_samples.length;
   };
-  while (cursor_x < width * 1.2) add_heartbeat();
+
+  fetch('/assets/ecg_waveform/ecg_loop.json')
+    .then(response => response.json())
+    .then(data => {
+      ecg_samples = data.samples;
+      while (cursor_x < width * 1.2) add_ecg_sample();
+    })
+    .catch(() => {});
 
   const draw_path = () => {
     let d = '';
@@ -147,7 +146,7 @@ export function init_hero_ecg() {
     scroll_offset += base_speed * speed_multiplier * delta_seconds;
 
     while (points.length > 4 && points[1][0] - scroll_offset < -20) points.shift();
-    while (cursor_x - scroll_offset < width * 1.2) add_heartbeat();
+    while (ecg_samples && cursor_x - scroll_offset < width * 1.2) add_ecg_sample();
 
     draw_path();
     requestAnimationFrame(animate);
