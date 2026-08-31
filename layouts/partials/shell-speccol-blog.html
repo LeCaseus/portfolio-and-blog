@@ -3,34 +3,51 @@
   {{ $allTags := slice }}
   {{ range $posts }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end }}
   {{ $uniqueTags := $allTags | uniq | sort }}
+  {{ $years := slice }}
+  {{ range $posts }}{{ $years = $years | append .Date.Year }}{{ end }}
+  {{ $uniqueYears := $years | uniq }}
 
   <input type="checkbox" id="speccol-blog-toggle" class="mobile-dropdown-toggle" />
   <div class="blog-nav-section">
-    <label for="speccol-blog-toggle" class="col-label mobile-dropdown-summary">// CHANNELS</label>
-    <div class="blog-tag-list mobile-dropdown-content" data-blog-tag-list>
-      <button type="button" class="blog-tag-chip active" data-tag="all">
-        <span class="lbl">all entries</span><span class="count">{{ len $posts }}</span>
-      </button>
-      {{ range $uniqueTags }}
-      <button type="button" class="blog-tag-chip" data-tag="{{ . }}">
-        <span class="lbl">{{ . }}</span><span class="count">{{ len (where $posts "Params.tags" "intersect" (slice .))
-          }}</span>
-      </button>
-      {{ end }}
+    <label for="speccol-blog-toggle" class="col-label mobile-dropdown-summary">// SEARCH &amp; FILTERS</label>
+    <div class="mobile-dropdown-content">
+      <input type="text" class="blog-search-input" data-blog-search placeholder='grep -i "..."' autocomplete="off" />
+      <div class="blog-tag-list" data-blog-tag-list>
+        {{ range $uniqueTags }}
+        <button type="button" class="blog-tag-chip" data-tag="{{ . }}">
+          <span class="lbl">{{ . }}</span><span class="count">{{ len (where $posts "Params.tags" "intersect" (slice .))
+            }}</span>
+        </button>
+        {{ end }}
+      </div>
+      <button type="button" class="blog-filter-clear" data-blog-clear-filters hidden>clear filters ×</button>
     </div>
   </div>
 
   <div class="blog-nav-section mobile-dropdown-content">
     <div class="col-label">// ENTRIES</div>
-    <ul class="blog-post-list" data-blog-post-list>
-      {{ range $posts }}
-      <li data-tags="{{ delimit .Params.tags " ||" }}">
-        <a class="blog-post-item{{ if eq $.RelPermalink .RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}">
-          <span class="ttl">{{ .Title }}</span>
-          <span class="date">{{ .Date.Format "2006-01-02" }}</span>
-        </a>
-      </li>
+    <div data-blog-post-groups>
+      {{ range $index, $year := $uniqueYears }}
+      {{ $year_posts := where $posts "Date.Year" $year }}
+      <div class="blog-year-group" data-blog-year-group>
+        <input type="checkbox" id="year-{{ $year }}-toggle" class="blog-year-toggle" {{ if eq $index 0 }}checked{{ end
+          }} />
+        <label class="blog-year-label" for="year-{{ $year }}-toggle">
+          <span>ADMISSION RECORD · {{ $year }}</span><span class="blog-year-count">{{ len $year_posts }}</span>
+        </label>
+        <ul class="blog-post-list" data-blog-post-list>
+          {{ range $year_posts }}
+          <li data-tags="{{ delimit .Params.tags " ||" }}" data-title="{{ .Title }}">
+            <a class="blog-post-item{{ if eq $.RelPermalink .RelPermalink }} active{{ end }}"
+              href="{{ .RelPermalink }}">
+              <span class="ttl">{{ .Title }}</span>
+              <span class="date">{{ .Date.Format "2006-01-02" }}</span>
+            </a>
+          </li>
+          {{ end }}
+        </ul>
+      </div>
       {{ end }}
-    </ul>
+    </div>
   </div>
 </aside>
