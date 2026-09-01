@@ -986,6 +986,9 @@ section:first-of-type {
   padding: 4px 10px 0 0;
   color: var(--signal);
 }
+.readings-split .specimen-viewer {
+  border: 0;
+}
 .read {
   display: flex;
   flex-direction: column;
@@ -2559,8 +2562,8 @@ button.blog-tag-chip:hover {
 .heart-container {
   --heart-color: var(--signal);
   position: relative;
-  width: 42px;
-  height: 42px;
+  width: 64px;
+  height: 64px;
   transition: 0.3s;
 }
 .heart-container .checkbox {
@@ -2578,15 +2581,6 @@ button.blog-tag-chip:hover {
   justify-content: center;
   align-items: center;
 }
-.heart-container .svg-outline,
-.heart-container .svg-filled {
-  fill: var(--heart-color);
-  position: absolute;
-}
-.heart-container .svg-filled {
-  animation: keyframes-svg-filled 1s;
-  display: none;
-}
 .heart-container .svg-celebrate {
   position: absolute;
   width: 100%;
@@ -2598,24 +2592,28 @@ button.blog-tag-chip:hover {
   fill: var(--heart-color);
   stroke-width: 2px;
 }
-.heart-container .checkbox:checked ~ .svg-container .svg-filled {
-  display: block;
-}
 .heart-container .checkbox:checked ~ .svg-container .svg-celebrate {
   display: block;
 }
 
-@keyframes keyframes-svg-filled {
-  0% {
-    transform: scale(0);
-  }
-  25% {
-    transform: scale(1.2);
-  }
-  50% {
-    transform: scale(1);
-    filter: brightness(1.5);
-  }
+.heart_sprite {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  background-image: url(/assets/heart_reaction/heart_idle_green.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.checkbox:checked ~ .heart_sprite {
+  background-image: url(/assets/heart_reaction/sprite_sheet_green.png);
+  background-size: 256px 64px;
+  animation: heartbeat-frames 900ms steps(4) infinite;
+}
+
+@keyframes heartbeat-frames {
+  from { background-position-x: 0%; }
+  to   { background-position-x: -256px; }
 }
 @keyframes keyframes-svg-celebrate {
   0% {
