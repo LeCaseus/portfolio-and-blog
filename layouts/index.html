@@ -66,8 +66,9 @@
   {{ range (where .Site.RegularPages "Section" "notes").ByDate.Reverse }}
   {{ $notes = $notes | append (dict
   "ts" (.Date.Format "2006-01-02 15:04")
+  "iso" (.Date.Format "2006-01-02T15:04:05Z07:00")
   "lvl" .Params.lvl
-  "msg" .Content
+  "msg" (.Content | plainify | truncate 160)
   "tags" .Params.tags
   "permalink" .RelPermalink
   ) }}

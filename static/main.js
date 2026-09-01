@@ -1,4 +1,4 @@
-import { init_hero_ecg, init_theme_toggle, start_clock, init_mobile_nav, init_typewriter, init_scroll_reveal, format_post_date, escape_html, fetch_feed_posts } from './shared.js';
+import { init_hero_ecg, init_theme_toggle, start_clock, init_mobile_nav, init_typewriter, init_scroll_reveal, format_post_date, format_relative_time, escape_html, fetch_feed_posts } from './shared.js';
 import * as THREE from '/vendor/three/three.module.min.js';
 import { OrbitControls } from '/vendor/three/OrbitControls.js';
 import { GLTFLoader } from '/vendor/three/GLTFLoader.js';
@@ -106,7 +106,7 @@ async function load_notes() {
     const message_html = note.msg;
     return `
       <div class="entry-row">
-        <div class="ts">${note.ts}</div>
+        <div class="ts" title="${note.ts}">${format_relative_time(note.iso)}</div>
         <div class="lvl" data-lvl="${note.lvl}">${note.lvl}</div>
         <div class="msg">${message_html}${tags_html}</div>
       </div>

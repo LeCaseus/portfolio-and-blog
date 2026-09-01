@@ -251,6 +251,21 @@ export function format_post_date(iso_string, include_time = false) {
   return `${date_part} ${time_part}`;
 }
 
+export function format_relative_time(iso_string) {
+  const then = new Date(iso_string).getTime();
+  const diff_seconds = Math.floor((Date.now() - then) / 1000);
+
+  if (diff_seconds < 60) return 'just now';
+  const diff_minutes = Math.floor(diff_seconds / 60);
+  if (diff_minutes < 60) return `${diff_minutes}m ago`;
+  const diff_hours = Math.floor(diff_minutes / 60);
+  if (diff_hours < 24) return `${diff_hours}h ago`;
+  const diff_days = Math.floor(diff_hours / 24);
+  if (diff_days < 7) return `${diff_days}d ago`;
+
+  return new Date(iso_string).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
 export function escape_html(value) {
   return String(value).replace(/[&<>"']/g, char => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'

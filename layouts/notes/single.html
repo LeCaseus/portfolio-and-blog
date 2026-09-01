@@ -13,7 +13,8 @@
       <span class="feed-card-meta">
         <span class="lvl" data-lvl="{{ .Params.lvl }}">{{ .Params.lvl }}</span>
         <span class="feed-card-dot" aria-hidden="true">·</span>
-        <span class="feed-card-time">{{ .Date.Format "2 January 2006, 15:04" }}</span>
+        <span class="feed-card-time" data-iso='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
+          title='{{ .Date.Format "2 January 2006, 15:04" }}'>{{ .Date.Format "2 January 2006, 15:04" }}</span>
       </span>
     </div>
     <div class="feed-card-body">

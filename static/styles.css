@@ -1728,15 +1728,60 @@ section:first-of-type {
 
 .feed-list {
   list-style: none;
-  margin: 16px 5rem 16px;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
+.tag-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 24px;
+}
+
+.tag-pill {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 2px solid var(--rule);
+  background: var(--paper_2);
+  color: var(--mute);
+  font-family: var(--pixel);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.tag-pill:hover {
+  border-color: var(--signal);
+  color: var(--ink);
+}
+
+.tag-pill.active {
+  border-color: var(--signal);
+  color: var(--signal);
+  background: var(--signal_soft);
+}
+
+.tag-pill .count {
+  color: var(--mute_2);
+  font-size: 10px;
+}
+
+.tag-pill.active .count {
+  color: var(--signal);
+}
+
 .feed-card {
-  margin: ;
+  margin: 0;
   border: 2px solid var(--signal);
   background: var(--paper_2);
   padding: 16px 20px;
