@@ -28,23 +28,35 @@
   <ul class="feed-list">
     {{ if $notes }}
     {{ range $index, $note := $notes }}
-    <li class="feed-card" data-tags='{{ delimit (.Params.tags | default slice) "||" }}'>
+    <li class="h-entry feed-card" data-tags='{{ delimit (.Params.tags | default slice) "||" }}'>
       <div class="feed-card-head">
         <span class="feed-card-author">@chezter</span>
         <span class="feed-card-meta">
           <span class="lvl" data-lvl="{{ .Params.lvl }}">{{ .Params.lvl }}</span>
           <span class="feed-card-dot" aria-hidden="true">·</span>
-          <span class="feed-card-time" data-iso='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
-            title='{{ .Date.Format "2 January 2006, 15:04" }}'>{{ .Date.Format "2 January 2006, 15:04" }}</span>
+          <time class="dt-published feed-card-time" datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
+            data-iso='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
+            title='{{ .Date.Format "2 January 2006, 15:04" }}'>{{ .Date.Format "2 January 2006, 15:04" }}</time>
         </span>
       </div>
-      <div class="feed-card-body">{{ .Content }}</div>
+      {{ if eq .Params.entry_kind "quote" }}
+      {{ with .Params.source_url }}<a class="u-repost-of" href="{{ . }}" hidden></a>{{ end }}
+      <blockquote class="feed-card-quote h-cite">
+        <div class="p-content">{{ .Params.quoted_text | markdownify }}</div>
+        <footer class="feed-card-quote-source">
+          {{ with .Params.source_author }}<span class="p-author">{{ . }}</span>{{ end }}
+          {{ with .Params.source_url }}<a class="u-url" href="{{ . }}" target="_blank" rel="noopener">source →</a>{{ end
+          }}
+        </footer>
+      </blockquote>
+      {{ end }}
+      <div class="e-content feed-card-body">{{ .Content }}</div>
       {{ with .Params.tags }}
-      <div class="feed-card-tags">{{ range . }}<span>{{ . }}</span>{{ end }}</div>
+      <div class="feed-card-tags">{{ range . }}<span class="p-category">{{ . }}</span>{{ end }}</div>
       {{ end }}
       <div class="feed-card-foot">
         <button type="button" class="log-nav" data-copy-link data-permalink="{{ .Permalink }}">share me</button>
-        <a class="log-nav" href="{{ .RelPermalink }}">open →</a>
+        <a class="u-url u-uid log-nav" href="{{ .RelPermalink }}">open →</a>
       </div>
     </li>
     {{ end }}

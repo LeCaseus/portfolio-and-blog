@@ -41,9 +41,18 @@
   </footer>
 </article>
 
+<section class="webmentions" data-webmention-target="{{ .Permalink }}">
+  <div class="channel"><span class="line"></span><span>REPLIES</span><b><span data-webmention-count>—</span>
+      WEBMENTIONS</b></div>
+  <ul class="webmention-list" data-webmention-list>
+    <li class="doc-empty">loading webmentions…</li>
+  </ul>
+</section>
+
 {{ end }}
 
 {{ define "scripts" }}
 <script type="module" src="/blog-list.js"></script>
 <script type="module" src="/reaction.js"></script>
+<script type="module" src="/webmention.js"></script>
 {{ end }}

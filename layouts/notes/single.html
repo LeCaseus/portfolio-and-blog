@@ -7,28 +7,54 @@
 
 <section class="doc-section" id="entry">
   <div class="channel"><span class="line"></span><span>CH-03</span><b>THREAD</b></div>
-  <article class="feed-card feed-card--full">
+  <article class="h-entry feed-card feed-card--full">
     <div class="feed-card-head">
       <span class="feed-card-author">@chezter</span>
       <span class="feed-card-meta">
         <span class="lvl" data-lvl="{{ .Params.lvl }}">{{ .Params.lvl }}</span>
         <span class="feed-card-dot" aria-hidden="true">·</span>
-        <span class="feed-card-time" data-iso='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
-          title='{{ .Date.Format "2 January 2006, 15:04" }}'>{{ .Date.Format "2 January 2006, 15:04" }}</span>
+        <time class="dt-published feed-card-time" datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
+          data-iso='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
+          title='{{ .Date.Format "2 January 2006, 15:04" }}'>{{ .Date.Format "2 January 2006, 15:04" }}</time>
       </span>
     </div>
-    <div class="feed-card-body">
+    {{ if eq .Params.type "quote" }}
+    {{ with .Params.source_url }}<a class="u-repost-of" href="{{ . }}" hidden></a>{{ end }}
+    <blockquote class="feed-card-quote h-cite">
+      <div class="p-content">{{ .Params.quoted_text | markdownify }}</div>
+      <footer class="feed-card-quote-source">
+        {{ with .Params.source_author }}<span class="p-author">{{ . }}</span>{{ end }}
+        {{ with .Params.source_url }}<a class="u-url" href="{{ . }}" target="_blank" rel="noopener">source →</a>{{ end
+        }}
+      </footer>
+    </blockquote>
+    {{ end }}
+    <div class="e-content feed-card-body">
       {{ .Content }}
     </div>
     {{ with .Params.tags }}
-    <div class="feed-card-tags">{{ range . }}<span>{{ . }}</span>{{ end }}</div>
+    <div class="feed-card-tags">{{ range . }}<span class="p-category">{{ . }}</span>{{ end }}</div>
     {{ end }}
   </article>
-  <div class="entry-back"><a href="/notes.html">← back to the feed</a></div>
+  <div class="entry-back">
+    <a class="u-url u-uid" href="{{ .Permalink }}">{{ .Permalink }}</a>
+    <span class="dot" aria-hidden="true"></span>
+    <a class="p-author h-card" href="https://cheztervargas.com/">Chezter Vargas</a>
+    <span class="dot" aria-hidden="true"></span>
+    <a href="/notes.html">← back to the feed</a>
+  </div>
+</section>
+
+<section class="webmentions" data-webmention-target="{{ .Permalink }}">
+  <div class="channel"><span class="line"></span><span>CH-03.2</span><b>WEBMENTIONS</b></div>
+  <ul class="webmention-list" data-webmention-list>
+    <li class="doc-empty">loading webmentions…</li>
+  </ul>
 </section>
 
 {{ end }}
 
 {{ define "scripts" }}
 <script type="module" src="/notes.js"></script>
+<script type="module" src="/webmention.js"></script>
 {{ end }}
