@@ -37,7 +37,7 @@
         </label>
         <ul class="blog-post-list" data-blog-post-list>
           {{ range $year_posts }}
-          <li data-tags="{{ delimit .Params.tags " ||" }}" data-title="{{ .Title }}">
+          <li data-tags='{{ delimit .Params.tags "||" }}' data-title="{{ .Title }}">
             <a class="blog-post-item{{ if eq $.RelPermalink .RelPermalink }} active{{ end }}"
               href="{{ .RelPermalink }}">
               <span class="ttl">{{ .Title }}</span>

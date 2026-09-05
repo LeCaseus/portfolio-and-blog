@@ -3,6 +3,12 @@
 <section class="hero-intro" id="top" data-screen-label="03 Notes">
   <div class="name-eyebrow">0x0003 · <span>ELECTRODES CONNECTED</span> · lead II</div>
   <h1>CHEZTER'S<br /><span class="alive">MICRO-LOGS<span class="records-cursor">_</span></span></h1>
+  <div class="prose">
+    <div class="col-label">BIO</div>
+    <p>If you think that I'd finally gotten rid of my social media profiles then you'd be half-right. This is now my
+      main social media feed -- right here, right now. Publish (on my) Own Site (first), Syndicate Elsewhere (later) or
+      <a href="https://indieweb.org/POSSE">POSSE</a>.
+  </div>
 </section>
 
 <section class="doc-section" id="feed">
@@ -30,7 +36,10 @@
     {{ range $index, $note := $notes }}
     <li class="h-entry feed-card" data-tags='{{ delimit (.Params.tags | default slice) "||" }}'>
       <div class="feed-card-head">
-        <span class="feed-card-author">@chezter</span>
+        <span class="feed-card-byline">
+          <img class="feed-card-avatar" src="/assets/face.jpg" alt="" />
+          <span class="feed-card-author">@chezter</span>
+        </span>
         <span class="feed-card-meta">
           <span class="lvl" data-lvl="{{ .Params.lvl }}">{{ .Params.lvl }}</span>
           <span class="feed-card-dot" aria-hidden="true">·</span>
@@ -39,18 +48,11 @@
             title='{{ .Date.Format "2 January 2006, 15:04" }}'>{{ .Date.Format "2 January 2006, 15:04" }}</time>
         </span>
       </div>
-      {{ if eq .Params.entry_kind "quote" }}
-      {{ with .Params.source_url }}<a class="u-repost-of" href="{{ . }}" hidden></a>{{ end }}
-      <blockquote class="feed-card-quote h-cite">
-        <div class="p-content">{{ .Params.quoted_text | markdownify }}</div>
-        <footer class="feed-card-quote-source">
-          {{ with .Params.source_author }}<span class="p-author">{{ . }}</span>{{ end }}
-          {{ with .Params.source_url }}<a class="u-url" href="{{ . }}" target="_blank" rel="noopener">source →</a>{{ end
-          }}
-        </footer>
-      </blockquote>
-      {{ end }}
       <div class="e-content feed-card-body">{{ .Content }}</div>
+      {{ with $note.Params.source_url }}
+      <a class="feed-card-source {{ if eq $note.Params.mention_type " repost" }}u-repost-of{{ else }}u-in-reply-to{{ end
+        }}" href="{{ . }}" target="_blank" rel="noopener">SOURCE →</a>
+      {{ end }}
       {{ with .Params.tags }}
       <div class="feed-card-tags">{{ range . }}<span class="p-category">{{ . }}</span>{{ end }}</div>
       {{ end }}

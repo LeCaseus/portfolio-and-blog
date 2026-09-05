@@ -1807,6 +1807,18 @@ section:first-of-type {
   letter-spacing: 0.04em;
   color: var(--signal);
 }
+.feed-card-byline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.feed-card-avatar {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border: 2px solid var(--rule);
+  flex-shrink: 0;
+}
 .feed-card-meta {
   display: flex;
   align-items: center;
@@ -1857,38 +1869,90 @@ section:first-of-type {
   text-decoration: none;
   border-bottom: 2px dotted var(--signal);
 }
-
-.feed-card-quote {
-  margin: 0 0 12px;
-  padding: 10px 16px;
-  border-left: 2px solid var(--signal);
-  background: var(--paper);
-  font-family: var(--serif_read);
-  font-size: 14px;
-  line-height: 1.55;
+.feed-card-body img {
+  display: block;
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+  margin: 10px 0;
+  border: 2px solid var(--rule);
+  border-radius: 3px;
+}
+.feed-card-body strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+.feed-card-body em {
+  color: var(--signal);
+  font-style: italic;
+}
+.feed-card-body del {
   color: var(--mute);
 }
-.feed-card-quote p {
-  margin: 0 0 0.6em;
+
+.feed-card-body ul,
+.feed-card-body ol {
+  margin: 0 0 0.8em;
+  padding-left: 22px;
 }
-.feed-card-quote p:last-child {
+.feed-card-body li {
+  margin-bottom: 0.3em;
+}
+.feed-card-body li:last-child {
   margin-bottom: 0;
 }
-.feed-card-quote-source {
-  margin-top: 8px;
-  display: flex;
-  gap: 10px;
-  align-items: baseline;
+
+.feed-card-body blockquote {
+  margin: 0.6em 0 0.8em;
+  padding: 2px 0 2px 16px;
+  border-left: 2px solid var(--signal);
+  font-style: italic;
+  color: var(--mute);
+}
+.feed-card-body blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.feed-card-body pre {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  line-height: 1.5;
+  background: var(--paper);
+  border: 2px solid var(--rule);
+  border-radius: 3px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  margin: 0 0 0.8em;
+}
+.feed-card-body pre code {
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.feed-card-body hr {
+  border: 0;
+  height: 2px;
+  background: var(--rule);
+  margin: 1em 0;
+}
+
+.feed-card-source {
+  display: inline-block;
+  margin-top: 10px;
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--mute_2);
-}
-.feed-card-quote-source a {
   color: var(--signal);
   text-decoration: none;
   border-bottom: 2px dotted var(--signal);
+  transition: color 0.2s, border-color 0.2s;
+}
+.feed-card-source:hover {
+  color: var(--ink);
+  border-color: var(--ink);
 }
 
 .feed-card-tags {

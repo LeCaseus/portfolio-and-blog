@@ -9,7 +9,10 @@
   <div class="channel"><span class="line"></span><span>CH-03</span><b>THREAD</b></div>
   <article class="h-entry feed-card feed-card--full">
     <div class="feed-card-head">
-      <span class="feed-card-author">@chezter</span>
+      <span class="feed-card-byline">
+        <img class="feed-card-avatar" src="/assets/face.jpg" alt="" />
+        <span class="feed-card-author">@chezter</span>
+      </span>
       <span class="feed-card-meta">
         <span class="lvl" data-lvl="{{ .Params.lvl }}">{{ .Params.lvl }}</span>
         <span class="feed-card-dot" aria-hidden="true">·</span>
@@ -18,20 +21,13 @@
           title='{{ .Date.Format "2 January 2006, 15:04" }}'>{{ .Date.Format "2 January 2006, 15:04" }}</time>
       </span>
     </div>
-    {{ if eq .Params.type "quote" }}
-    {{ with .Params.source_url }}<a class="u-repost-of" href="{{ . }}" hidden></a>{{ end }}
-    <blockquote class="feed-card-quote h-cite">
-      <div class="p-content">{{ .Params.quoted_text | markdownify }}</div>
-      <footer class="feed-card-quote-source">
-        {{ with .Params.source_author }}<span class="p-author">{{ . }}</span>{{ end }}
-        {{ with .Params.source_url }}<a class="u-url" href="{{ . }}" target="_blank" rel="noopener">source →</a>{{ end
-        }}
-      </footer>
-    </blockquote>
-    {{ end }}
     <div class="e-content feed-card-body">
       {{ .Content }}
     </div>
+    {{ with .Params.source_url }}
+    <a class="feed-card-source {{ if eq $.Params.mention_type " repost" }}u-repost-of{{ else }}u-in-reply-to{{ end }}"
+      href="{{ . }}" target="_blank" rel="noopener">SOURCE →</a>
+    {{ end }}
     {{ with .Params.tags }}
     <div class="feed-card-tags">{{ range . }}<span class="p-category">{{ . }}</span>{{ end }}</div>
     {{ end }}

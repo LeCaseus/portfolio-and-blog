@@ -5,31 +5,6 @@ init_theme_toggle();
 start_clock();
 init_mobile_nav();
 
-function init_tag_filters() {
-  const tag_list = document.querySelector('[data-notes-tag-list]');
-  const cards = document.querySelectorAll('.feed-card[data-tags]');
-  if (!tag_list || !cards.length) return;
-
-  const get_active_tags = () =>
-    new Set([...tag_list.querySelectorAll('.tag-pill.active')].map(chip => chip.dataset.tag));
-
-  const apply_filters = () => {
-    const active_tags = get_active_tags();
-    cards.forEach(card => {
-      const card_tags = card.dataset.tags ? card.dataset.tags.split('||') : [];
-      const matches = active_tags.size === 0 || [...active_tags].some(tag => card_tags.includes(tag));
-      card.hidden = !matches;
-    });
-  };
-
-  tag_list.addEventListener('click', event => {
-    const chip = event.target.closest('.tag-pill');
-    if (!chip) return;
-    chip.classList.toggle('active');
-    apply_filters();
-  });
-}
-
 function init_copy_link() {
   document.querySelectorAll('[data-copy-link]').forEach(button => {
     button.addEventListener('click', async () => {
@@ -52,45 +27,58 @@ function init_relative_timestamps() {
   });
 }
 
-function init_infinite_scroll() {
-  const batch_size = 10;
+function init_feed_visibility() {
+  const tag_list = document.querySelector('[data-notes-tag-list]');
   const cards = [...document.querySelectorAll('.feed-card[data-tags]')];
   const sentinel = document.querySelector('[data-feed-sentinel]');
-  const tag_list = document.querySelector('[data-notes-tag-list]');
-  if (!sentinel || cards.length <= batch_size) return;
+  if (!cards.length) return;
 
-  let revealed_count = batch_size;
-  cards.forEach((card, index) => { card.dataset.batchHidden = index >= revealed_count ? 'true' : 'false'; });
-  apply_batch_visibility();
+  const batch_size = 10;
+  let revealed_count = Math.min(batch_size, cards.length);
 
-  function apply_batch_visibility() {
+  const get_active_tags = () =>
+    tag_list ? new Set([...tag_list.querySelectorAll('.tag-pill.active')].map(chip => chip.dataset.tag)) : new Set();
+
+  const card_matches_tags = (card, active_tags) => {
+    if (active_tags.size === 0) return true;
+    const card_tags = card.dataset.tags ? card.dataset.tags.split('||') : [];
+    return [...active_tags].some(tag => card_tags.includes(tag));
+  };
+
+  // A card shows when it matches the active tags AND is either within the
+  // currently-revealed scroll batch, or a filter is active -- filtering
+  // searches the whole feed, not just what's been scrolled into view yet.
+  const apply_visibility = () => {
+    const active_tags = get_active_tags();
+    const filtering = active_tags.size > 0;
     cards.forEach((card, index) => {
-      if (card.dataset.batchHidden === 'true' && index >= revealed_count) card.hidden = true;
+      const within_batch = filtering || index < revealed_count;
+      card.hidden = !(card_matches_tags(card, active_tags) && within_batch);
     });
-  }
-
-  function reveal_next_batch() {
-    revealed_count += batch_size;
-    cards.forEach((card, index) => {
-      if (index < revealed_count) { card.dataset.batchHidden = 'false'; card.hidden = false; }
-    });
-    if (revealed_count >= cards.length) observer.disconnect();
-  }
-
-  const observer = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) reveal_next_batch();
-  }, { rootMargin: '200px' });
-  observer.observe(sentinel);
+  };
 
   if (tag_list) {
-    tag_list.addEventListener('click', () => {
-      const has_active_filter = tag_list.querySelector('.tag-pill.active');
-      cards.forEach(card => { if (card.dataset.batchHidden === 'true') card.hidden = !!has_active_filter ? false : true; });
+    tag_list.addEventListener('click', event => {
+      const chip = event.target.closest('.tag-pill');
+      if (!chip) return;
+      chip.classList.toggle('active');
+      apply_visibility();
     });
   }
+
+  if (sentinel && cards.length > batch_size) {
+    const observer = new IntersectionObserver(entries => {
+      if (!entries[0].isIntersecting) return;
+      revealed_count += batch_size;
+      apply_visibility();
+      if (revealed_count >= cards.length) observer.disconnect();
+    }, { rootMargin: '200px' });
+    observer.observe(sentinel);
+  }
+
+  apply_visibility();
 }
 
-init_tag_filters();
+init_feed_visibility();
 init_copy_link();
 init_relative_timestamps();
-init_infinite_scroll();
