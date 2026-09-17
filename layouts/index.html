@@ -12,13 +12,14 @@
     <img class="u-photo" src="/assets/face.jpg" alt="" hidden />
     <a href="https://cheztervargas.com/" class="p-name u-url" hidden>Chezter Vargas</a>
     <span class="lead">Yep, that's me. You're probably wondering how I got <em>into this situation</em>...</span>
-    <p class="p-note">// A few existential crises later about paying for yet another Software as a Subscription (SaaS)
-      and realizing
-      that Social Media had become a mindless slop-filled algorithm that'll keep on destroying my attention span, I
-      decided to focus my skills on web development and linux systems instead, to create this digital cozy corner where
-      I have control over my own
-      data.</p>
-    <p>// My stack is fully self-hosted, along with the rest of my homelab, so if you are seeing an offline page or just
+    <p class="p-note">
+      // A few existential crises later about paying for yet another Software as a Subscription (SaaS)
+      and realizing that Social Media had become a mindless slop-filled algorithm that'll keep on destroying my
+      attention span, I decided to focus my skills on web development and linux systems instead, to create this
+      digital cozy corner where I have control over my own data.
+    </p>
+    <p>
+      // My stack is fully self-hosted, along with the rest of my homelab, so if you are seeing an offline page or just
       an error, then my laptop is probably sleeping. You can follow along my journey as a homelabber, an engineer, or
       simply as a friend on this digital landscape by checking out what's new over at the <a
         href="/blog.html">./blog</a>.
@@ -30,7 +31,7 @@
 </section>
 
 <section class="readings reveal" id="blog" data-screen-label="02 Blog">
-  <div class="channel"><span class="line"></span><span>CH-02</span><b>BLOG</b></div>
+  <div class="channel"><span class="line"></span><span>CH-02</span><strong>BLOG</strong></div>
   <div class="head">
     <h2><em>+++</em> Readings <em>+++</em></h2>
     <a href="/blog.html">I wanna read everything!</a>
@@ -46,24 +47,26 @@
 </section>
 
 <section class="notes reveal" id="notes" data-screen-label="03 Notes">
-  <div class="channel"><span class="line"></span><span>CH-03</span><b>NOTES</b></div>
+  <div class="channel"><span class="line"></span><span>CH-03</span><strong>NOTES</strong></div>
   <div class="head">
     <h2><em>+++</em> Micro-logs <em>+++</em></h2>
     <a href="/notes.html">Oh great, Social Media...</a>
   </div>
   <div class="log">
     <div class="log-bar">
-      <div class="stream"><b>STREAM</b> <span>chezter@notes</span> <span class="ok">live</span></div>
+      <div class="stream"><strong>STREAM</strong> <span>chezter@notes</span> <span class="ok">live</span></div>
       <div>kernel: v4.3 · entries=<span data-note-count>000</span></div>
     </div>
     <div class="log-foot">
-      <button class="log-nav" data-log-prev type="button" aria-label="Older entries">‹ prev</button>
+      <button class="log-nav" data-log-prev type="button" aria-label="Older entries" data-umami-event="notes-log-nav"
+        data-umami-event-direction="prev">‹ prev</button>
       <span class="log-page">entries <span data-page-range>0–0</span> / <span data-page-total>0</span></span>
-      <button class="log-nav" data-log-next type="button" aria-label="Newer entries">next ›</button>
+      <button class="log-nav" data-log-next type="button" aria-label="Newer entries" data-umami-event="notes-log-nav"
+        data-umami-event-direction="next">next ›</button>
     </div>
   </div>
   {{ $notes := slice }}
-  {{ range (where .Site.RegularPages "Section" "notes").ByDate.Reverse }}
+  {{- range (where .Site.RegularPages "Section" "notes").ByDate.Reverse }}
   {{ $notes = $notes | append (dict
   "ts" (.Date.Format "2006-01-02 15:04")
   "iso" (.Date.Format "2006-01-02T15:04:05Z07:00")
@@ -72,12 +75,12 @@
   "tags" .Params.tags
   "permalink" .RelPermalink
   ) }}
-  {{ end }}
+  {{ end -}}
   <script type="application/json" data-notes-json>{{ $notes | jsonify | safeJS }}</script>
 </section>
 
 <section class="guestbook reveal" id="guestbook" data-screen-label="04 Guestbook">
-  <div class="channel"><span class="line"></span><span>CH-04</span><b>GUESTBOOK</b></div>
+  <div class="channel"><span class="line"></span><span>CH-04</span><strong>GUESTBOOK</strong></div>
   <div class="head">
     <h2><em>+++</em> Patients <em>+++</em></h2>
     <a href="/guestbook.html">This guy seems cool.</a>
@@ -91,7 +94,7 @@
       <span class="gb-tui-app">guestbook.tui</span>
       <span class="gb-tui-meter">
         <span class="gb-tui-meter-label">ENTRIES</span>
-        <span class="gb-tui-gauge"><i data-gb-gauge-fill></i></span>
+        <span class="gb-tui-gauge"><i data-gb-gauge-fill aria-hidden="true"></i></span>
         <span class="gb-tui-meter-val" data-gb-count>—</span>
       </span>
     </div>
@@ -99,16 +102,16 @@
       <li class="gb-tui-empty">loading…</li>
     </ul>
     <div class="gb-tui-footer">
-      <span><b>F1</b>help</span>
-      <span><b>F2</b>sign</span>
-      <span><b>F3</b>random</span>
-      <span><b>F10</b>quit</span>
+      <span><strong>F1</strong>help</span>
+      <span><strong>F2</strong>sign</span>
+      <span><strong>F3</strong>random</span>
+      <span><strong>F10</strong>quit</span>
     </div>
   </div>
 </section>
 
 <section class="webrings reveal" id="webrings" data-screen-label="05 Webrings">
-  <div class="channel"><span class="line"></span><span>CH-05</span><b>WEBRINGS</b></div>
+  <div class="channel"><span class="line"></span><span>CH-05</span><strong>WEBRINGS</strong></div>
   <div class="head">
     <h2><em>+++</em> Webrings <em>+++</em></h2>
     <div class="note">// small corners of the internet, linked together</div>
@@ -117,8 +120,7 @@
 
     <article class="ring-card">
       <div class="ring-head">
-        <div class="label"><span>RING-001</span><b>INDIEWEB</b></div>
-        <!-- <span class="status-pill" data-s="link">LINK</span> -->
+        <div class="label"><span>RING-001</span><strong>INDIEWEB</strong></div>
       </div>
       <div class="ring-body">
         <div class="ring-embed ring-embed--text">
@@ -131,7 +133,7 @@
               data-umami-event="webring-click" data-umami-event-ring="indieweb"
               data-umami-event-action="previous">prev</a>
             <span class="ring-dot" aria-hidden="true"></span>
-            <a class="log-nav" href="https://xn--sr8hvo.ws/random" aria-label="Previous site in ring"
+            <a class="log-nav" href="https://xn--sr8hvo.ws/random" aria-label="Random site in ring"
               data-umami-event="webring-click" data-umami-event-ring="indieweb"
               data-umami-event-action="random">random</a>
             <span class="ring-dot" aria-hidden="true"></span>
@@ -144,8 +146,7 @@
 
     <article class="ring-card">
       <div class="ring-head">
-        <div class="label"><span>RING-002</span><b>LITERRING</b></div>
-        <!-- <span class="status-pill" data-s="badge">BADGE</span> -->
+        <div class="label"><span>RING-002</span><strong>LITERRING</strong></div>
       </div>
       <div class="ring-body">
         <div class="ring-embed ring-embed--button">
@@ -164,8 +165,7 @@
 
     <article class="ring-card">
       <div class="ring-head">
-        <div class="label"><span>RING-003</span><b>STAR WARS</b></div>
-        <!-- <span class="status-pill" data-s="link">LINK</span> -->
+        <div class="label"><span>RING-003</span><strong>STAR WARS</strong></div>
       </div>
       <div class="ring-body">
         <div class="ring-embed ring-embed--text">
@@ -190,8 +190,7 @@
 
     <article class="ring-card">
       <div class="ring-head">
-        <div class="label"><span>RING-004</span><b>HOTLINE</b></div>
-        <!-- <span class="status-pill" data-s="link">LINK</span> -->
+        <div class="label"><span>RING-004</span><strong>HOTLINE</strong></div>
       </div>
       <div class="ring-body">
         <div class="ring-embed ring-embed--text">
@@ -213,8 +212,7 @@
 
     <article class="ring-card">
       <div class="ring-head">
-        <div class="label"><span>RING-005</span><b>NO AI</b></div>
-        <!-- <span class="status-pill" data-s="badge">BADGE</span> -->
+        <div class="label"><span>RING-005</span><strong>NO AI</strong></div>
       </div>
       <div class="ring-body">
         <div class="ring-embed ring-embed--button">
@@ -241,8 +239,7 @@
 
     <article class="ring-card">
       <div class="ring-head">
-        <div class="label"><span>RING-006</span><b>WEBMASTER</b></div>
-        <!-- <span class="status-pill" data-s="link">LINK</span> -->
+        <div class="label"><span>RING-006</span><strong>WEBMASTER</strong></div>
       </div>
       <div class="ring-body">
         <div class="ring-embed ring-embed--button">
@@ -256,7 +253,7 @@
               data-umami-event-action="previous">prev</a>
             <span class="ring-dot" aria-hidden="true"></span>
             <a class="log-nav" href="https://webmasterwebring.netlify.app?chezterv-random"
-              aria-label="Previous site in ring" data-umami-event="webring-click" data-umami-event-ring="webmaster"
+              aria-label="Random site in ring" data-umami-event="webring-click" data-umami-event-ring="webmaster"
               data-umami-event-action="random">random</a>
             <span class="ring-dot" aria-hidden="true"></span>
             <a class="log-nav" href="https://webmasterwebring.netlify.app?chezterv-next" aria-label="Next site in ring"
@@ -268,8 +265,7 @@
 
     <article class="ring-card">
       <div class="ring-head">
-        <div class="label"><span>RING-007</span><b>JOURNALRING</b></div>
-        <!-- <span class="status-pill" data-s="badge">BADGE</span> -->
+        <div class="label"><span>RING-007</span><strong>JOURNALRING</strong></div>
       </div>
       <div class="ring-body">
         <div class="ring-embed ring-embed--button" data-umami-event="webring-click" data-umami-event-ring="journalring"
@@ -282,8 +278,7 @@
 
     <article class="ring-card">
       <div class="ring-head">
-        <div class="label"><span>RING-008</span><b>*NIXRING</b></div>
-        <!-- <span class="status-pill" data-s="badge">BADGE</span> -->
+        <div class="label"><span>RING-008</span><strong>*NIXRING</strong></div>
       </div>
       <div class="ring-body">
         <div id="nixring" style="display: flex; gap: 8px; align-items: center;">
@@ -298,12 +293,17 @@
               text-decoration: none;
             }
           </style>
-          <a href="https://softmachine.dev/webring/linuxring/redirect?url=https%3A%2Fcheztervargas.com%2F&go=prev">←</a>
-          <a href="https://softmachine.dev/webring/linuxring">
-            <div>*nixRing<br><img style="height: 25px;" src="https://softmachine.dev/webring/linuxring/icon/fedora.png">
+          <a href="https://softmachine.dev/webring/linuxring/redirect?url=https%3A%2Fcheztervargas.com%2F&go=prev"
+            data-umami-event="webring-click" data-umami-event-ring="nixring" data-umami-event-action="previous">←</a>
+          <a href="https://softmachine.dev/webring/linuxring" data-umami-event="webring-click"
+            data-umami-event-ring="nixring" data-umami-event-action="hub">
+            <div>
+              *nixRing<br />
+              <img style="height: 25px;" src="https://softmachine.dev/webring/linuxring/icon/fedora.png" alt="" />
             </div>
           </a>
-          <a href="https://softmachine.dev/webring/linuxring/redirect?url=https%3A%2Fcheztervargas.com%2F&go=next">→</a>
+          <a href="https://softmachine.dev/webring/linuxring/redirect?url=https%3A%2Fcheztervargas.com%2F&go=next"
+            data-umami-event="webring-click" data-umami-event-ring="nixring" data-umami-event-action="next">→</a>
         </div>
       </div>
     </article>

@@ -14,9 +14,11 @@
     <p class="p-summary lede">{{ .Params.summary }}</p>
   </header>
 
+  {{ partial "shell-blog-nav-trigger.html" . }}
+
   <aside class="post-heart" data-post-heart data-slug="{{ .Slug }}">
     <div class="heart-container" title="react to this post">
-      <input type="checkbox" class="checkbox" data-heart-checkbox />
+      <input type="checkbox" class="checkbox" data-heart-checkbox data-umami-event="post-reaction" />
       <div class="heart_sprite" aria-hidden="true"></div>
       <svg class="svg-celebrate" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
         <polygon points="10,10 16,10 16,16"></polygon>
@@ -42,8 +44,8 @@
 </article>
 
 <section class="webmentions" data-webmention-target="{{ .Permalink }}">
-  <div class="channel"><span class="line"></span><span>REPLIES</span><b><span data-webmention-count>—</span>
-      WEBMENTIONS</b></div>
+  <div class="channel"><span class="line"></span><span>REPLIES</span><strong><span data-webmention-count>—</span>
+      WEBMENTIONS</strong></div>
   <ul class="webmention-list" data-webmention-list>
     <li class="doc-empty">loading webmentions…</li>
   </ul>

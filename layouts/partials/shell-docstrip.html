@@ -1,5 +1,7 @@
 <input type="checkbox" id="docstrip-toggle" class="mobile-dropdown-toggle" />
-<label for="docstrip-toggle" class="col-label mobile-dropdown-summary doc-strip-summary">// SUBJECT RECORD</label>
+<label for="docstrip-toggle" class="col-label mobile-dropdown-summary doc-strip-summary" data-umami-event="doc-strip-toggle">
+  // SUBJECT RECORD
+</label>
 <div class="doc-strip mobile-dropdown-content">
   <div class="doc-field">
     <span class="k">SUBJECT</span>
@@ -7,13 +9,11 @@
   </div>
   <div class="doc-field">
     <span class="k">CLASSIFICATION</span>
-    <span class="v">{{ if .Params.classification }}{{ .Params.classification }}{{ else if eq .Section "posts" }}BLOG
-      ENTRY{{ else }}PUBLIC RECORD{{ end }}</span>
+    <span class="v">{{ if .Params.classification }}{{ .Params.classification }}{{ else if eq .Section "posts" }}BLOG ENTRY{{ else }}PUBLIC RECORD{{ end }}</span>
   </div>
   <div class="doc-field">
     <span class="k">DOCUMENT ID</span>
-    <span class="v">{{ if .Params.docid }}{{ .Params.docid }}{{ else if not .Date.IsZero }}{{ .Date.Format "2006-01-02"
-      }}{{ end }}</span>
+    <span class="v">{{ if .Params.docid }}{{ .Params.docid }}{{ else if not .Date.IsZero }}{{ .Date.Format "2006-01-02" }}{{ end }}</span>
   </div>
   <div class="doc-field">
     <span class="k">ORIGIN</span>

@@ -1,30 +1,37 @@
-<aside class="spec-col" aria-label="Readings navigation">
+<div class="blog-nav-backdrop" data-blog-nav-backdrop aria-hidden="true"></div>
+<aside class="spec-col spec-col--blog" aria-label="Readings navigation">
   {{ $posts := (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
   {{ $allTags := slice }}
-  {{ range $posts }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end }}
+  {{- range $posts }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end -}}
   {{ $uniqueTags := $allTags | uniq | sort }}
   {{ $years := slice }}
-  {{ range $posts }}{{ $years = $years | append .Date.Year }}{{ end }}
+  {{- range $posts }}{{ $years = $years | append .Date.Year }}{{ end -}}
   {{ $uniqueYears := $years | uniq }}
 
   <input type="checkbox" id="speccol-blog-toggle" class="mobile-dropdown-toggle" />
   <div class="blog-nav-section">
-    <label for="speccol-blog-toggle" class="col-label mobile-dropdown-summary">// SEARCH &amp; FILTERS</label>
+    <label for="speccol-blog-toggle" class="col-label mobile-dropdown-summary" data-umami-event="blog-filters-toggle">
+      // SEARCH &amp; FILTERS
+    </label>
     <div class="mobile-dropdown-content">
       <input type="text" class="blog-search-input" data-blog-search placeholder='grep -i "..."' autocomplete="off" />
       <div class="blog-tag-list" data-blog-tag-list>
         {{ range $uniqueTags }}
-        <button type="button" class="blog-tag-chip" data-tag="{{ . }}">
-          <span class="lbl">{{ . }}</span><span class="count">{{ len (where $posts "Params.tags" "intersect" (slice .))
-            }}</span>
+        <button type="button" class="blog-tag-chip" data-tag="{{ . }}" data-umami-event="blog-tag-filter"
+          data-umami-event-tag="{{ . }}">
+          <span class="lbl">{{ . }}</span>
+          <span class="count">{{ len (where $posts "Params.tags" "intersect" (slice .)) }}</span>
         </button>
         {{ end }}
       </div>
-      <button type="button" class="blog-filter-clear" data-blog-clear-filters hidden>clear filters ×</button>
+      <button type="button" class="blog-filter-clear" data-blog-clear-filters data-umami-event="blog-filters-clear"
+        hidden>
+        clear filters ×
+      </button>
     </div>
   </div>
 
-  <div class="blog-nav-section mobile-dropdown-content">
+  <div class="blog-nav-section">
     <div class="col-label">// ENTRIES</div>
     <div data-blog-post-groups>
       {{ range $index, $year := $uniqueYears }}

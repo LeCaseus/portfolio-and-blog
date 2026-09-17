@@ -5,30 +5,40 @@
   <h1>CHEZTER'S<br /><span class="alive">MICRO-LOGS<span class="records-cursor">_</span></span></h1>
   <div class="prose">
     <div class="col-label">BIO</div>
-    <p>If you think that I'd finally gotten rid of my social media profiles then you'd be half-right. This is now my
+    <p>
+      If you think that I'd finally gotten rid of my social media profiles then you'd be half-right. This is now my
       main social media feed -- right here, right now. Publish (on my) Own Site (first), Syndicate Elsewhere (later) or
-      <a href="https://indieweb.org/POSSE">POSSE</a>.
+      <a href="https://indieweb.org/POSSE" data-umami-event="outbound-link" data-umami-event-target="posse">POSSE</a>.
+    </p>
   </div>
 </section>
 
 <section class="doc-section" id="feed">
-  <div class="channel"><span class="line"></span><span>CH-03.1</span><b>LIVE&nbsp;FEED</b></div>
+  <div class="channel"><span class="line"></span><span>CH-03.1</span><strong>LIVE&nbsp;FEED</strong></div>
   {{ $notes := (where .Site.RegularPages "Section" "notes").ByDate.Reverse }}
   {{ $allTags := slice }}
-  {{ range $notes }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end }}
+  {{- range $notes }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end -}}
   {{ $uniqueTags := $allTags | uniq | sort }}
   <div class="feed-head">
     <span class="feed-head-count"><span>{{ len $notes }}</span> transmissions</span>
     <span class="feed-head-live"><span class="feed-live-dot" aria-hidden="true"></span>live</span>
   </div>
   {{ if $uniqueTags }}
-  <div class="tag-pill-list" data-notes-tag-list>
-    {{ range $uniqueTags }}
-    <button type="button" class="tag-pill" data-tag="{{ . }}">
-      <span class="lbl">{{ . }}</span><span class="count">{{ len (where $notes "Params.tags" "intersect" (slice .))
-        }}</span>
-    </button>
-    {{ end }}
+  <div class="tag-dropdown">
+    <input type="checkbox" id="notes-tag-toggle" class="tag-dropdown-toggle"
+      data-umami-event="notes-tag-dropdown-toggle" />
+    <label for="notes-tag-toggle" class="tag-dropdown-summary">
+      <span>FILTER BY TAG</span><span class="tag-dropdown-arrow">▾</span>
+    </label>
+    <div class="tag-pill-list" data-notes-tag-list>
+      {{ range $uniqueTags }}
+      <button type="button" class="tag-pill" data-tag="{{ . }}" data-umami-event="notes-tag-filter"
+        data-umami-event-tag="{{ . }}">
+        <span class="lbl">{{ . }}</span>
+        <span class="count">{{ len (where $notes "Params.tags" "intersect" (slice .)) }}</span>
+      </button>
+      {{ end }}
+    </div>
   </div>
   {{ end }}
   <ul class="feed-list">
@@ -50,14 +60,16 @@
       </div>
       <div class="e-content feed-card-body">{{ .Content }}</div>
       {{ with $note.Params.source_url }}
-      <a class="feed-card-source {{ if eq $note.Params.mention_type " repost" }}u-repost-of{{ else }}u-in-reply-to{{ end
-        }}" href="{{ . }}" target="_blank" rel="noopener">SOURCE →</a>
+      <a class='feed-card-source {{ if eq $note.Params.mention_type "repost" }}u-repost-of{{ else }}u-in-reply-to{{ end }}'
+        href="{{ . }}" target="_blank" rel="noopener" data-umami-event="outbound-link"
+        data-umami-event-target="note-source">SOURCE →</a>
       {{ end }}
       {{ with .Params.tags }}
       <div class="feed-card-tags">{{ range . }}<span class="p-category">{{ . }}</span>{{ end }}</div>
       {{ end }}
       <div class="feed-card-foot">
-        <button type="button" class="log-nav" data-copy-link data-permalink="{{ .Permalink }}">share me</button>
+        <button type="button" class="log-nav" data-copy-link data-permalink="{{ .Permalink }}"
+          data-umami-event="note-copy-link">share me</button>
         <a class="u-url u-uid log-nav" href="{{ .RelPermalink }}">open →</a>
       </div>
     </li>

@@ -6,7 +6,7 @@
 </section>
 
 <section class="doc-section" id="entry">
-  <div class="channel"><span class="line"></span><span>CH-03</span><b>THREAD</b></div>
+  <div class="channel"><span class="line"></span><span>CH-03</span><strong>THREAD</strong></div>
   <article class="h-entry feed-card feed-card--full">
     <div class="feed-card-head">
       <span class="feed-card-byline">
@@ -25,8 +25,9 @@
       {{ .Content }}
     </div>
     {{ with .Params.source_url }}
-    <a class="feed-card-source {{ if eq $.Params.mention_type " repost" }}u-repost-of{{ else }}u-in-reply-to{{ end }}"
-      href="{{ . }}" target="_blank" rel="noopener">SOURCE →</a>
+    <a class='feed-card-source {{ if eq $.Params.mention_type "repost" }}u-repost-of{{ else }}u-in-reply-to{{ end }}'
+      href="{{ . }}" target="_blank" rel="noopener" data-umami-event="outbound-link"
+      data-umami-event-target="note-source">SOURCE →</a>
     {{ end }}
     {{ with .Params.tags }}
     <div class="feed-card-tags">{{ range . }}<span class="p-category">{{ . }}</span>{{ end }}</div>
@@ -42,7 +43,7 @@
 </section>
 
 <section class="webmentions" data-webmention-target="{{ .Permalink }}">
-  <div class="channel"><span class="line"></span><span>CH-03.2</span><b>WEBMENTIONS</b></div>
+  <div class="channel"><span class="line"></span><span>CH-03.2</span><strong>WEBMENTIONS</strong></div>
   <ul class="webmention-list" data-webmention-list>
     <li class="doc-empty">loading webmentions…</li>
   </ul>

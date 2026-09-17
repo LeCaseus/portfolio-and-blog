@@ -25,11 +25,7 @@
     {{ $last_index := sub (len .children) 1 }}
     {{ range $child_index, $child := .children }}
     <a class="nav-chip nav-chip--child{{ if eq $child.href $.RelPermalink }} active{{ end }}" href="{{ $child.href }}">
-      <span class="branch-glyph">{{ if eq $child_index $last_index }}
-        └──
-        {{ else }}
-        ├──
-        {{ end }}</span>
+      <span class="branch-glyph">{{ if eq $child_index $last_index }}└──{{ else }}├──{{ end }}</span>
       <span class="idx">{{ $child.idx }}</span><span class="lbl">{{ $child.lbl }}</span>
     </a>
     {{ end }}
