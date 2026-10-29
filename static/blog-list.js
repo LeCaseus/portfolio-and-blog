@@ -95,5 +95,42 @@ function init_scroll_memory(selector, storage_key) {
   }, { passive: true });
 }
 
+function init_blog_nav_drawer() {
+  const panel = document.querySelector('.spec-col--blog');
+  const backdrop = document.querySelector('[data-blog-nav-backdrop]');
+  const trigger_button = document.querySelector('[data-blog-nav-trigger]');
+  if (!panel || !backdrop || !trigger_button) return;
+
+  const open_drawer = () => {
+    panel.classList.add('open');
+    backdrop.classList.add('open');
+    trigger_button.setAttribute('aria-expanded', 'true');
+  };
+
+  const close_drawer = () => {
+    panel.classList.remove('open');
+    backdrop.classList.remove('open');
+    trigger_button.setAttribute('aria-expanded', 'false');
+  };
+
+  trigger_button.addEventListener('click', () => {
+    if (panel.classList.contains('open')) {
+      close_drawer();
+    } else {
+      open_drawer();
+    }
+  });
+
+  backdrop.addEventListener('click', close_drawer);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && panel.classList.contains('open')) close_drawer();
+  });
+
+  document.querySelectorAll('.blog-post-item').forEach(link => {
+    link.addEventListener('click', close_drawer);
+  });
+}
+
 init_search_and_filters();
 init_scroll_memory('.spec-col', 'cv.blogNavScroll');
+init_blog_nav_drawer();

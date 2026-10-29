@@ -1,26 +1,15 @@
-/* INFO: shell -- dashboard grid tweaks (doc-strip stacks to 1 column) */
-.doc-strip {
-  grid-template-columns: 1fr;
-}
-.doc-field {
-  border-right: 0;
-  border-top: 2px solid var(--signal);
-}
-.doc-field:first-child {
-  border-top: 0;
-}
-.name-row {
-  flex-direction: column;
-  align-items: flex-start;
+.doc-strip,
+.mobile-dropdown-summary.doc-strip-summary {
+  display: none;
 }
 .hero-intro h1 {
-  font-size: clamp(24px, 9vw, 36px);
+  font-size: clamp(20px, 7.5vw, 56px);
+  white-space: nowrap;
 }
 .name-sub {
   margin-top: 20px;
 }
 
-/* INFO: shell -- status header + channel labels */
 .status {
   display: flex;
   align-items: center;
@@ -58,7 +47,6 @@
   width: 16px;
 }
 
-/* INFO: shared -- base layout spacing (main/section padding) */
 main {
   padding: 0 18px;
 }
@@ -66,7 +54,6 @@ section {
   padding: 56px 0 40px;
 }
 
-/* INFO: page -- hero intro */
 .hero-intro {
   padding: 12px 0 32px;
 }
@@ -85,7 +72,6 @@ section {
   font-size: clamp(15px, 4.5vw, 18px);
 }
 
-/* INFO: shared -- section heading pattern (hides note/link on small screens) */
 .head {
   flex-wrap: wrap;
 }
@@ -101,13 +87,6 @@ section {
   display: none;
 }
 
-/* INFO: home -- projects slides (stack to 1 column) */
-.slides {
-  grid-template-columns: 1fr;
-  gap: 14px;
-}
-
-/* INFO: home -- guestbook teaser (TUI widget) tweaks */
 .gb-entry-date {
   margin-left: 0;
 }
@@ -126,7 +105,6 @@ section {
   padding: 9px 14px;
 }
 
-/* INFO: home -- notes log tweaks */
 .log {
   margin-top: 16px;
 }
@@ -150,12 +128,17 @@ section {
   display: inline;
   padding: 0;
 }
+.msg-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .log .log-foot {
   font-size: 11.5px;
   padding: 8px 14px;
 }
 
-/* INFO: shared -- contact terminal tweaks */
 .contact .term {
   padding: 20px 16px;
   font-size: 15px;
@@ -166,17 +149,29 @@ section {
   padding-left: 12px;
 }
 
-/* INFO: portfolio -- project viewer tweaks */
 .project-stats {
   grid-template-columns: 1fr;
 }
 
-/* INFO: blog -- post reader tweaks */
 .prose-body {
-  font-size: 14px;
+  font-size: clamp(16px, 2.2vw, 18px);
+}
+.reader .header {
+  gap: 8px;
+  margin-top: 8px;
+}
+.reader .meta {
+  gap: 10px;
+  font-size: 11px;
+}
+.reader .meta .tag,
+.reader .meta .tag ~ .dot {
+  display: none;
+}
+.reader .blog-nav-trigger {
+  margin-top: 16px;
 }
 
-/* INFO: shell -- hud strip (site footer) becomes a fixed bottom bar */
 .hud-strip {
   border-top: 6px double var(--signal);
   position: fixed;
@@ -199,7 +194,6 @@ body[data-shell="dashboard"] {
   padding-bottom: 64px;
 }
 
-/* INFO: shell -- mobile hamburger nav toggle + button */
 .mobile-nav-toggle {
   display: block;
   position: fixed;
@@ -233,7 +227,6 @@ body[data-shell="dashboard"] {
   box-shadow: 3px 3px 0 var(--signal_soft);
 }
 
-/* INFO: shell -- nav column becomes a full-screen overlay menu */
 body:has(#mobile-nav-check:checked) {
   overflow: hidden;
 }
@@ -272,9 +265,7 @@ body:has(#mobile-nav-check:checked) .nav-col {
   font-size: 16px;
 }
 
-/* INFO: shell -- mobile dropdown / accordion mechanics
-   (turns the desktop-visible col-labels from styles.css into real
-   tap-to-expand accordions -- see styles.css for the desktop defaults) */
+/* turns the desktop-visible col-label text from styles.css into real tap-to-expand accordions */
 .mobile-dropdown-toggle {
   display: none;
 }
@@ -298,36 +289,79 @@ body:has(#mobile-nav-check:checked) .nav-col {
   transition: max-height 300ms ease;
 }
 
-body:has(#docstrip-toggle:checked) .doc-strip-summary::after {
-  transform: rotate(180deg);
-}
-
-body:has(#docstrip-toggle:checked) .doc-strip.mobile-dropdown-content {
-  max-height: 400px;
-}
-
 .spec-col {
-  padding: 0;
-  gap: 0;
+  display: none;
 }
 
-.spec-col .mobile-dropdown-summary {
-  padding: 14px 16px;
-}
-
-.spec-col:has(.mobile-dropdown-toggle:checked) {
-  padding: 24px 20px;
+body[data-shell="dashboard"] > .spec-col--blog {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 65;
+  width: min(85vw, 320px);
+  background: var(--paper);
+  flex-direction: column;
   gap: 20px;
+  padding: 24px;
+  border: 0;
+  border-right: 2px solid var(--signal);
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.open { transform: translateX(0); }
+
+  & .mobile-dropdown-summary { padding: 14px 16px; }
+
+  &:has(.mobile-dropdown-toggle:checked) .mobile-dropdown-summary {
+    padding: 0;
+
+    &::after { transform: rotate(180deg); }
+  }
+
+  &:has(.mobile-dropdown-toggle:checked) .mobile-dropdown-content {
+    max-height: 800px;
+  }
 }
 
-.spec-col:has(.mobile-dropdown-toggle:checked) .mobile-dropdown-summary {
-  padding: 0;
+.blog-nav-backdrop {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 64;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+.blog-nav-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.spec-col:has(.mobile-dropdown-toggle:checked) .mobile-dropdown-summary::after {
-  transform: rotate(180deg);
+.blog-nav-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 8px 14px;
+  border: 2px solid var(--signal);
+  background: var(--paper_2);
+  color: var(--ink);
+  font-family: var(--pixel);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
 }
 
-.spec-col:has(.mobile-dropdown-toggle:checked) .mobile-dropdown-content {
-  max-height: 800px;
+.site-links--external .path {
+  font-size: 0;
+}
+.site-links--external .path::after {
+  content: "↗";
+  font-size: 15px;
 }
