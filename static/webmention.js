@@ -16,7 +16,7 @@ function render_mention(mention) {
     : '';
 
   return `
-    <li class="webmention-entry" data-type="${mention.type}">
+    <li class="webmention-entry" data-type="${escape_html(mention.type)}">
       <div class="webmention-head">${photo_html}${author_link} ${verb} — ${source_link}</div>
       ${content_html}
     </li>

@@ -9,7 +9,7 @@
   </p>
   <div class="prose h-card">
     <div class="col-label">// LOG</div>
-    <img class="u-photo" src="/assets/face.jpg" alt="" hidden />
+    <img class="u-photo" src="/assets/face.jpg" alt="" loading="lazy" decoding="async" hidden />
     <a href="https://cheztervargas.com/" class="p-name u-url" hidden>Chezter Vargas</a>
     <span class="lead">Yep, that's me. You're probably wondering how I got <em>into this situation</em>...</span>
     <p class="p-note">
@@ -41,7 +41,21 @@
       <canvas></canvas>
     </div>
     <div class="readings-list-col">
-      <div class="strip"></div>
+      <div class="strip">
+        {{ $recent := first 3 ((where .Site.RegularPages "Section" "posts").ByDate.Reverse) }}
+        {{ range $recent }}
+        <a class="read" href="{{ .RelPermalink }}">
+          <div class="row-top">
+            <span class="date">{{ .Date.Format "02-01-2006" }}</span>
+            <span class="tag">{{ delimit (.Params.tags | default slice) ", " }}</span>
+          </div>
+          <span class="ttl">{{ .Title }}</span>
+          <p class="summary">{{ .Params.summary }}</p>
+        </a>
+        {{ else }}
+        <div class="note">// no readings found.</div>
+        {{ end }}
+      </div>
     </div>
   </div>
 </section>
@@ -71,7 +85,7 @@
   "ts" (.Date.Format "2006-01-02 15:04")
   "iso" (.Date.Format "2006-01-02T15:04:05Z07:00")
   "lvl" .Params.lvl
-  "msg" (.Content | plainify | truncate 160)
+  "msg" (.Content | plainify | htmlUnescape | truncate 160)
   "tags" .Params.tags
   "permalink" .RelPermalink
   ) }}

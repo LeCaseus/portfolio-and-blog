@@ -1,15 +1,9 @@
-import { init_hero_ecg, init_theme_toggle, start_clock, init_mobile_nav } from '/shared.js';
+import { init_hero_ecg, init_theme_toggle, start_clock, init_mobile_nav, escape_html } from '/shared.js';
 
 init_hero_ecg();
 init_theme_toggle();
 start_clock();
 init_mobile_nav();
-
-function escape_html(value) {
-  return String(value).replace(/[&<>"']/g, char => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-  }[char]));
-}
 
 function format_entry_date(iso_string) {
   const date = new Date(iso_string);

@@ -21,13 +21,17 @@
 
 <section class="doc-section" id="readings">
   <div class="channel"><span class="line"></span><span>CH-11.2</span><strong>READINGS</strong></div>
-  <ul class="site-links" data-post-links>
-    <li class="doc-empty">loading entries…</li>
+  <ul class="site-links">
+    {{ range (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
+    <li><a href="{{ .RelPermalink }}"><span>{{ .Title }}</span><span class="path">{{ .RelPermalink }}</span></a></li>
+    {{ else }}
+    <li class="doc-empty">no entries yet.</li>
+    {{ end }}
   </ul>
 </section>
 
 {{ end }}
 
 {{ define "scripts" }}
-<script type="module" src="/sitemap.js"></script>
+<script type="module" src="/shell.js"></script>
 {{ end }}

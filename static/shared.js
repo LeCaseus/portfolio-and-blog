@@ -71,6 +71,22 @@ export function init_scroll_reveal() {
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 
+export function init_specimen_viewers(model_url, use_draco) {
+  const wrappers = document.querySelectorAll('[data-specimen-viewer]');
+  if (!wrappers.length) return;
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(async entry => {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+      const { init_specimen_viewer } = await import('/specimen.js');
+      init_specimen_viewer(entry.target, model_url, use_draco);
+    });
+  }, { rootMargin: '200px' });
+
+  wrappers.forEach(wrapper => observer.observe(wrapper));
+}
+
 export function init_hero_ecg() {
   const ecg_svg = document.querySelector('.ecg svg');
   const ecg_wrap = document.querySelector('.ecg');
@@ -87,9 +103,8 @@ export function init_hero_ecg() {
   ecg_svg.setAttribute('preserveAspectRatio', 'none');
   ecg_svg.appendChild(path);
 
-  const scroll_container = document.querySelector('.app-main') || window;
-  const get_scroll_position = () =>
-    scroll_container === window ? window.scrollY : scroll_container.scrollTop;
+  const app_main = document.querySelector('.app-main');
+  const get_scroll_position = () => window.scrollY + (app_main ? app_main.scrollTop : 0);
 
   let intensity = 1;
   let pointer_inside = false;
@@ -152,7 +167,7 @@ export function init_hero_ecg() {
     requestAnimationFrame(animate);
   };
 
-  scroll_container.addEventListener('scroll', () => {
+  const on_scroll = () => {
     const now = performance.now();
     const current_scroll_y = get_scroll_position();
     const distance = Math.abs(current_scroll_y - last_scroll_y);
@@ -160,7 +175,9 @@ export function init_hero_ecg() {
     scroll_energy = Math.min(120, scroll_energy * 0.6 + (distance / elapsed) * 60);
     last_scroll_y = current_scroll_y;
     last_scroll_time = now;
-  }, { passive: true });
+  };
+  window.addEventListener('scroll', on_scroll, { passive: true });
+  if (app_main) app_main.addEventListener('scroll', on_scroll, { passive: true });
 
   if (ecg_wrap) {
     ecg_wrap.addEventListener('pointerenter', () => { pointer_inside = true; });
@@ -231,26 +248,6 @@ export function init_mobile_nav() {
   });
 }
 
-export function format_post_date(iso_string, include_time = false) {
-  const date = new Date(iso_string);
-  const date_part = date
-    .toLocaleDateString('en-GB', {
-      timeZone: 'Pacific/Auckland'
-    })
-    .replace(/\//g, '-');
-
-  if (!include_time) return date_part;
-
-  const time_part = date.toLocaleTimeString('en-GB', {
-    timeZone: 'Pacific/Auckland',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  });
-
-  return `${date_part} ${time_part}`;
-}
-
 export function format_relative_time(iso_string) {
   const then = new Date(iso_string).getTime();
   const diff_seconds = Math.floor((Date.now() - then) / 1000);
@@ -270,19 +267,4 @@ export function escape_html(value) {
   return String(value).replace(/[&<>"']/g, char => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   }[char]));
-}
-
-export async function fetch_feed_posts(feed_url = '/feed.xml') {
-  const response = await fetch(feed_url);
-  const xml_text = await response.text();
-  const doc = new DOMParser().parseFromString(xml_text, 'application/xml');
-  if (doc.querySelector('parsererror')) throw new Error('feed parse failed');
-
-  return [...doc.querySelectorAll('item')].map(item => ({
-    title: item.querySelector('title')?.textContent ?? '',
-    link: item.querySelector('link')?.textContent ?? '',
-    date: item.querySelector('pubDate')?.textContent ?? '',
-    summary: item.querySelector('description')?.textContent ?? '',
-    tags: [...item.querySelectorAll('category')].map(node => node.textContent),
-  }));
 }
