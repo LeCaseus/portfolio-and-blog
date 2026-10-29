@@ -1,7 +1,7 @@
 {{ define "main" }}
 
 <section class="hero-intro" id="top" data-screen-label="12 Privacy">
-  <div class="name-eyebrow">0x0012 · <span>ELECTRODES CONNECTED</span> · lead II · effective 2026-07-07 · v1.0</div>
+  <div class="name-eyebrow">0x0012 · <span>ELECTRODES CONNECTED</span> · lead II · effective 2026-07-07 · v1.1</div>
   <h1>PRIVACY<br /><span class="alive">POLICY<span class="records-cursor">_</span></span></h1>
 </section>
 
@@ -28,14 +28,16 @@
       <code>/blog.html</code>. It doesn't apply to third-party sites this site links to (e.g. GitHub,
       LinkedIn, Instagram) — those have their own privacy policies.
     </p>
-    <p>This site does not target children, does not knowingly collect data from anyone under 16, and has no age-gating because it isn't designed for or marketed to minors.</p>
+    <p>This site does not target children, does not knowingly collect data from anyone under 16, and has no age-gating
+      because it isn't designed for or marketed to minors.</p>
   </div>
 </section>
 
 <section class="doc-section" id="collected">
   <div class="channel"><span class="line"></span><span>CH-12.3</span><strong>WHAT'S&nbsp;COLLECTED</strong></div>
   <div class="doc-prose">
-    <p>Under GDPR, every category of personal data processed needs a stated legal basis. Here's each one this site actually touches:</p>
+    <p>Under GDPR, every category of personal data processed needs a stated legal basis. Here's each one this site
+      actually touches:</p>
     <ul>
       <li>
         <strong>Analytics (self-hosted Umami):</strong> page URL, referrer, browser/device type, and an
@@ -51,7 +53,8 @@
         feature, using the least identifying method available (a one-way hash).
       </li>
       <li>
-        <strong>Guestbook (name, website, email, message):</strong> name, website, and message are optional-to-required fields
+        <strong>Guestbook (name, website, email, message):</strong> name, website, and message are optional-to-required
+        fields
         you submit and that get displayed publicly once approved. Email is optional and never displayed — it's collected
         only so I can reply directly if needed. Your IP address is hashed (SHA-256, same method as reactions) to enforce
         a submission rate limit. Legal basis: consent (Art. 6(1)(a)) for the name/website/message you choose to publish,
@@ -69,7 +72,8 @@
         — securing the service, a recognized legitimate interest under Recital 49.
       </li>
     </ul>
-    <p>None of the above is used for advertising, profiling, or automated decision-making with legal or similarly significant effects on you.</p>
+    <p>None of the above is used for advertising, profiling, or automated decision-making with legal or similarly
+      significant effects on you.</p>
   </div>
 </section>
 
@@ -77,10 +81,14 @@
   <div class="channel"><span class="line"></span><span>CH-12.4</span><strong>RETENTION</strong></div>
   <div class="doc-prose">
     <ul>
-      <li><strong>Analytics data:</strong> retained indefinitely on my own server. There is no automatic expiry — data is only removed if I manually delete it from the Umami database.</li>
-      <li><strong>Reaction hashes:</strong> retained indefinitely, tied to the post slug, until you request deletion or I manually clear the <code>reaction_log</code> table.</li>
-      <li><strong>Guestbook entries:</strong> approved entries retained indefinitely, same policy as everything else on this site — no automatic expiry.</li>
-      <li><strong>Infrastructure/security logs:</strong> retention is set by Cloudflare and CrowdSec's own configurations, not by me directly. See their respective policies for specifics.</li>
+      <li><strong>Analytics data:</strong> retained indefinitely on my own server. There is no automatic expiry — data
+        is only removed if I manually delete it from the Umami database.</li>
+      <li><strong>Reaction hashes:</strong> retained indefinitely, tied to the post slug, until you request deletion or
+        I manually clear the <code>reaction_log</code> table.</li>
+      <li><strong>Guestbook entries:</strong> approved entries retained indefinitely, same policy as everything else on
+        this site — no automatic expiry.</li>
+      <li><strong>Infrastructure/security logs:</strong> retention is set by Cloudflare and CrowdSec's own
+        configurations, not by me directly. See their respective policies for specifics.</li>
     </ul>
     <p>
       Indefinite retention is a deliberate choice, not an oversight — post statistics are only useful to
@@ -94,25 +102,31 @@
   <div class="channel"><span class="line"></span><span>CH-12.5</span><strong>THIRD&nbsp;PARTIES</strong></div>
   <div class="doc-prose">
     <p>No data is sold, rented, or shared for marketing purposes, with anyone, ever.</p>
-    <p>The following third parties process data on this site's behalf purely as infrastructure — not as recipients who use your data for their own purposes:</p>
+    <p>The following third parties process data on this site's behalf purely as infrastructure — not as recipients who
+      use your data for their own purposes:</p>
     <ul>
       <li>
         <strong>Cloudflare</strong> — CDN, DNS, tunnel, and reverse proxy in front of the origin server.
         Cloudflare is a global network, meaning your request may be routed through servers outside your
         country, including outside the EU/EEA. See
-        <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener" data-umami-event="outbound-link" data-umami-event-target="cloudflare-privacy-policy">Cloudflare's privacy policy</a>
+        <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener"
+          data-umami-event="outbound-link" data-umami-event-target="cloudflare-privacy-policy">Cloudflare's privacy
+          policy</a>
         for their safeguards on international transfers.
       </li>
-      <li><strong>CrowdSec</strong> — self-hosted intrusion/abuse prevention running alongside the origin server, used to identify and block malicious traffic patterns.</li>
+      <li><strong>CrowdSec</strong> — self-hosted intrusion/abuse prevention running alongside the origin server, used
+        to identify and block malicious traffic patterns.</li>
       <li>
-        <strong>Webring embeds (site footer):</strong> some webring widgets on this site load a small script or banner
-        directly from the ring's own server (e.g. <code>softmachine.dev</code>, <code>webring.antaresph.dev</code>).
-        These third-party embeds outside my control — the ring provider may set their own cookies or log your visit
+        <strong>Webring embeds (home page):</strong> some webring widgets on this site load a small script or banner
+        directly from the ring's own server (<code>softmachine.dev</code>, <code>baccyflap.com</code>,
+        <code>literring.neocities.org</code>, <code>cdn.jsdelivr.net</code>).
+        These third-party embeds are outside my control — the ring provider may set their own cookies or log your visit
         independently of anything described in this policy. <strong>Legal basis:</strong> not applicable — I am not the
         controller for data these embeds collect; see each ring's own privacy policy.
       </li>
     </ul>
-    <p>Analytics (Umami) and the reactions database run entirely on hardware I own — that data does not leave my own infrastructure.</p>
+    <p>Analytics (Umami) and the reactions database run entirely on hardware I own — that data does not leave my own
+      infrastructure.</p>
   </div>
 </section>
 
@@ -123,14 +137,17 @@
     <ul>
       <li><strong>Access</strong> — ask what data, if any, is held about you.</li>
       <li><strong>Rectification</strong> — ask for inaccurate data to be corrected.</li>
-      <li><strong>Erasure</strong> — ask for your data (e.g. a reaction hash, or a guestbook submission including your email if you gave one) to be deleted.</li>
+      <li><strong>Erasure</strong> — ask for your data (e.g. a reaction hash, or a guestbook submission including your
+        email if you gave one) to be deleted.</li>
       <li><strong>Restriction</strong> — ask for processing of your data to be limited.</li>
       <li><strong>Objection</strong> — object to processing based on legitimate interest.</li>
-      <li><strong>Portability</strong> — request a copy of data you've provided, in a portable format (limited applicability here, since almost nothing identifiable is stored).</li>
+      <li><strong>Portability</strong> — request a copy of data you've provided, in a portable format (limited
+        applicability here, since almost nothing identifiable is stored).</li>
       <li>
         <strong>Lodge a complaint</strong> — with your national data protection supervisory authority, if you
         believe your data has been mishandled. (In the EU, find yours via the
-        <a href="https://edpb.europa.eu/about-edpb/about-edpb/members_en" target="_blank" rel="noopener" data-umami-event="outbound-link" data-umami-event-target="edpb-member-list">EDPB member list</a>.)
+        <a href="https://edpb.europa.eu/about-edpb/about-edpb/members_en" target="_blank" rel="noopener"
+          data-umami-event="outbound-link" data-umami-event-target="edpb-member-list">EDPB member list</a>.)
       </li>
     </ul>
     <p>
@@ -145,7 +162,8 @@
 <section class="doc-section" id="cookies">
   <div class="channel"><span class="line"></span><span>CH-12.7</span><strong>COOKIES</strong></div>
   <div class="doc-prose">
-    <p>This site does not set any cookies. The only client-side storage is <code>localStorage</code> for your theme preference, which is not a cookie, isn't sent to any server, and isn't used for tracking.</p>
+    <p>This site does not set any cookies. The only client-side storage is <code>localStorage</code> for your theme
+      preference, which is not a cookie, isn't sent to any server, and isn't used for tracking.</p>
     <p>Some embedded third-party widgets (see "third parties") may set their own cookies independently of this site.</p>
   </div>
 </section>
@@ -168,10 +186,12 @@
     <span class="ln"><span class="prompt">$</span> whoami</span>
     <span class="ln out">→ chezter - data controller for this site</span>
     <span class="ln"><span class="prompt">$</span> requests --scope</span>
-    <span class="ln out">→ analytics data · reaction hashes · guestbook submissions (name / website / email / message)</span>
+    <span class="ln out">→ analytics data · reaction hashes · guestbook submissions (name / website / email /
+      message)</span>
     <span class="ln"><span class="prompt">$</span> contact --send</span>
     <span class="ln out">
-      → email me at <a href="mailto:chezter_vargas@outlook.ph" data-umami-event="privacy-contact-click">chezter_vargas@outlook.ph</a> and I'll
+      → email me at <a href="mailto:chezter_vargas@outlook.ph"
+        data-umami-event="privacy-contact-click">chezter_vargas@outlook.ph</a> and I'll
       act on access/erasure/objection requests
     </span>
     <span class="ln"><span class="prompt">$</span> <span class="blink"></span></span>
@@ -181,5 +201,5 @@
 {{ end }}
 
 {{ define "scripts" }}
-<script type="module" src="/privacy.js"></script>
+<script type="module" src="/shell.js"></script>
 {{ end }}
