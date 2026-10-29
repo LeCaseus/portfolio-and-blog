@@ -1,6 +1,6 @@
 {{ define "main" }}
 
-<section class="hero-intro" id="top" data-screen-label="09 Sitemap">
+<section class="hero-intro" id="top" data-screen-label="10 Bookmarks">
   <div class="name-eyebrow">0x0010 · <span>ELECTRODES CONNECTED</span> · lead II</div>
   <h1>AWESOME<br /><span class="alive">WEBSITES<span class="records-cursor">_</span></span></h1>
   <div class="doc-flag">
@@ -13,7 +13,7 @@
 
 <section class="doc-section" id="websites">
   <div class="channel"><span class="line"></span><span>CH-10.1</span><strong>PERSONAL WEB</strong></div>
-  <ul class="site-links">
+  <ul class="site-links site-links--external">
     <li><a href="https://www.johngerace.com/" data-umami-event="bookmark-click"
         data-umami-event-site="john-gerace"><span>john gerace</span><span
           class="path">https://www.johngerace.com/</span></a></li>
@@ -45,9 +45,49 @@
   </ul>
 </section>
 
+<section class="doc-section" id="server">
+  <div class="channel"><span class="line"></span><span>CH-10.2</span><strong>HOW I MADE MY SERVER</strong></div>
+  <ul class="site-links site-links--external">
+    <li><a href="https://github.com/yhirose/cpp-httplib" data-umami-event="bookmark-click"
+        data-umami-event-site="cpp-httplib"><span>cpp-httplib</span><span
+          class="path">https://github.com/yhirose/cpp-httplib</span></a></li>
+    <li><a href="https://medium.com/@aryandev512/i-wrote-a-http-server-from-scratch-in-c-0a97e8252371"
+        data-umami-event="bookmark-click" data-umami-event-site="http-server-from-scratch"><span>I wrote a HTTP server
+          from scratch in C++</span><span
+          class="path">https://medium.com/@aryandev512/i-wrote-a-http-server-from-scratch-in-c-0a97e8252371</span></a>
+    </li>
+    <li><a href="https://github.com/Dungyichao/http_server" data-umami-event="bookmark-click"
+        data-umami-event-site="http-server"><span>http-server</span><span
+          class="path">https://github.com/Dungyichao/http_server</span></a></li>
+  </ul>
+</section>
+
+<section class="doc-section" id="cnf">
+  <div class="channel"><span class="line"></span><span>CH-10.3</span><strong>WRITING BLOGS</strong></div>
+  <ul class="site-links site-links--external">
+    <li><a href="https://writers.com/what-is-creative-nonfiction" data-umami-event="bookmark-click"
+        data-umami-event-site="creative-nonfiction-what-it-is-and-how-to-write-it"><span>Creative Nonfiction: What It Is
+          and How to Write It</span><span class="path">https://writers.com/what-is-creative-nonfiction</span></a></li>
+    <li><a href="https://nationalcentreforwriting.org.uk/writing-hub/17-tips-for-writing-creative-non-fiction/"
+        data-umami-event="bookmark-click" data-umami-event-site="17-tips-for-writing-creative-nonfiction"><span>17 tips
+          for writing creative non-fiction</span><span
+          class="path">https://nationalcentreforwriting.org.uk/writing-hub/17-tips-for-writing-creative-non-fiction/</span></a>
+    </li>
+    <li><a href="https://writers.com/lyric-essay" data-umami-event="bookmark-click"
+        data-umami-event-site="writing-without-limits-understanding-the-lyric-essay"><span>Writing Without Limits:
+          Understanding the Lyric Essay</span><span class="path">https://writers.com/lyric-essay</span></a>
+    </li>
+    <li><a href="https://writewithseth.com/finding-your-prose-rhythm/" data-umami-event="bookmark-click"
+        data-umami-event-site="find-your-prose-rhythm-how-to-write-description-that-keeps-readers-turning-pages"><span>Find
+          Your Prose Rhythm: How to Write Description That Keeps Readers Turning Pages</span><span
+          class="path">https://writewithseth.com/finding-your-prose-rhythm/</span></a>
+    </li>
+  </ul>
+</section>
+
 <section class="doc-section" id="medical">
-  <div class="channel"><span class="line"></span><span>CH-10.2</span><strong>BIOMEDICAL</strong></div>
-  <ul class="site-links">
+  <div class="channel"><span class="line"></span><span>CH-10.4</span><strong>BIOMEDICAL</strong></div>
+  <ul class="site-links site-links--external">
     <li><a href="https://www.biodigital.com/" data-umami-event="bookmark-click"
         data-umami-event-site="biodigital"><span>biodigital</span><span
           class="path">https://www.biodigital.com/</span></a></li>
@@ -55,8 +95,8 @@
 </section>
 
 <section class="doc-section" id="tools">
-  <div class="channel"><span class="line"></span><span>CH-10.3</span><strong>OTHER TOOLS</strong></div>
-  <ul class="site-links">
+  <div class="channel"><span class="line"></span><span>CH-10.5</span><strong>OTHER TOOLS</strong></div>
+  <ul class="site-links site-links--external">
     <li><a href="https://fmhy.net/" data-umami-event="bookmark-click"
         data-umami-event-site="freemediaheckyeah"><span>freemediaheckyeah</span><span
           class="path">https://fmhy.net/</span></a></li>
@@ -69,5 +109,5 @@
 {{ end }}
 
 {{ define "scripts" }}
-<script type="module" src="/bookmarks.js"></script>
+<script type="module" src="/shell.js"></script>
 {{ end }}
