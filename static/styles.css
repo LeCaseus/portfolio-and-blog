@@ -867,7 +867,12 @@ section:first-of-type { border-top: 0; }
   border-left: 2px solid var(--signal);
   padding: 22px clamp(20px, 3vw, 32px);
 }
-.readings-split .specimen-viewer { border: 0; }
+.readings-split .specimen-viewer {
+  border: 0;
+  aspect-ratio: auto;
+  align-self: stretch;
+  min-height: 240px;
+}
 .read {
   display: flex;
   flex-direction: column;

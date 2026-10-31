@@ -61,6 +61,55 @@ body[data-shell="dashboard"] > .hud-strip {
 .reader .lede {
   display: none;
 }
-.reader h1.post-title {
-  font-size: clamp(22px, 4.5vw, 40px);
+
+@media (min-width: 641px) and (orientation: portrait) {
+  .readings-split {
+    grid-template-columns: minmax(220px, 0.85fr) 1.15fr;
+  }
+  .readings-split .specimen-viewer {
+    width: auto;
+    margin-inline: 0;
+    background: var(--paper_2);
+  }
+  .readings-list-col {
+    border-left: 2px solid var(--signal);
+    border-top: 0;
+    padding: 22px clamp(20px, 3vw, 32px);
+  }
+
+  .project-block {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "viewer stats"
+      "head head"
+      "desc desc"
+      "plat plat";
+    column-gap: clamp(20px, 3vw, 40px);
+    row-gap: 0;
+  }
+  .project-viewer-col { grid-area: viewer; }
+  .project-block .specimen-viewer {
+    width: 100%;
+    margin-inline: 0;
+  }
+  .project-info-col { display: contents; }
+  .project-info-head {
+    grid-area: head;
+    margin-top: 24px;
+  }
+  .project-info-head + .project-desc { grid-area: desc; }
+  .project-block .project-stats {
+    grid-area: stats;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, 1fr);
+    align-self: stretch;
+    margin-top: 0;
+  }
+  .project-stats + .project-desc { grid-area: plat; }
+  .project-block .vital-chip {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px 14px;
+  }
 }
