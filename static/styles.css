@@ -1,5 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Bytesized&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,400..700;1,400..700&family=Fira+Code:wght@400;500&family=Silkscreen:wght@400;700&family=Press+Start+2P&display=swap");
 
+@font-face {
+  font-family: "ModeSeven";
+  src: url("/assets/fonts/modeseven.woff2") format("woff2");
+  font-display: swap;
+}
+
 :root {
   --ink: #0c0d0c;
   --paper: #f3eee4;
@@ -21,6 +27,7 @@
   --mono: "Fira Code", ui-monospace, "JetBrains Mono", Menlo, monospace;
   --pixel: "Silkscreen", var(--mono);
   --pixel_display: "Press Start 2P", var(--pixel);
+  --teletext: "ModeSeven", var(--mono);
   --pad: clamp(20px, 4vw, 64px);
   --maxw: 1240px;
   --col_gap: clamp(16px, 2.5vw, 40px);
@@ -2283,6 +2290,7 @@ button.blog-tag-chip:hover {
 .reader .meta {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 18px;
   font-family: var(--mono);
   font-size: 12px;
@@ -2301,31 +2309,39 @@ button.blog-tag-chip:hover {
 }
 
 .reader h1.post-title {
-  font-family: "Bytesized", var(--pixel);
+  font-family: var(--teletext);
   font-weight: 400;
-  font-size: clamp(40px, 11vw, 64px);
-  line-height: 0.8;
+  font-size: clamp(30px, 5vw, 40px);
+  line-height: 1.15;
   letter-spacing: 0;
   margin: 0;
   text-wrap: pretty;
+  text-transform: uppercase;
+  text-align: center;
+  -webkit-text-stroke: 1px currentColor;
 }
 
 .reader .lede {
-  font-family: var(--mono);
+  font-family: var(--teletext);
   font-size: clamp(15px, 1vw, 16px);
   line-height: 1.2;
-  color: var(--mute);
+  color: rgb(0, 112, 122);
   margin: 0;
+  text-align: center;
+}
+
+[data-theme="dark"] .reader .lede {
+  color: rgb(110, 227, 231);
 }
 
 .prose-body {
   max-width: 68ch;
   margin: 40px auto 0;
-  font-family: var(--sans_read);
-  font-size: clamp(17px, 1.4vw, 19px);
-  line-height: 1.7;
+  font-family: var(--teletext);
+  font-size: 20px;
+  line-height: 1.6;
   color: var(--ink);
-  text-align: justify;
+  text-align: left;
   grid-column: 2;
   grid-row: 2;
 }
@@ -2375,6 +2391,14 @@ button.blog-tag-chip:hover {
 
 .prose-body a:hover { color: var(--signal); }
 
+.prose-body strong,
+.prose-body b {
+  font-weight: 400;
+  font-synthesis: none;
+  color: var(--signal);
+  text-shadow: 1px 0 currentColor;
+}
+
 .prose-body code,
 .prose-body pre {
   font-family: var(--mono);
@@ -2409,6 +2433,7 @@ button.blog-tag-chip:hover {
   padding: 4px 0 4px 22px;
   border-left: 2px solid var(--signal);
   font-style: italic;
+  font-size: 0.85em;
   color: var(--mute);
 }
 
