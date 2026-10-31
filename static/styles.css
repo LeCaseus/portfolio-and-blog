@@ -2431,6 +2431,31 @@ button.blog-tag-chip:hover {
   color: var(--mute_2);
 }
 
+.prose-body img {
+  max-width: 100%;
+  height: auto;
+  border: 2px solid var(--rule);
+  border-radius: 3px;
+}
+
+.post-figure {
+  margin: 1.6em 0;
+
+  & img {
+    display: block;
+    margin: 0 auto;
+  }
+
+  & figcaption {
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--mute);
+    text-align: center;
+  }
+}
+
 .post-heart {
   grid-column: 3;
   grid-row: 1 / 3;

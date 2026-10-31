@@ -15,3 +15,6 @@ disableKinds = ["taxonomy", "term"]
   baseName = "feed"
   mediaType = "application/rss+xml"
   isPlainText = true
+
+[markup.goldmark.parser]
+  wrapStandAloneImageWithinParagraph = false
