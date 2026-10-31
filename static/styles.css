@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,400..700;1,400..700&family=Fira+Code:wght@400;500&family=Silkscreen:wght@400;700&family=Press+Start+2P&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bytesized&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,400..700;1,400..700&family=Fira+Code:wght@400;500&family=Silkscreen:wght@400;700&family=Press+Start+2P&display=swap");
 
 :root {
   --ink: #0c0d0c;
@@ -1287,10 +1287,10 @@ section:first-of-type { border-top: 0; }
   gap: 14px;
 }
 .project-ttl {
-  font-family: var(--pixel_display);
+  font-family: "Bytesized", var(--pixel);
   font-weight: 400;
-  font-size: clamp(18px, 2.2vw, 26px);
-  line-height: 1.6;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
   margin: 0;
 }
 .project-ttl em {
@@ -2296,10 +2296,10 @@ button.blog-tag-chip:hover {
 }
 
 .reader h1.post-title {
-  font-family: var(--pixel_display);
+  font-family: "Bytesized", var(--pixel);
   font-weight: 400;
-  font-size: clamp(22px, 3.2vw, 40px);
-  line-height: 1.06;
+  font-size: clamp(40px, 11vw, 64px);
+  line-height: 0.8;
   letter-spacing: 0;
   margin: 0;
   text-wrap: pretty;
