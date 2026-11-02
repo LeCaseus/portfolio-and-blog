@@ -1,7 +1,7 @@
 {{ define "main" }}
 
 <section class="hero-intro" id="top" data-screen-label="12 Privacy">
-  <div class="name-eyebrow">0x0012 · <span>ELECTRODES CONNECTED</span> · lead II · effective 2026-07-07 · v1.1</div>
+  <div class="name-eyebrow">0x0012 · <span>ELECTRODES CONNECTED</span> · lead II · effective 2026-11-02 · v1.2</div>
   <h1>PRIVACY<br /><span class="alive">POLICY<span class="records-cursor">_</span></span></h1>
 </section>
 
@@ -25,8 +25,8 @@
   <div class="doc-prose">
     <p>
       This policy applies to <code>cheztervargas.com</code> and its subpaths, including the blog at
-      <code>/blog.html</code>. It doesn't apply to third-party sites this site links to (e.g. GitHub,
-      LinkedIn, Instagram) — those have their own privacy policies.
+      <code>/blog.html</code> and the notes feed at <code>/notes.html</code>. It doesn't apply to third-party sites
+      this site links to (e.g. GitHub, LinkedIn, Instagram) — those have their own privacy policies.
     </p>
     <p>This site does not target children, does not knowingly collect data from anyone under 16, and has no age-gating
       because it isn't designed for or marketed to minors.</p>
@@ -53,12 +53,29 @@
         feature, using the least identifying method available (a one-way hash).
       </li>
       <li>
-        <strong>Guestbook (name, website, email, message):</strong> name, website, and message are optional-to-required
-        fields
-        you submit and that get displayed publicly once approved. Email is optional and never displayed — it's collected
-        only so I can reply directly if needed. Your IP address is hashed (SHA-256, same method as reactions) to enforce
-        a submission rate limit. Legal basis: consent (Art. 6(1)(a)) for the name/website/message you choose to publish,
-        and legitimate interest (Art. 6(1)(f)) for the hashed IP — abuse prevention, least-identifying method available.
+        <strong>Guestbook and post comments (name, website, email, message):</strong> both go through the same
+        form and the same approval queue. The guestbook is one page, and a comment is a message left under a blog
+        post or a note, so I also store which page it was posted on. Name and website are optional and the message is
+        required. Name, website and message are displayed publicly once I approve them, together with a reply from me
+        if I write one. Email is optional and never displayed. It is collected only so I can reply directly if
+        needed. Your IP address is hashed (SHA-256, same method as reactions) and stored with the entry to enforce a
+        limit of five submissions per hour, counted across the guestbook and all comments together.
+        <strong>Legal basis:</strong> consent (Art. 6(1)(a)) for the name, website, message and email you choose to
+        submit, and legitimate interest (Art. 6(1)(f)) for the hashed IP: abuse prevention, using the least
+        identifying method available.
+      </li>
+      <li>
+        <strong>Incoming webmentions (URLs, author name, author link, author photo link, excerpt):</strong> a
+        webmention is a notification that a page somewhere else links to a page here. If someone sends one, my server
+        fetches the page they named to check that it really links here. It then stores both URLs, the kind of
+        mention (reply, like, repost or plain mention), whatever that page publicly marks up about its author (name,
+        profile link, photo link), and an excerpt of its text of up to 280 characters. Nothing is shown until I
+        approve it. Once approved, the author's name and link, the source link and the excerpt appear under the post
+        or note being responded to. The photo link is stored but never displayed. Your IP address is hashed (SHA-256)
+        and stored with it to enforce a limit of ten per hour. This data comes from the sender's own public page, not
+        from a form on this site. <strong>Legal basis:</strong> legitimate interest (Art. 6(1)(f)): showing public
+        responses to my own writing, only after I have reviewed them, and keeping no more than the sender's page
+        already publishes.
       </li>
       <li>
         <strong>Theme preference:</strong> stored only in your browser's <code>localStorage</code>. Never
@@ -85,8 +102,12 @@
         is only removed if I manually delete it from the Umami database.</li>
       <li><strong>Reaction hashes:</strong> retained indefinitely, tied to the post slug, until you request deletion or
         I manually clear the <code>reaction_log</code> table.</li>
-      <li><strong>Guestbook entries:</strong> approved entries retained indefinitely, same policy as everything else on
-        this site — no automatic expiry.</li>
+      <li><strong>Guestbook entries and comments:</strong> approved ones are retained indefinitely, same policy as
+        everything else on this site, with no automatic expiry. Pending ones are kept until I approve or delete them.
+        Ones I reject are deleted immediately. The hashed IP and the email, if you gave one, stay in the stored record
+        for as long as the entry does.</li>
+      <li><strong>Webmentions:</strong> approved ones are retained indefinitely. Pending ones are kept until I review
+        them. Rejected ones are marked as rejected rather than deleted, and stay until I clear them out by hand.</li>
       <li><strong>Infrastructure/security logs:</strong> retention is set by Cloudflare and CrowdSec's own
         configurations, not by me directly. See their respective policies for specifics.</li>
     </ul>
@@ -125,8 +146,8 @@
         controller for data these embeds collect; see each ring's own privacy policy.
       </li>
     </ul>
-    <p>Analytics (Umami) and the reactions database run entirely on hardware I own — that data does not leave my own
-      infrastructure.</p>
+    <p>Analytics (Umami), reactions, the guestbook and comments, and webmentions all run on hardware I own — that data
+      does not leave my own infrastructure.</p>
   </div>
 </section>
 
@@ -137,12 +158,12 @@
     <ul>
       <li><strong>Access</strong> — ask what data, if any, is held about you.</li>
       <li><strong>Rectification</strong> — ask for inaccurate data to be corrected.</li>
-      <li><strong>Erasure</strong> — ask for your data (e.g. a reaction hash, or a guestbook submission including your
-        email if you gave one) to be deleted.</li>
+      <li><strong>Erasure</strong> — ask for your data (e.g. a reaction hash, a guestbook entry or comment including
+        your email if you gave one, or a webmention) to be deleted.</li>
       <li><strong>Restriction</strong> — ask for processing of your data to be limited.</li>
       <li><strong>Objection</strong> — object to processing based on legitimate interest.</li>
       <li><strong>Portability</strong> — request a copy of data you've provided, in a portable format (limited
-        applicability here, since almost nothing identifiable is stored).</li>
+        applicability here, since little identifiable data is stored).</li>
       <li>
         <strong>Lodge a complaint</strong> — with your national data protection supervisory authority, if you
         believe your data has been mishandled. (In the EU, find yours via the
@@ -153,8 +174,10 @@
     <p>
       To exercise any of these, email me at
       <a href="mailto:chezter_vargas@outlook.ph" data-umami-event="privacy-contact-click">chezter_vargas@outlook.ph</a>.
-      Because almost nothing on this site identifies you directly, most requests will amount to
-      confirming no identifiable record exists, or deleting a reaction hash tied to your IP.
+      Hashed IPs can't be traced back to a person, so some requests will amount to confirming no identifiable
+      record exists, or deleting a reaction hash tied to your IP. For a guestbook entry, a comment or a webmention,
+      tell me which one is yours (the page it was posted on, and the name or email you used) and I'll find and
+      delete it.
     </p>
   </div>
 </section>
@@ -163,7 +186,9 @@
   <div class="channel"><span class="line"></span><span>CH-12.7</span><strong>COOKIES</strong></div>
   <div class="doc-prose">
     <p>This site does not set any cookies. The only client-side storage is <code>localStorage</code> for your theme
-      preference, which is not a cookie, isn't sent to any server, and isn't used for tracking.</p>
+      preference, and <code>sessionStorage</code> for the blog sidebar's search text, tag filters and scroll position,
+      which is cleared when you close the tab. Neither is a cookie, neither is sent to any server, and neither is used
+      for tracking.</p>
     <p>Some embedded third-party widgets (see "third parties") may set their own cookies independently of this site.</p>
   </div>
 </section>
@@ -175,7 +200,11 @@
       If what this site collects or how it's processed changes, this page will be updated and the
       "effective" date at the top will change accordingly. Material changes affecting your rights will
       be reflected here before they take effect — there's no separate mailing list to notify, since this
-      site doesn't collect emails.
+      site doesn't collect emails for that purpose.
+    </p>
+    <p>
+      <strong>v1.1, 2026-11-02:</strong> added comments on posts and notes (which share the guestbook's approval
+      queue) and incoming webmentions, and corrected the description of client-side storage.
     </p>
   </div>
 </section>
@@ -186,8 +215,8 @@
     <span class="ln"><span class="prompt">$</span> whoami</span>
     <span class="ln out">→ chezter - data controller for this site</span>
     <span class="ln"><span class="prompt">$</span> requests --scope</span>
-    <span class="ln out">→ analytics data · reaction hashes · guestbook submissions (name / website / email /
-      message)</span>
+    <span class="ln out">→ analytics data · reaction hashes · guestbook and comment submissions (name / website / email
+      / message) · webmentions</span>
     <span class="ln"><span class="prompt">$</span> contact --send</span>
     <span class="ln out">
       → email me at <a href="mailto:chezter_vargas@outlook.ph"
