@@ -15,14 +15,21 @@
     </label>
     <div class="mobile-dropdown-content">
       <input type="text" class="blog-search-input" data-blog-search placeholder='grep -i "..."' autocomplete="off" />
-      <div class="blog-tag-list" data-blog-tag-list>
-        {{ range $uniqueTags }}
-        <button type="button" class="blog-tag-chip" data-tag="{{ . }}" data-umami-event="blog-tag-filter"
-          data-umami-event-tag="{{ . }}">
-          <span class="lbl">{{ . }}</span>
-          <span class="count">{{ len (where $posts "Params.tags" "intersect" (slice .)) }}</span>
-        </button>
-        {{ end }}
+      <div class="blog-tag-dropdown">
+        <input type="checkbox" id="blog-tags-toggle" class="blog-tag-dropdown-toggle" />
+        <label for="blog-tags-toggle" class="blog-tag-dropdown-summary" data-umami-event="blog-tags-toggle">
+          <span>TAGS <span data-blog-tag-active-count hidden></span></span>
+          <span class="blog-tag-dropdown-arrow" aria-hidden="true">▾</span>
+        </label>
+        <div class="blog-tag-list" data-blog-tag-list>
+          {{ range $uniqueTags }}
+          <button type="button" class="blog-tag-chip" data-tag="{{ . }}" data-umami-event="blog-tag-filter"
+            data-umami-event-tag="{{ . }}">
+            <span class="lbl">{{ . }}</span>
+            <span class="count">{{ len (where $posts "Params.tags" "intersect" (slice .)) }}</span>
+          </button>
+          {{ end }}
+        </div>
       </div>
       <button type="button" class="blog-filter-clear" data-blog-clear-filters data-umami-event="blog-filters-clear"
         hidden>

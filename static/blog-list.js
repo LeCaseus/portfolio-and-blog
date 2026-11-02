@@ -40,6 +40,7 @@ function init_search_and_filters() {
   const tag_list = document.querySelector('[data-blog-tag-list]');
   const search_input = document.querySelector('[data-blog-search]');
   const clear_button = document.querySelector('[data-blog-clear-filters]');
+  const active_count_el = document.querySelector('[data-blog-tag-active-count]');
   const groups = document.querySelectorAll('[data-blog-year-group]');
   if (!tag_list || !search_input) return;
 
@@ -56,6 +57,10 @@ function init_search_and_filters() {
     const active_tags = [...get_active_tags(tag_list)];
     sessionStorage.setItem(tags_storage_key, JSON.stringify(active_tags));
     clear_button.hidden = active_tags.length === 0 && !search_input.value;
+    if (active_count_el) {
+      active_count_el.textContent = `(${active_tags.length})`;
+      active_count_el.hidden = active_tags.length === 0;
+    }
     apply_filters(tag_list, search_input, groups);
   };
 
