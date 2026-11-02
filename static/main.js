@@ -14,7 +14,7 @@ async function load_guestbook_teaser() {
   if (!rows_el) return;
 
   try {
-    const entries = await fetch('/api/guestbook').then(response => response.json());
+    const entries = await fetch('/api/messages').then(response => response.json());
     const recent_entries = entries.slice(0, 6);
 
     count_el.textContent = String(entries.length).padStart(2, '0');

@@ -1,0 +1,40 @@
+{{ $mailSubject := replace (urlquery (printf "Re: %s" .title)) "+" "%20" }}
+{{ $mailtoHref := printf "mailto:%s?subject=%s" site.Params.contactEmail $mailSubject | safeURL }}
+<section class="doc-section" data-comments data-page="{{ .messagePage }}" data-target-url="{{ .targetUrl }}">
+  <div class="channel"><span class="line"></span><span>COMMENTS</span><strong><span
+        data-comments-entry-count>—</span>&nbsp;ON&nbsp;FILE</strong></div>
+  <ul class="gb-entries" data-comments-list>
+    <li class="doc-empty">loading comments…</li>
+  </ul>
+  <form class="gb-form" data-comments-form novalidate>
+    <div class="gb-row">
+      <label for="comment-name">name <span class="opt">optional</span></label>
+      <input type="text" id="comment-name" name="name" maxlength="80" autocomplete="name" />
+    </div>
+    <div class="gb-row">
+      <label for="comment-website">website <span class="opt">optional</span></label>
+      <input type="url" id="comment-website" name="website" maxlength="200" placeholder="https://" autocomplete="url" />
+    </div>
+    <div class="gb-row">
+      <label for="comment-email">email <span class="opt">optional · private only. this will not be
+          displayed.</span></label>
+      <input type="email" id="comment-email" name="email" maxlength="200" autocomplete="email" />
+    </div>
+    <div class="gb-row">
+      <label for="comment-message">comment</label>
+      <textarea id="comment-message" name="message" maxlength="1000" rows="4" required></textarea>
+      <div class="gb-count"><span data-comments-char-count>0</span> / 1000</div>
+    </div>
+    <div class="gb-actions">
+      <button type="submit" data-comments-submit data-umami-event="comment-submit">post comment</button>
+      <span class="gb-status" data-comments-status role="status" aria-live="polite"></span>
+    </div>
+  </form>
+  <div class="doc-prose">
+    <p>
+      thoughts on this? drop a comment above, or
+      <a href="{{ $mailtoHref }}" data-umami-event="comment-email-click">email me</a>
+      if you'd rather keep it private.
+    </p>
+  </div>
+</section>

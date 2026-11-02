@@ -42,16 +42,11 @@
   </div>
 </section>
 
-<section class="webmentions" data-webmention-target="{{ .Permalink }}">
-  <div class="channel"><span class="line"></span><span>CH-03.2</span><strong>WEBMENTIONS</strong></div>
-  <ul class="webmention-list" data-webmention-list>
-    <li class="doc-empty">loading webmentions…</li>
-  </ul>
-</section>
+{{ partial "comments.html" (dict "messagePage" (printf "notes/%s" .Slug) "targetUrl" .Permalink "title" .Title) }}
 
 {{ end }}
 
 {{ define "scripts" }}
+<script type="module" src="/comments.js"></script>
 <script type="module" src="/notes.js"></script>
-<script type="module" src="/webmention.js"></script>
 {{ end }}

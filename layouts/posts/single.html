@@ -1,40 +1,43 @@
 {{ define "main" }}
 
 <article class="h-entry reader" id="reader">
-  <header class="header">
-    <div class="meta">
-      <time class="dt-published" datetime='{{ .Date | time.Format "2006-01-02T15:04:05Z07:00" }}'>{{ .Date | time.Format
-        "2 January 2006" }}</time>
-      <span class="dot"></span>
-      {{ range .Params.tags }}<span class="tag p-category">{{ . }}</span>{{ end }}
-      <span class="dot"></span>
-      <span>{{ .ReadingTime }} min read</span>
+  <div class="reader-grid">
+    <header class="header">
+      <div class="meta">
+        <time class="dt-published" datetime='{{ .Date | time.Format "2006-01-02T15:04:05Z07:00" }}'>{{ .Date |
+          time.Format
+          "2 January 2006" }}</time>
+        <span class="dot"></span>
+        {{ range .Params.tags }}<span class="tag p-category">{{ . }}</span>{{ end }}
+        <span class="dot"></span>
+        <span>{{ .ReadingTime }} min read</span>
+      </div>
+      <h1 class="p-name post-title">{{ .Title }}</h1>
+      <p class="p-summary lede">{{ .Params.summary }}</p>
+    </header>
+
+    {{ partial "shell-blog-nav-trigger.html" . }}
+
+    <aside class="post-heart" data-post-heart data-slug="{{ .Slug }}">
+      <span class="post-heart-label">press me</span>
+      <div class="heart-container" title="react to this post">
+        <input type="checkbox" class="checkbox" data-heart-checkbox data-umami-event="post-reaction" />
+        <div class="heart_sprite" aria-hidden="true"></div>
+        <svg class="svg-celebrate" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="10,10 16,10 16,16"></polygon>
+          <polygon points="90,10 84,10 84,16"></polygon>
+          <polygon points="10,90 16,90 16,84"></polygon>
+          <polygon points="90,90 84,90 84,84"></polygon>
+          <polygon points="50,4 54,10 46,10"></polygon>
+          <polygon points="50,96 54,90 46,90"></polygon>
+        </svg>
+      </div>
+      <span class="post-heart-count" data-heart-count>—</span>
+    </aside>
+
+    <div class="e-content prose-body">
+      {{ .Content }}
     </div>
-    <h1 class="p-name post-title">{{ .Title }}</h1>
-    <p class="p-summary lede">{{ .Params.summary }}</p>
-  </header>
-
-  {{ partial "shell-blog-nav-trigger.html" . }}
-
-  <aside class="post-heart" data-post-heart data-slug="{{ .Slug }}">
-    <span class="post-heart-label">press me</span>
-    <div class="heart-container" title="react to this post">
-      <input type="checkbox" class="checkbox" data-heart-checkbox data-umami-event="post-reaction" />
-      <div class="heart_sprite" aria-hidden="true"></div>
-      <svg class="svg-celebrate" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="10,10 16,10 16,16"></polygon>
-        <polygon points="90,10 84,10 84,16"></polygon>
-        <polygon points="10,90 16,90 16,84"></polygon>
-        <polygon points="90,90 84,90 84,84"></polygon>
-        <polygon points="50,4 54,10 46,10"></polygon>
-        <polygon points="50,96 54,90 46,90"></polygon>
-      </svg>
-    </div>
-    <span class="post-heart-count" data-heart-count>—</span>
-  </aside>
-
-  <div class="e-content prose-body">
-    {{ .Content }}
   </div>
 
   <footer class="entry-footer">
@@ -44,18 +47,12 @@
   </footer>
 </article>
 
-<section class="webmentions" data-webmention-target="{{ .Permalink }}">
-  <div class="channel"><span class="line"></span><span>REPLIES</span><strong><span data-webmention-count>—</span>
-      WEBMENTIONS</strong></div>
-  <ul class="webmention-list" data-webmention-list>
-    <li class="doc-empty">loading webmentions…</li>
-  </ul>
-</section>
+{{ partial "comments.html" (dict "messagePage" (printf "blog/%s" .Slug) "targetUrl" .Permalink "title" .Title) }}
 
 {{ end }}
 
 {{ define "scripts" }}
 <script type="module" src="/blog-list.js"></script>
+<script type="module" src="/comments.js"></script>
 <script type="module" src="/reaction.js"></script>
-<script type="module" src="/webmention.js"></script>
 {{ end }}

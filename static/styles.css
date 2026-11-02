@@ -1220,6 +1220,16 @@ section:first-of-type { border-top: 0; }
   text-decoration: none;
   border-bottom: 2px dotted var(--signal);
 }
+.gb-entry-kind {
+  color: var(--signal);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.gb-entry-name a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 2px dotted var(--signal);
+}
 .gb-entry-date {
   color: var(--mute_2);
   margin-left: auto;
@@ -2328,8 +2338,12 @@ button.blog-tag-chip:hover {
 
 .reader {
   position: relative;
+}
+
+.reader-grid {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 68ch) 64px minmax(0, 1fr);
+  grid-template-columns: 1fr min(68ch, 100%) 64px 1fr;
   column-gap: 24px;
 }
 
@@ -2635,7 +2649,7 @@ button.blog-tag-chip:hover {
 }
 
 @media (max-width: 1200px) {
-  .reader { display: block; }
+  .reader-grid { display: block; }
   .reader .header,
   .prose-body,
   .entry-footer {
@@ -2663,8 +2677,6 @@ button.blog-tag-chip:hover {
   font-size: 12px;
   letter-spacing: 0.04em;
   color: var(--mute);
-  grid-column: 1 / -1;
-  grid-row: 3;
 }
 
 .entry-footer a {
