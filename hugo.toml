@@ -6,7 +6,7 @@ disableKinds = ["taxonomy", "term"]
 
 [params]
   author = 'Chezter Vargas'
-  contactEmail = 'vargas.chez@icloud.com'
+  contactEmail = 'vargas.chez [at] icloud [dot] com'
 
 [permalinks]
   posts = "/blog/:slug/"
