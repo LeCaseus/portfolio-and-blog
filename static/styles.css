@@ -13,8 +13,8 @@
   --rule: rgba(12, 13, 12, 0.14);
   --mute: rgba(12, 13, 12, 0.55);
   --mute_2: rgba(12, 13, 12, 0.38);
-  --signal: #1f9a10;
-  --signal_soft: rgba(31, 154, 16, 0.14);
+  --signal: #00D968;
+  --signal_soft: rgba(0, 217, 104, 0.28);
   --warn: rgb(198, 109, 0);
   --cyan: rgb(0, 122, 153);
   --violet: rgb(124, 77, 196);
@@ -22,7 +22,7 @@
   --grid: rgba(12, 13, 12, 0.05);
   --hi: rgba(12, 13, 12, 1);
   --scanline: rgba(12, 13, 12, 0.05);
-  --glow_text: 0 0 3px var(--signal), 0 0 10px var(--signal_soft), 0 0 22px var(--signal_soft);
+  --glow_text: 0 0 2px #00FF78, 0 0 8px rgba(0, 255, 120, 0.75), 0 0 18px rgba(0, 217, 104, 0.55), 0 0 32px rgba(0, 180, 80, 0.25);
   --sans_read: "Open Sans", system-ui, "Segoe UI", sans-serif;
   --mono: "Fira Code", ui-monospace, "JetBrains Mono", Menlo, monospace;
   --pixel: "Silkscreen", var(--mono);
@@ -40,8 +40,8 @@
   --rule: rgba(240, 236, 227, 0.16);
   --mute: rgba(240, 236, 227, 0.6);
   --mute_2: rgba(240, 236, 227, 0.4);
-  --signal: #39ff2a;
-  --signal_soft: rgba(57, 255, 42, 0.18);
+  --signal: #00E875;
+  --signal_soft: rgba(0, 232, 117, 0.32);
   --warn: rgb(255, 179, 48);
   --cyan: rgb(86, 204, 242);
   --violet: rgb(177, 140, 255);
