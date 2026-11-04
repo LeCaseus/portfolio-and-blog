@@ -44,7 +44,8 @@
   <ul class="feed-list">
     {{ if $notes }}
     {{ range $index, $note := $notes }}
-    <li class="h-entry feed-card" data-tags='{{ delimit (.Params.tags | default slice) "||" }}'>
+    <li class="h-entry feed-card" data-kind='{{ .Params.entry_kind | default "note" }}'
+      data-tags='{{ delimit (.Params.tags | default slice) "||" }}'>
       <div class="feed-card-head">
         <span class="feed-card-byline">
           <img class="feed-card-avatar" src="/assets/face.jpg" alt="" />
@@ -59,11 +60,7 @@
         </span>
       </div>
       <div class="e-content feed-card-body">{{ .Content }}</div>
-      {{ with $note.Params.source_url }}
-      <a class='feed-card-source {{ if eq $note.Params.mention_type "repost" }}u-repost-of{{ else }}u-in-reply-to{{ end }}'
-        href="{{ . }}" target="_blank" rel="noopener" data-umami-event="outbound-link"
-        data-umami-event-target="note-source">SOURCE →</a>
-      {{ end }}
+      {{ partial "note-kind.html" . }}
       {{ with .Params.tags }}
       <div class="feed-card-tags">{{ range . }}<span class="p-category">{{ . }}</span>{{ end }}</div>
       {{ end }}

@@ -8,6 +8,22 @@ disableKinds = ["taxonomy", "term"]
   author = 'Chezter Vargas'
   contactEmail = 'vargas.chez [at] icloud [dot] com'
 
+[params.note_kinds.like]
+  label = "liked"
+  class = "u-like-of"
+
+[params.note_kinds.bookmark]
+  label = "bookmarked"
+  class = "u-bookmark-of"
+
+[params.note_kinds.reply]
+  label = "replying to"
+  class = "u-in-reply-to"
+
+[params.note_kinds.quote]
+  label = "quoting"
+  class = "u-repost-of"
+  
 [permalinks]
   posts = "/blog/:slug/"
   notes = "/notes/:slug"

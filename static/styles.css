@@ -1584,6 +1584,16 @@ section:first-of-type { border-top: 0; }
   gap: 16px;
 }
 
+#feed {
+  max-width: 680px;
+  margin-inline: auto;
+  border-top: 0;
+}
+
+.hero-intro:has(+ #feed) {
+  border-bottom: 2px dashed var(--signal);
+}
+
 .tag-dropdown {
   position: relative;
   display: inline-block;
@@ -1778,9 +1788,11 @@ section:first-of-type { border-top: 0; }
 }
 .feed-card-body img {
   display: block;
-  max-width: 320px;
   width: 100%;
+  max-width: none;
   height: auto;
+  max-height: 680px;
+  object-fit: cover;
   margin: 10px 0;
   border: 2px solid var(--rule);
   border-radius: 3px;
@@ -1846,12 +1858,23 @@ section:first-of-type { border-top: 0; }
   text-transform: uppercase;
   color: var(--signal);
   text-decoration: none;
-  border-bottom: 2px dotted var(--signal);
-  transition: color 0.2s, border-color 0.2s;
+  transition: color 0.2s;
 }
 .feed-card-source:hover {
   color: var(--ink);
+}
+.feed-card-source .host {
+  border-bottom: 2px dotted var(--signal);
+  transition: border-color 0.2s;
+}
+.feed-card-source:hover .host {
   border-color: var(--ink);
+}
+.feed-card-source .kind {
+  margin-right: 8px;
+  padding: 1px 6px;
+  border: 2px solid var(--signal);
+  border-radius: 2px;
 }
 
 .feed-card-tags {

@@ -1,0 +1,8 @@
+{{ $kind := .Params.entry_kind | default (cond (eq .Params.mention_type "repost") "quote" "reply") }}
+{{ $meta := index site.Params.note_kinds $kind }}
+{{ if and $meta .Params.source_url }}
+<a class="feed-card-source {{ $meta.class }}" href="{{ .Params.source_url }}" target="_blank" rel="noopener"
+  data-umami-event="outbound-link" data-umami-event-target="note-source">
+  <span class="kind">{{ $meta.label }}</span><span class="host">{{ (urls.Parse .Params.source_url).Host }}</span> →
+</a>
+{{ end }}
