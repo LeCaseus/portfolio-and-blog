@@ -2076,23 +2076,7 @@ a.log-nav {
   text-decoration: none;
 }
 
-/* the selector list below intentionally touches many components -- it's the single shared text-shadow glow effect, not a bug */
-.reveal {
-  opacity: 0;
-  transform: translateY(10px);
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s ease;
-}
-.reveal.in {
-  opacity: 1;
-  transform: none;
-}
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-  }
   * {
     animation-duration: 0.001s !important;
     transition-duration: 0.001s !important;
