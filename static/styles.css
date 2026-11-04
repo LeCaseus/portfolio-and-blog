@@ -13,8 +13,8 @@
   --rule: rgba(12, 13, 12, 0.14);
   --mute: rgba(12, 13, 12, 0.55);
   --mute_2: rgba(12, 13, 12, 0.38);
-  --signal: rgb(57, 158, 67);
-  --signal_soft: rgba(57, 158, 67, 0.14);
+  --signal: #1f9a10;
+  --signal_soft: rgba(31, 154, 16, 0.14);
   --warn: rgb(198, 109, 0);
   --cyan: rgb(0, 122, 153);
   --violet: rgb(124, 77, 196);
@@ -40,8 +40,8 @@
   --rule: rgba(240, 236, 227, 0.16);
   --mute: rgba(240, 236, 227, 0.6);
   --mute_2: rgba(240, 236, 227, 0.4);
-  --signal: rgb(104, 211, 111);
-  --signal_soft: rgba(104, 211, 111, 0.18);
+  --signal: #39ff2a;
+  --signal_soft: rgba(57, 255, 42, 0.18);
   --warn: rgb(255, 179, 48);
   --cyan: rgb(86, 204, 242);
   --violet: rgb(177, 140, 255);
