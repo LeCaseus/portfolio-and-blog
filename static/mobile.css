@@ -153,6 +153,11 @@ section {
   grid-template-columns: 1fr;
 }
 
+.read .row-top {
+  flex-direction: column;
+  gap: 2px;
+}
+
 .prose-body {
   font-size: clamp(16px, 2.2vw, 18px);
 }
@@ -231,18 +236,18 @@ body:has(#mobile-nav-check:checked) {
   overflow: hidden;
 }
 
-.nav-col {
+body[data-shell="dashboard"] > .nav-col {
   position: fixed;
   inset: 0;
   z-index: 65;
   background: var(--paper);
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: 10px;
-  padding: 24px;
+  padding: 24px 24px 150px;
   border: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
   transform: translateY(12px);
   opacity: 0;
   pointer-events: none;
@@ -251,6 +256,8 @@ body:has(#mobile-nav-check:checked) {
     opacity 300ms ease;
 }
 
+body[data-shell="dashboard"] > .nav-col > :first-child { margin-top: auto; }
+body[data-shell="dashboard"] > .nav-col > :last-child { margin-bottom: auto; }
 body:has(#mobile-nav-check:checked) .nav-col {
   transform: translateY(0);
   opacity: 1;
@@ -356,6 +363,22 @@ body[data-shell="dashboard"] > .spec-col--blog {
   text-transform: uppercase;
   border-radius: 2px;
   cursor: pointer;
+}
+
+.feed-card-foot {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.feed-card-foot .log-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 4px;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .site-links--external .path {

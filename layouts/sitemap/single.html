@@ -7,7 +7,7 @@
 
 <section class="doc-section" id="pages">
   <div class="channel"><span class="line"></span><span>CH-11.1</span><strong>PAGES</strong></div>
-  <ul class="site-links">
+  <ul class="site-links site-links--external">
     <li><a href="/"><span>home</span><span class="path">/</span></a></li>
     <li><a href="/blog.html"><span>readings log</span><span class="path">/blog.html</span></a></li>
     <li><a href="/notes.html"><span>micro-logs</span><span class="path">/notes.html</span></a></li>
@@ -21,7 +21,7 @@
 
 <section class="doc-section" id="readings">
   <div class="channel"><span class="line"></span><span>CH-11.2</span><strong>READINGS</strong></div>
-  <ul class="site-links">
+  <ul class="site-links site-links--external">
     {{ range (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
     <li><a href="{{ .RelPermalink }}"><span>{{ .Title }}</span><span class="path">{{ .RelPermalink }}</span></a></li>
     {{ else }}

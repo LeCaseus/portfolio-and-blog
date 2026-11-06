@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Bytesized&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,400..700;1,400..700&family=Fira+Code:wght@400;500&family=Silkscreen:wght@400;700&family=Press+Start+2P&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Silkscreen:wght@400;700&family=Press+Start+2P&display=swap");
 
 @font-face {
   font-family: "ModeSeven";
@@ -13,8 +13,8 @@
   --rule: rgba(12, 13, 12, 0.14);
   --mute: rgba(12, 13, 12, 0.55);
   --mute_2: rgba(12, 13, 12, 0.38);
-  --signal: #00D968;
-  --signal_soft: rgba(0, 217, 104, 0.28);
+  --signal: #00873f;
+  --signal_soft: rgba(0, 135, 63, 0.16);
   --warn: rgb(198, 109, 0);
   --cyan: rgb(0, 122, 153);
   --violet: rgb(124, 77, 196);
@@ -22,8 +22,7 @@
   --grid: rgba(12, 13, 12, 0.05);
   --hi: rgba(12, 13, 12, 1);
   --scanline: rgba(12, 13, 12, 0.05);
-  --glow_text: 0 0 2px #00FF78, 0 0 8px rgba(0, 255, 120, 0.75), 0 0 18px rgba(0, 217, 104, 0.55), 0 0 32px rgba(0, 180, 80, 0.25);
-  --sans_read: "Open Sans", system-ui, "Segoe UI", sans-serif;
+  --glow-text: none;
   --mono: "Fira Code", ui-monospace, "JetBrains Mono", Menlo, monospace;
   --pixel: "Silkscreen", var(--mono);
   --pixel_display: "Press Start 2P", var(--pixel);
@@ -42,6 +41,7 @@
   --mute_2: rgba(240, 236, 227, 0.4);
   --signal: #00E875;
   --signal_soft: rgba(0, 232, 117, 0.32);
+  --glow_text: 0 0 2px #00FF78, 0 0 8px rgba(0, 255, 120, 0.75), 0 0 18px rgba(0, 217, 104, 0.55), 0 0 32px rgba(0, 180, 80, 0.25);
   --warn: rgb(255, 179, 48);
   --cyan: rgb(86, 204, 242);
   --violet: rgb(177, 140, 255);
@@ -1235,8 +1235,8 @@ section:first-of-type { border-top: 0; }
   margin-left: auto;
 }
 .gb-entry-msg {
-  font-family: var(--sans_read);
-  font-size: 15px;
+  font-family: var(--mono);
+  font-size: 13.5px;
   line-height: 1.55;
   color: var(--ink);
   margin: 0;
@@ -1258,8 +1258,8 @@ section:first-of-type { border-top: 0; }
 }
 .gb-reply p {
   margin: 0;
-  font-family: var(--sans_read);
-  font-size: 14px;
+  font-family: var(--mono);
+  font-size: 13px;
   line-height: 1.5;
   color: var(--mute);
 }
@@ -1309,9 +1309,9 @@ section:first-of-type { border-top: 0; }
   gap: 14px;
 }
 .project-ttl {
-  font-family: "Bytesized", var(--pixel);
+  font-family: var(--pixel_display);
   font-weight: 400;
-  font-size: clamp(32px, 4vw, 48px);
+  font-size: clamp(24px, 4vw, 32px);
   line-height: 1.1;
   margin: 0;
 }
@@ -1897,6 +1897,7 @@ section:first-of-type { border-top: 0; }
   margin-top: 14px;
   display: flex;
   justify-content: flex-end;
+  gap: 8px;
 }
 
 .entry-back {
