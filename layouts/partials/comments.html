@@ -1,6 +1,5 @@
-{{ $mailSubject := replace (urlquery (printf "Re: %s" .title)) "+" "%20" }}
-{{ $mailtoHref := printf "mailto:%s?subject=%s" site.Params.contactEmail $mailSubject | safeURL }}
-<section class="doc-section" data-comments data-page="{{ .messagePage }}" data-target-url="{{ .targetUrl }}">
+<section class="doc-section" id="comments" data-comments data-page="{{ .messagePage }}"
+  data-target-url="{{ .targetUrl }}">
   <div class="channel"><span class="line"></span><span>COMMENTS</span><strong><span
         data-comments-entry-count>—</span>&nbsp;ON&nbsp;FILE</strong></div>
   <ul class="gb-entries" data-comments-list>
@@ -32,9 +31,9 @@
   </form>
   <div class="doc-prose">
     <p>
-      thoughts on this? drop a comment above, or
-      <a href="{{ $mailtoHref }}" data-umami-event="comment-email-click">email me</a>
-      if you'd rather keep it private.
+  thoughts on this? drop a comment above, or email me at
+  <code>{{ site.Params.contactEmail }}</code>
+  if you'd rather keep it private.
     </p>
   </div>
 </section>

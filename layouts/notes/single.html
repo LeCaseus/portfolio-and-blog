@@ -9,10 +9,7 @@
   <div class="channel"><span class="line"></span><span>CH-03</span><strong>THREAD</strong></div>
   <article class="h-entry feed-card feed-card--full" data-kind='{{ .Params.entry_kind | default "note" }}'>
     <div class="feed-card-head">
-      <span class="feed-card-byline">
-        <img class="feed-card-avatar" src="/assets/face.jpg" alt="" />
-        <span class="feed-card-author">@chezter</span>
-      </span>
+      {{ partial "note-author.html" . }}
       <span class="feed-card-meta">
         <span class="lvl" data-lvl="{{ .Params.lvl }}">{{ .Params.lvl }}</span>
         <span class="feed-card-dot" aria-hidden="true">·</span>

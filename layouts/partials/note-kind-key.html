@@ -1,0 +1,5 @@
+{{ $kind := "note" }}
+{{ if .Params.source_url }}
+{{ $kind = .Params.entry_kind | default (cond (eq .Params.mention_type "repost") "quote" "reply") }}
+{{ end }}
+{{ return $kind }}

@@ -6,9 +6,10 @@
   <div class="prose">
     <div class="col-label">BIO</div>
     <p>
-      If you think that I'd finally gotten rid of my social media profiles then you'd be half-right. This is now my
-      main social media feed -- right here, right now. Publish (on my) Own Site (first), Syndicate Elsewhere (later) or
-      <a href="https://indieweb.org/POSSE" data-umami-event="outbound-link" data-umami-event-target="posse">POSSE</a>.
+      Welcome to my running record of shorter thoughts, passing observations, and things encountered elsewhere on the
+      web. Entries include original notes and webmentions of things liked, bookmarked, replied to, or quoted. This is an
+      independently maintained social feed, published on my own site first and syndicated elsewhere later. <a
+        href="https://indieweb.org/POSSE" data-umami-event="outbound-link" data-umami-event-target="posse">(POSSE.)</a>
     </p>
   </div>
 </section>
@@ -47,10 +48,7 @@
     <li class="h-entry feed-card" data-kind='{{ .Params.entry_kind | default "note" }}'
       data-tags='{{ delimit (.Params.tags | default slice) "||" }}'>
       <div class="feed-card-head">
-        <span class="feed-card-byline">
-          <img class="feed-card-avatar" src="/assets/face.jpg" alt="" />
-          <span class="feed-card-author">@chezter</span>
-        </span>
+        {{ partial "note-author.html" . }}
         <span class="feed-card-meta">
           <span class="lvl" data-lvl="{{ .Params.lvl }}">{{ .Params.lvl }}</span>
           <span class="feed-card-dot" aria-hidden="true">·</span>
@@ -65,9 +63,10 @@
       <div class="feed-card-tags">{{ range . }}<span class="p-category">{{ . }}</span>{{ end }}</div>
       {{ end }}
       <div class="feed-card-foot">
+        <a class="u-url u-uid log-nav" href="{{ .RelPermalink }}">open [↵]</a>
+        <a class="log-nav" href="{{ .RelPermalink }}#comments" data-umami-event="note-comment-click">comment [C]</a>
         <button type="button" class="log-nav" data-copy-link data-permalink="{{ .Permalink }}"
-          data-umami-event="note-copy-link">share me</button>
-        <a class="u-url u-uid log-nav" href="{{ .RelPermalink }}">open →</a>
+          data-umami-event="note-copy-link">share [S]</button>
       </div>
     </li>
     {{ end }}
