@@ -22,7 +22,7 @@
   --grid: rgba(12, 13, 12, 0.05);
   --hi: rgba(12, 13, 12, 1);
   --scanline: rgba(12, 13, 12, 0.05);
-  --glow-text: none;
+  --glow_text: none;
   --mono: "Fira Code", ui-monospace, "JetBrains Mono", Menlo, monospace;
   --pixel: "Silkscreen", var(--mono);
   --pixel_display: "Press Start 2P", var(--pixel);
@@ -2413,6 +2413,7 @@ button.blog-tag-chip:hover {
 }
 
 .prose-body {
+  width: 100%;
   max-width: 68ch;
   margin: 40px auto 0;
   font-family: var(--teletext);
