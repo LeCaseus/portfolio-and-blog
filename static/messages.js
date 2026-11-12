@@ -90,7 +90,6 @@ export function initMessageForm({ page, form, submitButton, statusElement, charC
     const payload = {
       name: fieldValue('name') || undefined,
       website: fieldValue('website') || undefined,
-      email: fieldValue('email') || undefined,
       message,
       page
     };
