@@ -17,6 +17,7 @@
   --hi: rgba(12, 13, 12, 1);
   --scanline: rgba(12, 13, 12, 0.05);
   --glow_text: none;
+  --glow_box: none;
   --mono: "Fira Code", ui-monospace, "JetBrains Mono", Menlo, monospace;
   --pixel_display: "Press Start 2P", var(--mono);
   --pad: clamp(20px, 4vw, 64px);
@@ -48,7 +49,8 @@
   --mute_2: rgba(240, 236, 227, 0.4);
   --signal: #00E875;
   --signal_soft: rgba(0, 232, 117, 0.32);
-  --glow_text: 0 0 2px #00FF78, 0 0 8px rgba(0, 255, 120, 0.75), 0 0 18px rgba(0, 217, 104, 0.55), 0 0 32px rgba(0, 180, 80, 0.25);
+  --glow_text: 0 0 2px currentColor, 0 0 8px color-mix(in srgb, currentColor 75%, transparent), 0 0 18px color-mix(in srgb, currentColor 55%, transparent), 0 0 32px color-mix(in srgb, currentColor 25%, transparent);
+  --glow_box: 0 0 6px var(--signal_soft), inset 0 0 6px var(--signal_soft);
   --warn: rgb(255, 179, 48);
   --cyan: rgb(86, 204, 242);
   --violet: rgb(177, 140, 255);
@@ -2157,8 +2159,40 @@ a.log-nav {
 .ring-main:hover,
 .contact .term .ln .prompt,
 .prose-body h2::before,
-.entry-row .lvl[data-lvl="info"] {
+.entry-row .lvl,
+.feed-card-meta .lvl,
+.col-label,
+.feed-card-author,
+.feed-card-source,
+.feed-card-tags span,
+.entry-row .msg .tags span,
+.reader .meta .tag,
+.ecg .ecg-readout .bpm,
+.ecg .ecg-readout .rhythm,
+.gb-entry-kind,
+.gb-reply-label,
+.about-prose h3 {
   text-shadow: var(--glow_text);
+}
+
+.vital-chip,
+.hero-intro .prose,
+.readings-split,
+.gb-tui,
+.log,
+.ring-card,
+.feed-card,
+.specimen-viewer,
+.contact .term,
+.head a,
+.gb-actions button,
+.status-pill[data-s="active"],
+.nav-chip:hover,
+.nav-chip.active,
+.status,
+.doc-strip,
+.hud-strip {
+  box-shadow: var(--glow_box);
 }
 
 .blog-nav-section + .blog-nav-section { margin-top: 24px; }
