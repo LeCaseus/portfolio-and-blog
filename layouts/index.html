@@ -83,7 +83,7 @@
   {{ $notes = $notes | append (dict
   "ts" (.Date.Format "2006-01-02 15:04")
   "iso" (.Date.Format "2006-01-02T15:04:05Z07:00")
-  "lvl" .Params.lvl
+  "lvl" (cond (not .Params.source_url) .Params.lvl (partial "note-kind-key.html" .))
   "msg" (.Content | plainify | htmlUnescape | truncate 160)
   "tags" .Params.tags
   "permalink" .RelPermalink

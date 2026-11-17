@@ -50,7 +50,8 @@
       <div class="feed-card-head">
         {{ partial "note-author.html" . }}
         <span class="feed-card-meta">
-          <span class="lvl" data-lvl="{{ .Params.lvl }}">{{ .Params.lvl }}</span>
+          {{ $lvl := cond (not .Params.source_url) .Params.lvl (partial "note-kind-key.html" .) }}
+          <span class="lvl" data-lvl="{{ $lvl }}">{{ $lvl }}</span>
           <span class="feed-card-dot" aria-hidden="true">·</span>
           <time class="dt-published feed-card-time" datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
             data-iso='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
