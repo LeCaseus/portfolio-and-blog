@@ -1,19 +1,30 @@
+const wants_html = request => (request.headers.get('Accept') || '').includes('text/html');
+
+// INFO: the origin is down, so every answer is a 503. Only page navigations get the html body.
+// API calls (guestbook, comments, reactions, webmentions) and the rss feed get plain text,
+// otherwise a client would try to parse html as json.
+const offline_response = request => {
+  const html = wants_html(request);
+  const headers = {
+    'Content-Type': html ? 'text/html;charset=UTF-8' : 'text/plain;charset=UTF-8',
+    'Retry-After': '300',
+    'Cache-Control': 'no-store'
+  };
+  if (html) headers['X-Robots-Tag'] = 'noindex';
+
+  return new Response(html ? OFFLINE_HTML : 'origin offline', { status: 503, headers });
+};
+
 export default {
-  async fetch(request, env) {
+  async fetch(request) {
+    if (new URL(request.url).pathname === '/__offline') return offline_response(request);
+
     try {
       const response = await fetch(request);
-      if (response.status >= 500) {
-        return new Response(OFFLINE_HTML, {
-          status: 200,
-          headers: { 'Content-Type': 'text/html;charset=UTF-8' }
-        });
-      }
-      return response;
+      if (response.status < 500) return response;
+      return offline_response(request);
     } catch {
-      return new Response(OFFLINE_HTML, {
-        status: 200,
-        headers: { 'Content-Type': 'text/html;charset=UTF-8' }
-      });
+      return offline_response(request);
     }
   }
 };
@@ -25,26 +36,34 @@ const OFFLINE_HTML = `
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chezter's Records — Offline</title>
+  <meta name="robots" content="noindex" />
+  <title>Chezter's Records | Offline</title>
   <meta name="description"
-    content="Site is currently offline. Chezter Vargas — Biomedical Engineer, Hobbyist C/C++, Tech Enthusiast." />
+    content="Site is currently offline. Chezter Vargas, Biomedical Engineer, Hobbyist C/C++, Tech Enthusiast." />
   <link rel="icon" href="/assets/favicons/16x16.ico" type="image/x-icon" />
+  <script>
+    (function () {
+      var stored = localStorage.getItem('cv.theme');
+      var theme = stored || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Fira+Code:wght@400;500&family=Silkscreen:wght@400;700&family=Press+Start+2P&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Silkscreen:wght@400;700&family=Press+Start+2P&display=swap");
 
     :root {
       --ink: #0c0d0c;
       --paper: #f3eee4;
       --paper_2: #ebe5d7;
-      --rule: rgba(12, 13, 12, .14);
-      --mute: rgba(12, 13, 12, .55);
-      --mute_2: rgba(12, 13, 12, .38);
-      --signal: oklch(0.62 0.16 145);
-      --signal_soft: oklch(0.62 0.16 145 / .14);
-      --warn: oklch(0.62 0.16 65);
-      --grid: rgba(12, 13, 12, .05);
-      --scanline: rgba(12, 13, 12, .05);
-      --serif_read: "Lora", "Times New Roman", serif;
+      --rule: rgba(12, 13, 12, 0.14);
+      --mute: rgba(12, 13, 12, 0.55);
+      --mute_2: rgba(12, 13, 12, 0.38);
+      --signal: #00873f;
+      --signal_soft: rgba(0, 135, 63, 0.16);
+      --warn: rgb(198, 109, 0);
+      --warn_soft: rgba(198, 109, 0, 0.16);
+      --grid: rgba(12, 13, 12, 0.05);
+      --scanline: rgba(12, 13, 12, 0.05);
       --mono: "Fira Code", ui-monospace, "JetBrains Mono", Menlo, monospace;
       --pixel: "Silkscreen", var(--mono);
       --pixel_display: "Press Start 2P", var(--pixel);
@@ -55,14 +74,15 @@ const OFFLINE_HTML = `
       --ink: #f0ece3;
       --paper: #0b0c0c;
       --paper_2: #131413;
-      --rule: rgba(240, 236, 227, .16);
-      --mute: rgba(240, 236, 227, .6);
-      --mute_2: rgba(240, 236, 227, .4);
-      --signal: oklch(0.78 0.17 145);
-      --signal_soft: oklch(0.78 0.17 145 / .18);
-      --warn: oklch(0.82 0.16 75);
-      --grid: rgba(240, 236, 227, .06);
-      --scanline: rgba(240, 236, 227, .06);
+      --rule: rgba(240, 236, 227, 0.16);
+      --mute: rgba(240, 236, 227, 0.6);
+      --mute_2: rgba(240, 236, 227, 0.4);
+      --signal: #00e875;
+      --signal_soft: rgba(0, 232, 117, 0.32);
+      --warn: rgb(255, 179, 48);
+      --warn_soft: rgba(255, 179, 48, 0.2);
+      --grid: rgba(240, 236, 227, 0.06);
+      --scanline: rgba(240, 236, 227, 0.06);
     }
 
     * { box-sizing: border-box; }
@@ -74,7 +94,9 @@ const OFFLINE_HTML = `
       font-family: var(--mono);
       font-size: 16px;
       line-height: 1.55;
+      font-feature-settings: "ss01", "cv11";
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     body {
@@ -83,11 +105,13 @@ const OFFLINE_HTML = `
         linear-gradient(var(--grid) 1px, transparent 1px) 0 0/100% 28px,
         var(--paper);
       background-attachment: fixed;
-      transition: background-color .35s ease, color .35s ease;
+      transition: background-color 0.35s ease, color 0.35s ease;
       overflow-x: hidden;
     }
 
-    /* INFO: crt overlay -- offline copy of styles.css version, non-animated */
+    a { color: inherit; text-decoration: none; }
+
+    /* INFO: crt overlay, static copy of the styles.css version (no flicker, no jitter) */
     .crt-overlay {
       position: fixed;
       inset: 0;
@@ -99,13 +123,13 @@ const OFFLINE_HTML = `
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, transparent 65%, rgba(0, 0, 0, .08) 95%, rgba(0, 0, 0, .2) 140%);
+      background: radial-gradient(ellipse at center, transparent 65%, rgba(0, 0, 0, 0.08) 95%, rgba(0, 0, 0, 0.2) 140%);
     }
     [data-theme="dark"] .crt-overlay::after {
-      background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, .12) 95%, rgba(0, 0, 0, .28) 140%);
+      background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.12) 95%, rgba(0, 0, 0, 0.28) 140%);
     }
 
-    /* INFO: dashboard shell -- grid layout (mirrors styles.css, single main section) */
+    /* INFO: dashboard shell, same grid as styles.css */
     body[data-shell="dashboard"] {
       height: 100dvh;
       overflow: hidden;
@@ -122,7 +146,7 @@ const OFFLINE_HTML = `
     body[data-shell="dashboard"] > .doc-strip { grid-area: doc; }
     body[data-shell="dashboard"] > .spec-col {
       grid-area: left;
-      border-right: 2px solid var(--rule);
+      border-right: 2px solid var(--warn);
       overflow-y: auto;
       min-height: 0;
     }
@@ -134,7 +158,7 @@ const OFFLINE_HTML = `
     }
     body[data-shell="dashboard"] > .nav-col {
       grid-area: right;
-      border-left: 2px solid var(--rule);
+      border-left: 2px solid var(--warn);
       overflow-y: auto;
       min-height: 0;
     }
@@ -146,7 +170,6 @@ const OFFLINE_HTML = `
       padding: 0 clamp(20px, 3vw, 48px);
     }
 
-    /* INFO: shell -- status header, offline state (grey dot, no pulse) */
     .status {
       position: sticky;
       top: 0;
@@ -158,10 +181,10 @@ const OFFLINE_HTML = `
       padding: 10px var(--pad);
       font-family: var(--mono);
       font-size: 13px;
-      letter-spacing: .04em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       color: var(--mute);
-      background: color-mix(in oklab, var(--paper) 88%, transparent);
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
       backdrop-filter: blur(10px);
       border-bottom: 6px double var(--warn);
     }
@@ -173,13 +196,12 @@ const OFFLINE_HTML = `
       background: var(--warn);
       margin-right: 8px;
       vertical-align: middle;
-      opacity: .8;
+      opacity: 0.8;
     }
-    .status .left { color: var(--warn); letter-spacing: .06em; }
-    .status .center { text-align: center; opacity: .8; }
+    .status .left { color: var(--warn); letter-spacing: 0.06em; }
+    .status .center { text-align: center; opacity: 0.8; }
     .status .right { display: flex; gap: 16px; align-items: center; }
 
-    /* INFO: shell -- theme switch (offline copy, functional) */
     .switch { --false: var(--warn); --true: var(--signal); display: inline-flex; flex-shrink: 0; }
     .switch .toggle {
       appearance: none;
@@ -188,7 +210,7 @@ const OFFLINE_HTML = `
       background-color: var(--paper);
       border: 2px solid var(--rule);
       position: relative;
-      border-radius: .2em;
+      border-radius: 0.2em;
       cursor: pointer;
       margin: 0;
     }
@@ -200,37 +222,36 @@ const OFFLINE_HTML = `
       transform: translate(-50%, -50%);
       position: absolute;
       top: 50%;
-      left: calc(1.5em / 2 + .25em);
+      left: calc(1.5em / 2 + 0.25em);
       background-color: var(--false);
-      border-radius: .2em;
-      transition: left .3s ease, background-color .3s ease;
+      border-radius: 0.2em;
+      transition: left 0.3s ease, background-color 0.3s ease;
     }
     .switch .toggle:checked::before {
       background-color: var(--true);
-      left: calc(100% - (1.5em / 2 + .25em));
+      left: calc(100% - (1.5em / 2 + 0.25em));
     }
 
     .col-label {
       font-family: var(--pixel);
       font-size: 10px;
-      letter-spacing: .14em;
+      letter-spacing: 0.14em;
       color: var(--warn);
       margin-bottom: 8px;
     }
 
-    /* INFO: shell -- doc strip, offline record */
     .doc-strip {
       display: grid;
       grid-template-columns: 1.3fr 1fr 1fr 1.5fr;
-      border-bottom: 2px solid var(--rule);
+      border-bottom: 2px solid var(--warn);
     }
-    .doc-field { padding: 9px 14px; border-right: 2px solid var(--rule); }
+    .doc-field { padding: 9px 14px; border-right: 2px solid var(--warn); }
     .doc-field:last-child { border-right: 0; }
     .doc-field .k {
       display: block;
       font-family: var(--pixel);
       font-size: 10px;
-      letter-spacing: .12em;
+      letter-spacing: 0.12em;
       color: var(--mute_2);
       margin-bottom: 5px;
     }
@@ -238,17 +259,16 @@ const OFFLINE_HTML = `
     .doc-field .v.warn { color: var(--warn); }
     .doc-field .v small { color: var(--mute); font-weight: 400; }
 
-    /* INFO: shell -- spec column, flatlined vitals */
     .spec-col { padding: 12px; display: flex; flex-direction: column; gap: 12px; }
     .vital-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-    .vital-chip { border: 2px solid var(--rule); padding: 24px 20px; background: var(--paper_2); }
+    .vital-chip { border: 2px solid var(--warn); padding: 24px 20px; background: var(--paper_2); }
     .vital-chip .k {
       display: flex;
       align-items: center;
       gap: 5px;
       font-family: var(--pixel);
       font-size: 9px;
-      letter-spacing: .08em;
+      letter-spacing: 0.08em;
       color: var(--mute);
       margin-bottom: 6px;
     }
@@ -266,30 +286,27 @@ const OFFLINE_HTML = `
     .barcode {
       height: 22px;
       background: repeating-linear-gradient(90deg, var(--mute_2) 0px, var(--mute_2) 2px, transparent 2px, transparent 3px);
-      opacity: .4;
+      opacity: 0.4;
     }
-    .barcode-label { font-family: var(--pixel); font-size: 9px; letter-spacing: .08em; color: var(--mute_2); margin-top: 5px; }
+    .barcode-label { font-family: var(--pixel); font-size: 9px; letter-spacing: 0.08em; color: var(--mute_2); margin-top: 5px; }
 
-    /* INFO: shell -- nav column, offline copy (links still resolve once origin returns) */
-    .nav-col { padding: 24px 18px; display: flex; flex-direction: column; gap: 4px; }
+    .nav-col { padding: 24px 18px; display: flex; flex-direction: column; gap: 8px; }
     .nav-chip {
       display: flex;
       align-items: baseline;
       gap: 8px;
       padding: 10px 14px;
       border: 2px solid transparent;
-      text-decoration: none;
-      transition: border-color .15s, background .15s;
     }
-    .nav-chip:hover { border-color: var(--mute_2); background: var(--signal_soft); }
-    .nav-chip .idx { font-family: var(--pixel); font-size: 10px; color: var(--mute_2); flex-shrink: 0; }
-    .nav-chip .lbl { font-family: var(--pixel); font-size: 12px; color: var(--mute); }
-    .nav-chip:hover .idx, .nav-chip:hover .lbl { color: var(--ink); }
-    .nav-branch { display: flex; flex-direction: column; gap: 2px; margin: 2px 0 6px; }
-    .nav-chip--child { padding-left: 10px; }
-    .branch-glyph { font-family: var(--mono); font-size: 11px; color: var(--mute_2); }
+    .nav-chip { opacity: 0.55; cursor: default; }
+    .nav-chip .idx { font-family: var(--pixel); font-size: 10px; letter-spacing: 0.04em; color: var(--mute_2); flex-shrink: 0; }
+    .nav-chip .lbl { font-family: var(--pixel); font-size: 12px; letter-spacing: 0.04em; color: var(--ink); }
+    .nav-chip--root .idx, .nav-chip--root .lbl { font-weight: 500; }
+    .nav-chip--child { padding-left: 34px; gap: 6px; }
+    .nav-branch { display: flex; flex-direction: column; gap: 4px; }
+    .branch-glyph { font-family: var(--mono); font-size: 11px; color: var(--mute_2); flex-shrink: 0; }
 
-    /* INFO: shell -- hud strip, flatlined ecg */
+    /* INFO: hud strip doubles as the site footer, ecg is flatlined */
     .hud-strip {
       border-top: 6px double var(--warn);
       display: grid;
@@ -297,24 +314,21 @@ const OFFLINE_HTML = `
     }
     .hud-side {
       padding: 10px 14px;
-      border-right: 2px solid var(--rule);
+      border-right: 2px solid var(--warn);
       display: flex;
       flex-direction: column;
       justify-content: center;
       gap: 3px;
     }
-    .hud-side-r { border-right: 0; border-left: 2px solid var(--rule); }
-    .hud-side .k { font-family: var(--pixel); font-size: 9px; letter-spacing: .1em; color: var(--mute_2); }
+    .hud-side-r { border-right: 0; border-left: 2px solid var(--warn); }
+    .hud-side .k { font-family: var(--pixel); font-size: 9px; letter-spacing: 0.1em; color: var(--mute_2); }
     .hud-side .v { font-family: var(--mono); font-size: 15px; color: var(--warn); font-weight: 600; }
-    .hud-strip .ecg { margin: 0; height: 64px; border: 0; }
 
-    /* INFO: shared -- ecg strip, flatlined (no animation, static center line) */
     .ecg {
-      margin: 56px 0 0;
+      margin: 0;
       position: relative;
-      height: 96px;
-      border-top: 2px solid var(--rule);
-      border-bottom: 2px solid var(--rule);
+      height: 64px;
+      border: 0;
       background:
         linear-gradient(to right, var(--rule) 1px, transparent 1px) 0 0/56px 100%,
         linear-gradient(to bottom, var(--rule) 1px, transparent 1px) 0 0/100% 24px;
@@ -328,18 +342,17 @@ const OFFLINE_HTML = `
       top: 8px;
       font-family: var(--mono);
       font-size: 12.5px;
-      letter-spacing: .1em;
+      letter-spacing: 0.1em;
       color: var(--mute);
       text-transform: uppercase;
     }
-    .ecg .ecg-readout b { color: var(--warn); font-weight: 500; }
+    .ecg .ecg-readout strong { color: var(--warn); font-weight: 500; }
 
-    /* INFO: page -- hero intro, single offline announcement section */
     .hero-intro { padding: 72px 0 56px; }
     .name-eyebrow {
       font-family: var(--pixel);
       font-size: 11px;
-      letter-spacing: .16em;
+      letter-spacing: 0.16em;
       color: var(--mute_2);
       margin-bottom: 16px;
     }
@@ -351,7 +364,7 @@ const OFFLINE_HTML = `
       line-height: 1.6;
       margin: 0;
     }
-    .hero-intro h1 .flat { color: var(--warn); }
+    .hero-intro h1 .flat { display: inline-block; color: var(--warn); }
     .records-cursor { display: inline-block; animation: blink 1.05s steps(24) infinite; }
     @keyframes blink { 50% { opacity: 0; } }
 
@@ -364,7 +377,7 @@ const OFFLINE_HTML = `
       padding: 28px 32px;
       text-wrap: pretty;
     }
-    .hero-intro .prose .col-label { margin-bottom: 14px; color: var(--warn); }
+    .hero-intro .prose .col-label { margin-bottom: 14px; }
     .hero-intro .prose .lead {
       font-family: var(--pixel);
       font-weight: 700;
@@ -374,71 +387,83 @@ const OFFLINE_HTML = `
       margin-bottom: 1.4em;
       color: var(--ink);
     }
-    .hero-intro .prose p { margin: 0 0 .85em; }
+    .hero-intro .prose p { margin: 0 0 0.85em; }
     .hero-intro .prose p:last-child { margin-bottom: 0; }
+    .hero-intro .prose em { color: var(--warn); font-style: italic; }
+    .hero-intro .prose code {
+      font-family: var(--mono);
+      font-size: 0.92em;
+      color: var(--warn);
+      background: var(--paper);
+      border: 2px solid var(--rule);
+      border-radius: 3px;
+      padding: 1px 6px;
+    }
     .hero-intro .prose a {
       color: inherit;
-      text-decoration: none;
       background-image: linear-gradient(var(--warn), var(--warn));
       background-size: 100% 1px;
       background-position: 0 95%;
       background-repeat: no-repeat;
-      padding-bottom: .06em;
-      transition: color .25s;
+      padding-bottom: 0.06em;
+      transition: color 0.25s;
     }
     .hero-intro .prose a:hover { color: var(--warn); }
 
+    .retry-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 1.2em; }
+    .retry-button {
+      appearance: none;
+      border: 2px solid var(--warn);
+      background: transparent;
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 12.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .retry-button:hover { background: var(--warn); color: var(--paper); }
+    .retry-note { font-size: 12.5px; letter-spacing: 0.04em; color: var(--mute); }
+
     :focus-visible { outline: 2px solid var(--warn); outline-offset: 3px; border-radius: 2px; }
 
-    /* INFO: shell -- mobile hamburger + full-screen nav overlay */
-    .mobile-nav-toggle { display: none; }
-    .comic-button {
-      display: inline-block;
-      padding: 8px 14px;
-      font-size: 18px;
-      font-weight: bold;
-      text-align: center;
-      text-decoration: none;
-      color: var(--paper);
-      background-color: var(--warn);
-      border: 2px solid var(--warn);
-      box-shadow: 3px 3px 0 var(--signal_soft);
-      cursor: pointer;
-    }
-    .comic-button input { display: none; }
-
     @media (max-width: 1024px) {
-      body[data-shell="dashboard"] {
-        height: auto;
-        overflow: visible;
-        display: block;
-      }
+      body[data-shell="dashboard"] { height: auto; overflow: visible; display: block; }
       body[data-shell="dashboard"] > .spec-col,
       body[data-shell="dashboard"] > .app-main,
       body[data-shell="dashboard"] > .nav-col { overflow: visible; border: 0; }
-      .spec-col { border-top: 2px solid var(--rule); border-bottom: 2px solid var(--rule); }
-      .nav-col { border-top: 2px solid var(--rule); }
+      body[data-shell="dashboard"] > .spec-col { border-top: 2px solid var(--warn); border-bottom: 2px solid var(--warn); }
+      body[data-shell="dashboard"] > .nav-col { border-top: 2px solid var(--warn); }
       .doc-strip { grid-template-columns: 1fr 1fr; }
-      .doc-field:nth-child(3), .doc-field:nth-child(4) { border-top: 2px solid var(--rule); }
+      .doc-field:nth-child(2n) { border-right: 0; }
+      .doc-field:nth-child(3), .doc-field:nth-child(4) { border-top: 2px solid var(--warn); }
       .hud-strip { grid-template-columns: 1fr; }
-      .hud-side { border: 0 !important; border-top: 2px solid var(--rule) !important; flex-direction: row; justify-content: space-between; align-items: center; }
+      .hud-side {
+        border: 0 !important;
+        border-top: 2px solid var(--warn) !important;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
     }
 
-    @media (max-width: 640px), (max-width: 1024px) and (orientation: portrait) {
-      .doc-strip { grid-template-columns: 1fr; }
-      .doc-field { border-right: 0; border-top: 2px solid var(--rule); }
-      .doc-field:first-child { border-top: 0; }
-      .hero-intro h1 { font-size: clamp(24px, 9vw, 36px); }
-      .status { display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; font-size: 12px; gap: 8px; }
+    /* INFO: same breakpoints as mobile.css, doc strip, vitals and the dead channel list are hidden */
+    @media (max-width: 640px), (max-width: 1024px) and (orientation: portrait), (max-width: 1024px) and (max-height: 600px) {
+      .doc-strip, .spec-col, .nav-col { display: none; }
+      .hero-intro h1 { font-size: clamp(20px, 7.5vw, 56px); white-space: nowrap; }
+      .status { display: flex; justify-content: space-between; padding: 10px 18px; font-size: 12px; gap: 8px; }
       .status .left { white-space: nowrap; overflow: hidden; min-width: 0; max-width: 55vw; }
       .status .center { display: none; }
-      main { padding: 0 18px; }
+      .status .right { flex-shrink: 0; }
+      .status .right > span { display: none; }
+      .app-main { padding: 0 18px; }
       .hero-intro { padding: 12px 0 32px; }
-      .ecg { height: 64px; margin-top: 0; }
       .hero-intro .prose { margin-top: 20px; font-size: 15px; padding: 18px 16px; }
       .hero-intro .prose .lead { font-size: clamp(15px, 4.5vw, 18px); }
       .hud-strip {
-        border-top: 6px double var(--warn);
         position: fixed;
         left: 0;
         right: 0;
@@ -447,30 +472,7 @@ const OFFLINE_HTML = `
         background: var(--paper);
       }
       .hud-side { display: none; }
-      .hud-strip .ecg { margin: 0; }
       body[data-shell="dashboard"] { padding-bottom: 64px; }
-      .mobile-nav-toggle { display: block; position: fixed; left: 18px; bottom: 78px; z-index: 70; }
-      body:has(#mobile-nav-check:checked) { overflow: hidden; }
-      .nav-col {
-        position: fixed;
-        inset: 0;
-        z-index: 65;
-        background: var(--paper);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 4px;
-        padding: 24px;
-        border: 0;
-        overflow-y: auto;
-        transform: translateY(12px);
-        opacity: 0;
-        pointer-events: none;
-        transition: transform 350ms cubic-bezier(.4,0,.2,1), opacity 300ms ease;
-      }
-      body:has(#mobile-nav-check:checked) .nav-col { transform: translateY(0); opacity: 1; pointer-events: auto; }
-      .nav-chip { padding: 16px 18px; }
-      .nav-chip .lbl { font-size: 16px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -486,7 +488,7 @@ const OFFLINE_HTML = `
     <div class="left">
       <span class="dot" aria-hidden="true"></span>ELECTRODES DISCONNECTED
     </div>
-    <div class="center">SIGNAL · LOST · LEAD II · — HZ</div>
+    <div class="center">SIGNAL · LOST · LEAD II · -- HZ</div>
     <div class="right">
       <span>UTC <span data-clock>00:00:00</span></span>
       <label class="switch" aria-label="Toggle theme">
@@ -495,7 +497,6 @@ const OFFLINE_HTML = `
     </div>
   </header>
 
-  <input type="checkbox" id="docstrip-toggle" class="mobile-dropdown-toggle" style="display:none" />
   <div class="doc-strip">
     <div class="doc-field">
       <span class="k">SUBJECT</span>
@@ -507,7 +508,7 @@ const OFFLINE_HTML = `
     </div>
     <div class="doc-field">
       <span class="k">DOCUMENT ID</span>
-      <span class="v">—</span>
+      <span class="v">CV-2026-0x0000</span>
     </div>
     <div class="doc-field">
       <span class="k">ORIGIN</span>
@@ -517,25 +518,25 @@ const OFFLINE_HTML = `
 
   <aside class="spec-col" aria-label="Vitals">
     <div class="now-block">
-      <label class="col-label">// SUBJECT STATUS</label>
+      <div class="col-label">// SUBJECT STATUS</div>
       <div class="vital-grid">
         <div class="vital-chip">
-          <div class="k"><i></i>STATUS</div>
+          <div class="k"><i aria-hidden="true"></i>STATUS</div>
           <div class="v">OFFLINE</div>
-          <div class="bar"><i style="--fill:0%"></i></div>
+          <div class="bar"><i></i></div>
         </div>
         <div class="vital-chip">
-          <div class="k"><i></i>SERVER</div>
+          <div class="k"><i aria-hidden="true"></i>SERVER</div>
           <div class="v">UNREACHABLE</div>
         </div>
         <div class="vital-chip">
-          <div class="k"><i></i>LAST SYNC</div>
-          <div class="v">UNKNOWN</div>
+          <div class="k"><i aria-hidden="true"></i>SIGNAL</div>
+          <div class="v">NO SIGNAL</div>
+          <div class="bar"><i></i></div>
         </div>
         <div class="vital-chip">
-          <div class="k"><i></i>SIGNAL</div>
-          <div class="v">NO SIGNAL</div>
-          <div class="bar"><i style="--fill:0%"></i></div>
+          <div class="k"><i aria-hidden="true"></i>AUTO-RETRY</div>
+          <div class="v">EVERY 30 SEC</div>
         </div>
       </div>
     </div>
@@ -550,58 +551,67 @@ const OFFLINE_HTML = `
       <div class="name-eyebrow">0x0000 · <span>ELECTRODES DISCONNECTED</span> · lead II · no carrier</div>
       <h1>
         CHEZTER'S<br />
-        <span class="flat">RECORDS<span class="records-cursor">_</span></span>
+        <span class="flat">OFFLINE<span class="records-cursor">_</span></span>
       </h1>
       <div class="prose">
         <div class="col-label">// TX/RX BUFFER</div>
-        <span class="lead">if you're seeing this, my server is down.</span>
-        <p>hmmm... my laptop is probably sleeping. this site is fully self-hosted on my own hardware, so
-          there's no fallback host to fail over to — just me, waiting for it to wake back up.</p>
-        <p>the channels on the right still point where they should. once the origin answers again, they'll
-          load normally. check back later.</p>
+        <span class="lead">Ahh... Hello there? Well, this is awkward...</span>
+        <p>// If you are seeing this page, that means my server has gone into a coma.</p>
+        <p>// If you don't already know, this website, along with the homelab behind it, is entirely self-hosted on an
+          old laptop turned Fedora server that I have plugged in somewhere in my bedroom.</p>
+        <p>// If you want to leave me a message, or check up on me, feel free to contact me at
+          <code>records [at] cheztervargas [dot] com</code>.</p>
+        <p>// I apologise for the inconvenience, bots and all that.</p>
+        <div class="retry-row">
+          <button type="button" class="retry-button" data-retry>retry now</button>
+          <span class="retry-note">// last checked <span data-last-check>just now</span></span>
+        </div>
       </div>
     </section>
   </main>
 
-  <nav class="nav-col" aria-label="Channels">
-    <div class="col-label">// CHANNELS</div>
-    <a class="nav-chip nav-chip--root" href="/">
+  <nav class="nav-col" aria-hidden="true">
+    <div class="col-label">// CHANNELS (NO CARRIER)</div>
+    <span class="nav-chip nav-chip--root">
       <span class="idx">CH-01</span><span class="lbl">HOME/</span>
-    </a>
+    </span>
     <div class="nav-branch">
-      <a class="nav-chip nav-chip--child" href="/blog.html">
+      <span class="nav-chip nav-chip--child">
         <span class="branch-glyph">├──</span><span class="idx">CH-02</span><span class="lbl">BLOG/</span>
-      </a>
-      <a class="nav-chip nav-chip--child" href="/#notes">
+      </span>
+      <span class="nav-chip nav-chip--child">
         <span class="branch-glyph">├──</span><span class="idx">CH-03</span><span class="lbl">NOTES/</span>
-      </a>
-      <a class="nav-chip nav-chip--child" href="/guestbook.html">
+      </span>
+      <span class="nav-chip nav-chip--child">
         <span class="branch-glyph">├──</span><span class="idx">CH-04</span><span class="lbl">GUESTBOOK/</span>
-      </a>
-      <a class="nav-chip nav-chip--child" href="/#webrings">
+      </span>
+      <span class="nav-chip nav-chip--child">
         <span class="branch-glyph">└──</span><span class="idx">CH-05</span><span class="lbl">WEBRINGS/</span>
-      </a>
+      </span>
     </div>
-    <a class="nav-chip nav-chip--root" href="/portfolio.html">
+    <span class="nav-chip nav-chip--root">
       <span class="idx">CH-06</span><span class="lbl">PORTFOLIO/</span>
-    </a>
+    </span>
     <div class="nav-branch">
-      <a class="nav-chip nav-chip--child" href="/portfolio.html#projects">
+      <span class="nav-chip nav-chip--child">
         <span class="branch-glyph">├──</span><span class="idx">CH-07</span><span class="lbl">PROJECTS/</span>
-      </a>
-      <a class="nav-chip nav-chip--child" href="/portfolio.html#about">
+      </span>
+      <span class="nav-chip nav-chip--child">
         <span class="branch-glyph">├──</span><span class="idx">CH-08</span><span class="lbl">ABOUT/</span>
-      </a>
-      <a class="nav-chip nav-chip--child" href="/portfolio.html#contact">
+      </span>
+      <span class="nav-chip nav-chip--child">
         <span class="branch-glyph">└──</span><span class="idx">CH-09</span><span class="lbl">CONTACT/</span>
-      </a>
+      </span>
     </div>
-    <a class="nav-chip nav-chip--root" href="/sitemap.html">
-      <span class="idx">CH-10</span><span class="lbl">SITEMAP/</span>
-    </a>
-    <a class="nav-chip nav-chip--root" href="/privacy.html">
-      <span class="idx">CH-11</span><span class="lbl">PRIVACY/</span>
-    </a>
+    <span class="nav-chip nav-chip--root">
+      <span class="idx">CH-10</span><span class="lbl">BOOKMARKS/</span>
+    </span>
+    <span class="nav-chip nav-chip--root">
+      <span class="idx">CH-11</span><span class="lbl">SITEMAP/</span>
+    </span>
+    <span class="nav-chip nav-chip--root">
+      <span class="idx">CH-12</span><span class="lbl">PRIVACY/</span>
+    </span>
   </nav>
 
   <div class="hud-strip">
@@ -614,54 +624,47 @@ const OFFLINE_HTML = `
         <path d="M0,53 L1200,53" />
       </svg>
       <div class="ecg-readout">
-        <b>HR</b> — BPM &nbsp;·&nbsp; NO SIGNAL
+        <strong>HR</strong> -- BPM &nbsp;·&nbsp; NO SIGNAL
       </div>
     </div>
     <div class="hud-side hud-side-r">
       <span class="k">BUILD</span>
-      <span class="v">OFFLINE</span>
+      <span class="v">v3.5 DOWN</span>
     </div>
   </div>
 
-  <div class="mobile-nav-toggle">
-    <label class="comic-button hamburger-btn" for="mobile-nav-check">
-      <input type="checkbox" id="mobile-nav-check" />
-      <span class="hamburger-btn-icon" aria-hidden="true">&#9776;</span>
-    </label>
-  </div>
-
   <script>
-    // Self-contained -- no /shared.js, /main.js, or /styles.css imports.
-    // If this page is being served, the origin those live on may be unreachable.
-    const root = document.documentElement;
-    const stored_theme = localStorage.getItem('cv.theme');
-    const prefers_dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initial_theme = stored_theme || (prefers_dark ? 'dark' : 'light');
-    root.setAttribute('data-theme', initial_theme);
-
+    // Self-contained, no /shared.js or /styles.css imports. If this page is being
+    // served, the origin those live on is probably unreachable.
     const theme_checkbox = document.querySelector('[data-theme-toggle]');
-    theme_checkbox.checked = initial_theme === 'dark';
+    theme_checkbox.checked = document.documentElement.getAttribute('data-theme') === 'dark';
     theme_checkbox.addEventListener('change', () => {
       const next_theme = theme_checkbox.checked ? 'dark' : 'light';
-      root.setAttribute('data-theme', next_theme);
+      document.documentElement.setAttribute('data-theme', next_theme);
       localStorage.setItem('cv.theme', next_theme);
     });
 
     const pad = number => String(number).padStart(2, '0');
     const tick_clock = () => {
       const now = new Date();
-      const formatted = \`\${pad(now.getUTCHours())}:\${pad(now.getUTCMinutes())}:\${pad(now.getUTCSeconds())}\`;
+      const formatted = pad(now.getUTCHours()) + ':' + pad(now.getUTCMinutes()) + ':' + pad(now.getUTCSeconds());
       document.querySelectorAll('[data-clock]').forEach(el => el.textContent = formatted);
     };
     tick_clock();
     setInterval(tick_clock, 1000);
 
-    const mobile_toggle = document.getElementById('mobile-nav-check');
-    if (mobile_toggle) {
-      document.querySelectorAll('.nav-col .nav-chip').forEach(link => {
-        link.addEventListener('click', () => { mobile_toggle.checked = false; });
-      });
-    }
+    // The worker answers non-html requests with a 503 while the origin is down,
+    // so a 2xx here means the real site is back.
+    const last_check_el = document.querySelector('[data-last-check]');
+    const probe_origin = async () => {
+      try {
+        const response = await fetch('/api/messages', { cache: 'no-store' });
+        if (response.ok) location.reload();
+      } catch {}
+      last_check_el.textContent = pad(new Date().getUTCHours()) + ':' + pad(new Date().getUTCMinutes()) + ' UTC';
+    };
+    if (location.pathname !== '/__offline') setInterval(probe_origin, 30000);
+    document.querySelector('[data-retry]').addEventListener('click', () => location.reload());
   </script>
 
 </body>
