@@ -58,8 +58,8 @@ export function init_typewriter() {
   tick();
 }
 
-export function init_specimen_viewers(model_url, use_draco) {
-  const wrappers = document.querySelectorAll('[data-specimen-viewer]');
+export function init_specimen_viewers(model_url, use_draco, selector = '[data-specimen-viewer]') {
+  const wrappers = document.querySelectorAll(selector);
   if (!wrappers.length) return;
 
   const observer = new IntersectionObserver(entries => {

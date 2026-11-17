@@ -1271,6 +1271,13 @@ section:first-of-type { border-top: 0; }
   align-items: start;
   margin-top: 28px;
 }
+.project-block--flip {
+  @media (min-width: 1025px) {
+    grid-template-columns: 1.3fr minmax(260px, 1fr);
+
+    & .project-viewer-col { order: 2; }
+  }
+}
 .specimen-viewer {
   position: relative;
   aspect-ratio: 4 / 3;

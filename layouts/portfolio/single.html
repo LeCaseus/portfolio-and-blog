@@ -21,7 +21,7 @@
     </p>
     <p>
       // Do you prefer a static document? grab my formal
-      <a href="/assets/CVargas_CV_ATS.pdf" target="_blank" rel="noopener"
+      <a href="/assets/CVargas_CV.pdf" target="_blank" rel="noopener"
         data-umami-event="cv-download">CVargas_CV.pdf</a>
       instead.
     </p>
@@ -41,7 +41,7 @@
 
   <article class="project-block">
     <div class="project-viewer-col">
-      <div class="specimen-viewer" data-specimen-viewer>
+      <div class="specimen-viewer" data-specimen-viewer="massager">
         <canvas></canvas>
         <span class="specimen-viewer-badge">MASSAGER.PROTOTYPE</span>
       </div>
@@ -81,9 +81,52 @@
     </div>
   </article>
 
+  <article class="project-block project-block--flip">
+    <div class="project-viewer-col">
+      <div class="specimen-viewer" data-specimen-viewer="laptop">
+        <canvas></canvas>
+        <span class="specimen-viewer-badge">FOLIO.9480M</span>
+      </div>
+    </div>
+    <div class="project-info-col">
+      <div class="project-info-head">
+        <span class="status-pill" data-s="active">LIVE</span>
+        <h3 class="project-ttl">home<em>lab</em></h3>
+      </div>
+      <p class="project-desc">
+        Home server on a repurposed HP EliteBook Folio 9480m, running this website and my everyday
+        self-hosted services: Navidrome, Miniflux, Beszel, Umami and more private services.<br />
+        // Personal project, 2026-present
+      </p>
+      <div class="project-stats">
+        <div class="vital-chip">
+          <div class="k"><i aria-hidden="true"></i> HARDWARE</div>
+          <div class="v">2 cores · 4 GiB</div>
+        </div>
+        <div class="vital-chip vital-chip--cyan">
+          <div class="k"><i aria-hidden="true"></i> SERVICES</div>
+          <div class="v">12+ running</div>
+        </div>
+        <div class="vital-chip vital-chip--violet">
+          <div class="k"><i aria-hidden="true"></i> BACKUPS</div>
+          <div class="v">3-2-1 · nightly</div>
+        </div>
+        <div class="vital-chip vital-chip--yellow">
+          <div class="k"><i aria-hidden="true"></i> INGRESS</div>
+          <div class="v">Tunnel + Access</div>
+        </div>
+      </div>
+      <p class="project-desc">
+        Platform: Linux, podman quadlets under systemd, Caddy, firewalld, static addressing. Traffic enters through
+        a Cloudflare Tunnel into Caddy, with Cloudflare Access gating private services and CrowdSec watching for abuse.
+        Maintenance: restic backups to an external drive and OneDrive on nightly timers, a database dump job, and a
+        notifier and moderation tool for the site's webmentions, guestbook entries and comments.
+      </p>
+    </div>
+  </article>
+
   <div class="project-note">
-    // this is my only project for now. if you want to poke around, my linux dotfiles and this
-    website's source codes are on
+    // more specimens coming soon. If you want to poke around, my linux dotfiles and this website's source codes are on
     <a href="https://github.com/LeCaseus" target="_blank" rel="noopener" data-umami-event="outbound-link"
       data-umami-event-target="github-profile">github</a>
   </div>

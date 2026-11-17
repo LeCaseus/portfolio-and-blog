@@ -6,4 +6,5 @@ start_clock();
 init_mobile_nav();
 init_typewriter();
 
-init_specimen_viewers('/assets/thesis_massager.glb', false);
+init_specimen_viewers('/assets/thesis_massager.glb', false, '[data-specimen-viewer="massager"]');
+init_specimen_viewers('/assets/generic_laptop.glb', false, '[data-specimen-viewer="laptop"]');
