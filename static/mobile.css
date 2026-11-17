@@ -15,7 +15,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 18px;
-  font-size: 12px;
+  font-size: var(--text_sm);
   gap: 8px;
 }
 .status .left {
@@ -39,7 +39,7 @@
 }
 .channel {
   top: 16px;
-  font-size: 11px;
+  font-size: var(--text_xs);
   letter-spacing: 0.1em;
   gap: 8px;
 }
@@ -65,7 +65,7 @@ section {
 
 .hero-intro .prose {
   margin-top: 20px;
-  font-size: 15px;
+  font-size: var(--text_md);
   padding: 18px 16px;
 }
 .hero-intro .prose .lead {
@@ -95,10 +95,10 @@ section {
   padding: 12px 14px;
 }
 .gb-tui-name {
-  font-size: 10px;
+  font-size: var(--text_xs);
 }
 .gb-tui-msg {
-  font-size: 12.5px;
+  font-size: var(--text_sm);
 }
 .gb-tui-footer {
   gap: 10px;
@@ -112,7 +112,7 @@ section {
   display: flex;
   justify-content: space-between;
   padding: 8px 14px;
-  font-size: 11.5px;
+  font-size: var(--text_xs);
 }
 .log .log-bar > div:last-child {
   display: none;
@@ -121,7 +121,7 @@ section {
   grid-template-columns: 1fr;
   gap: 6px;
   padding: 12px 14px;
-  font-size: 14px;
+  font-size: var(--text_sm);
 }
 .entry-row .ts,
 .entry-row .lvl {
@@ -135,13 +135,13 @@ section {
   overflow: hidden;
 }
 .log .log-foot {
-  font-size: 11.5px;
+  font-size: var(--text_xs);
   padding: 8px 14px;
 }
 
 .contact .term {
   padding: 20px 16px;
-  font-size: 15px;
+  font-size: var(--text_md);
   line-height: 1.8;
   word-break: break-word;
 }
@@ -167,7 +167,7 @@ section {
 }
 .reader .meta {
   gap: 10px;
-  font-size: 11px;
+  font-size: var(--text_xs);
 }
 .reader .meta .tag,
 .reader .meta .tag ~ .dot {
@@ -177,47 +177,48 @@ section {
   margin-top: 16px;
 }
 
-.hud-strip {
-  border-top: 6px double var(--signal);
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 50;
-  background: var(--paper);
-}
-
 .hud-side {
   display: none;
 }
 
+.hud-strip {
+  display: flex;
+}
+
 .hud-strip .ecg {
+  flex: 1;
   margin: 0;
 }
 
 body[data-shell="dashboard"] {
-  padding-bottom: 64px;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+body[data-shell="dashboard"] > .app-main {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .mobile-nav-toggle {
-  display: block;
-  position: fixed;
-  left: 18px;
-  bottom: 78px;
+  display: flex;
+  position: relative;
   z-index: 70;
 }
 
 .comic-button {
-  display: inline-block;
-  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
   font-size: 18px;
   font-weight: bold;
   text-align: center;
   text-decoration: none;
   color: var(--paper);
   background-color: var(--signal);
-  border: 2px solid var(--signal);
-  box-shadow: 3px 3px 0 var(--signal_soft);
+  border: 0;
   cursor: pointer;
 }
 
@@ -227,9 +228,7 @@ body[data-shell="dashboard"] {
 
 .hamburger-btn:has(input:checked) {
   background-color: var(--warn);
-  border-color: var(--warn);
   color: var(--paper);
-  box-shadow: 3px 3px 0 var(--signal_soft);
 }
 
 body:has(#mobile-nav-check:checked) {
@@ -357,8 +356,8 @@ body[data-shell="dashboard"] > .spec-col--blog {
   border: 2px solid var(--signal);
   background: var(--paper_2);
   color: var(--ink);
-  font-family: var(--pixel);
-  font-size: 12px;
+  font-family: var(--mono);
+  font-size: var(--text_sm);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   border-radius: 2px;
@@ -376,7 +375,7 @@ body[data-shell="dashboard"] > .spec-col--blog {
   align-items: center;
   justify-content: center;
   padding: 8px 4px;
-  font-size: 11px;
+  font-size: var(--text_xs);
   letter-spacing: 0.02em;
   white-space: nowrap;
 }
@@ -386,5 +385,5 @@ body[data-shell="dashboard"] > .spec-col--blog {
 }
 .site-links--external .path::after {
   content: "↗";
-  font-size: 15px;
+  font-size: var(--text_md);
 }

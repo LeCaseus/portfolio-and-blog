@@ -1,21 +1,17 @@
 body[data-shell="dashboard"] {
   height: auto;
   overflow: visible;
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 body[data-shell="dashboard"] > .spec-col {
   overflow: visible;
-  border: 0;
-  border-top: 2px solid var(--signal);
-  border-bottom: 2px solid var(--signal);
 }
 body[data-shell="dashboard"] > .app-main {
   overflow: visible;
 }
 body[data-shell="dashboard"] > .nav-col {
   overflow: visible;
-  border: 0;
-  border-top: 2px solid var(--signal);
 }
 body[data-shell="dashboard"] > .hud-strip {
   overflow: visible;
