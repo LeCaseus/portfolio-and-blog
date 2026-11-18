@@ -3045,7 +3045,6 @@ button.blog-tag-chip:hover {
 .entry-footer {
   margin: 48px 0 0;
   padding-top: 20px;
-  border-top: 2px dashed var(--signal);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -3054,6 +3053,27 @@ button.blog-tag-chip:hover {
   font-size: var(--text_sm);
   letter-spacing: 0.04em;
   color: var(--mute);
+}
+
+#comments {
+  & .gb-entries {
+    margin: 0;
+  }
+  & .gb-entry {
+    padding: 14px 18px;
+    border-top: 0;
+    border-bottom: 2px dotted var(--rule);
+  }
+  & .doc-empty {
+    padding-inline: 18px;
+  }
+  & .gb-form {
+    margin: 0;
+    padding: 18px;
+  }
+  & .doc-prose {
+    margin-top: var(--space_2);
+  }
 }
 
 .entry-footer a {
