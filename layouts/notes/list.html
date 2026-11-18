@@ -1,7 +1,7 @@
 {{ define "main" }}
 
-<section class="hero-intro" id="top" data-screen-label="03 Notes">
-  <div class="name-eyebrow">0x0003 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
+<section class="hero-intro" id="top" data-screen-label="04 Notes">
+  <div class="name-eyebrow">0x0004 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
   <h1>CHEZTER'S<br /><span class="alive">MICRO-LOGS<span class="records-cursor">_</span></span></h1>
   <div class="prose">
     <div class="col-label">BIO</div>
@@ -15,7 +15,7 @@
 </section>
 
 <section class="doc-section" id="feed">
-  <div class="channel"><span class="line"></span><span>CH-03.1</span><strong>LIVE&nbsp;FEED</strong></div>
+  <div class="channel"><span class="line"></span><span>CH-04.1</span><strong>LIVE&nbsp;FEED</strong></div>
   {{ $notes := (where .Site.RegularPages "Section" "notes").ByDate.Reverse }}
   {{ $allTags := slice }}
   {{- range $notes }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end -}}

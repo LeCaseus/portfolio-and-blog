@@ -1,26 +1,32 @@
 {{ define "main" }}
 
-<section class="hero-intro" id="top" data-screen-label="11 Sitemap">
-  <div class="name-eyebrow">0x0011 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
+<section class="hero-intro" id="top" data-screen-label="09 Sitemap">
+  <div class="name-eyebrow">0x0009 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
   <h1>EVERY&nbsp;PAGE<br /><span class="alive">I&nbsp;HAVE<span class="records-cursor">_</span></span></h1>
+  <div class="doc-flag">
+    <strong>RECORD LOG //</strong> Take this. It's a running record of everything around here. Not sure where to go?
+    Take a look through the available pages and find your way around.
+  </div>
 </section>
 
 <section class="doc-section" id="pages">
-  <div class="channel"><span class="line"></span><span>CH-11.1</span><strong>PAGES</strong></div>
+  <div class="channel"><span class="line"></span><span>CH-09.1</span><strong>PAGES</strong></div>
   <ul class="site-links site-links--external">
     <li><a href="/"><span>home</span><span class="path">/</span></a></li>
+    <li><a href="/about.html"><span>about</span><span class="path">/about.html</span></a></li>
     <li><a href="/blog.html"><span>readings log</span><span class="path">/blog.html</span></a></li>
     <li><a href="/notes.html"><span>micro-logs</span><span class="path">/notes.html</span></a></li>
-    <li><a href="/guestbook.html"><span>guestbook</span><span class="path">/guestbook.html</span></a></li>
-    <li><a href="/portfolio.html"><span>laboratory</span><span class="path">/portfolio.html</span></a></li>
+    <li><a href="/projects.html"><span>projects</span><span class="path">/projects.html</span></a></li>
     <li><a href="/bookmarks.html"><span>bookmarks</span><span class="path">/bookmarks.html</span></a></li>
+    <li><a href="/guestbook.html"><span>guestbook</span><span class="path">/guestbook.html</span></a></li>
+    <li><a href="/contact.html"><span>contact</span><span class="path">/contact.html</span></a></li>
     <li><a href="/sitemap.html"><span>sitemap</span><span class="path">/sitemap.html</span></a></li>
     <li><a href="/privacy.html"><span>privacy policy</span><span class="path">/privacy.html</span></a></li>
   </ul>
 </section>
 
 <section class="doc-section" id="readings">
-  <div class="channel"><span class="line"></span><span>CH-11.2</span><strong>READINGS</strong></div>
+  <div class="channel"><span class="line"></span><span>CH-09.2</span><strong>READINGS</strong></div>
   <ul class="site-links site-links--external">
     {{ range (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
     <li><a href="{{ .RelPermalink }}"><span>{{ .Title }}</span><span class="path">{{ .RelPermalink }}</span></a></li>
