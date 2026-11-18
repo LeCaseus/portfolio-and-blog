@@ -1,4 +1,4 @@
-import { init_hero_ecg, init_theme_toggle, start_clock, init_mobile_nav, init_typewriter, init_specimen_viewers, format_relative_time, escape_html } from '/shared.js';
+import { init_hero_ecg, init_theme_toggle, start_clock, init_mobile_nav, init_typewriter, init_specimen_viewers, init_relative_timestamps, escape_html } from '/shared.js';
 
 init_hero_ecg();
 init_theme_toggle();
@@ -100,4 +100,4 @@ async function load_notes() {
 init_specimen_viewers('/assets/exploded-skull.glb', true);
 
 load_guestbook_teaser();
-load_notes();
+init_relative_timestamps();

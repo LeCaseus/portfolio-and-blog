@@ -1,10 +1,10 @@
 {{ define "main" }}
 
-<section class="hero-intro" id="top" data-screen-label="03 Notes">
-  <div class="name-eyebrow">0x0003 · <span>ELECTRODES CONNECTED</span> · lead II</div>
+<section class="hero-intro" id="top" data-screen-label="04 Notes">
+  <div class="name-eyebrow">0x0004 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
   <h1>CHEZTER'S<br /><span class="alive">MICRO-LOGS<span class="records-cursor">_</span></span></h1>
   <div class="prose">
-    <div class="col-label">BIO</div>
+    <div class="col-label">// RECORD LOG</div>
     <p>
       Welcome to my running record of shorter thoughts, passing observations, and things encountered elsewhere on the
       web. Entries include original notes and webmentions of things liked, bookmarked, replied to, or quoted. This is an
@@ -15,7 +15,7 @@
 </section>
 
 <section class="doc-section" id="feed">
-  <div class="channel"><span class="line"></span><span>CH-03.1</span><strong>LIVE&nbsp;FEED</strong></div>
+  <div class="channel"><span class="line"></span><span>CH-04.1</span><strong>LIVE&nbsp;FEED</strong></div>
   {{ $notes := (where .Site.RegularPages "Section" "notes").ByDate.Reverse }}
   {{ $allTags := slice }}
   {{- range $notes }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end -}}
@@ -50,7 +50,8 @@
       <div class="feed-card-head">
         {{ partial "note-author.html" . }}
         <span class="feed-card-meta">
-          <span class="lvl" data-lvl="{{ .Params.lvl }}">{{ .Params.lvl }}</span>
+          {{ $lvl := cond (not .Params.source_url) .Params.lvl (partial "note-kind-key.html" .) }}
+          <span class="lvl" data-lvl="{{ $lvl }}">{{ $lvl }}</span>
           <span class="feed-card-dot" aria-hidden="true">·</span>
           <time class="dt-published feed-card-time" datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
             data-iso='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
