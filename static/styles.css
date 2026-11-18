@@ -619,7 +619,7 @@ body[data-shell="dashboard"] > .hud-strip {
   border: 0;
 }
 
-/* blink is reused by .records-cursor, .name-sub .cursor, .contact .term .blink */
+/* blink is reused by .records-cursor, .name-sub .cursor, .term .blink */
 @keyframes blink {
   50% {
     opacity: 0;
@@ -743,7 +743,7 @@ body[data-shell="dashboard"] > .hud-strip {
   text-align: left;
 }
 .name-sub .cursor,
-.contact .term .blink {
+.term .blink {
   display: inline-block;
   width: 0.55ch;
   height: 1em;
@@ -2201,7 +2201,7 @@ section:first-of-type {
   color: var(--signal);
 }
 
-.contact .term {
+.term {
   margin-top: 28px;
   padding: 28px clamp(20px, 3vw, 44px);
   border: 2px solid var(--signal);
@@ -2213,16 +2213,16 @@ section:first-of-type {
   line-height: 1.7;
   position: relative;
 }
-.contact .term .ln {
+.term .ln {
   display: block;
   color: var(--mute);
 }
-.contact .term .ln .prompt {
+.term .ln .prompt {
   font-family: var(--mono);
   color: var(--signal);
   margin-right: 8px;
 }
-.contact .term a {
+.term a {
   color: var(--ink);
   text-decoration: none;
   border-bottom: 2px solid var(--signal);
@@ -2231,11 +2231,11 @@ section:first-of-type {
     background 0.2s,
     color 0.2s;
 }
-.contact .term a:hover {
+.term a:hover {
   background: var(--signal);
   color: var(--paper);
 }
-.contact .term .out {
+.term .out {
   color: var(--ink);
   padding-left: 18px;
 }
@@ -2405,7 +2405,7 @@ a.log-nav {
 .read .tag,
 .gb-tui-name,
 .ring-main:hover,
-.contact .term .ln .prompt,
+.term .ln .prompt,
 .prose-body h2::before,
 .entry-row .lvl,
 .feed-card-meta .lvl,
@@ -2431,7 +2431,7 @@ a.log-nav {
 .ring-card,
 .feed-card,
 .specimen-viewer,
-.contact .term,
+.term,
 .head a,
 .gb-actions button,
 .status-pill[data-s="active"],

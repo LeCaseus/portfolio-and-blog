@@ -139,13 +139,13 @@ section {
   padding: 8px 14px;
 }
 
-.contact .term {
+.term {
   padding: 20px 16px;
   font-size: var(--text_md);
   line-height: 1.8;
   word-break: break-word;
 }
-.contact .term .ln.out {
+.term .ln.out {
   padding-left: 12px;
 }
 
