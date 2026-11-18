@@ -275,17 +275,17 @@ body[data-shell="dashboard"] > .hud-strip {
   font-size: var(--text_sm);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--mute);
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
-  backdrop-filter: blur(10px);
+  color: var(--paper);
+  background: var(--signal);
   border: var(--border);
 }
 .status .dot {
+  --pulse_colour: color-mix(in srgb, var(--paper) 45%, transparent);
   display: inline-block;
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--signal);
+  background: var(--paper);
   box-shadow: 0 0 0 0 var(--signal_soft);
   animation: pulse 1.8s ease-out infinite;
   margin-right: 8px;
@@ -293,7 +293,7 @@ body[data-shell="dashboard"] > .hud-strip {
 }
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 var(--signal_soft);
+    box-shadow: 0 0 0 0 var(--pulse_colour, var(--signal_soft));
   }
   70% {
     box-shadow: 0 0 0 12px transparent;
@@ -310,9 +310,6 @@ body[data-shell="dashboard"] > .hud-strip {
   display: flex;
   gap: 16px;
   align-items: center;
-}
-.status .left .build-tag {
-  color: var(--signal);
 }
 
 .switch {
@@ -2401,7 +2398,6 @@ a.log-nav {
   border-radius: 2px;
 }
 
-.status .left .build-tag,
 .alive,
 .nav-chip:hover .idx,
 .nav-chip:hover .lbl,
