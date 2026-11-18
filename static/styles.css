@@ -236,8 +236,11 @@ body[data-shell="dashboard"] > .doc-strip {
 body[data-shell="dashboard"] > .spec-col {
   grid-area: left;
   border: var(--border);
-  overflow-y: auto;
+  overflow: hidden;
   min-height: 0;
+}
+body[data-shell="dashboard"] > .spec-col--blog {
+  overflow-y: auto;
 }
 body[data-shell="dashboard"] > .app-main {
   grid-area: main;
@@ -401,11 +404,15 @@ body[data-shell="dashboard"] > .hud-strip {
   display: flex;
   flex-direction: column;
   gap: var(--space_2);
+
+  & .vital-chip {
+    padding-block: clamp(6px, 1.5dvh, var(--space_3));
+  }
 }
 .vital-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space_2);
+  gap: clamp(6px, 1.2dvh, var(--space_2));
 }
 .vital-chip {
   --chip: var(--signal);
