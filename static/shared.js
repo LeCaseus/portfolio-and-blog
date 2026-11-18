@@ -250,6 +250,12 @@ export function format_relative_time(iso_string) {
   return new Date(iso_string).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
+export function init_relative_timestamps() {
+  document.querySelectorAll('[data-iso]').forEach(el => {
+    el.textContent = format_relative_time(el.dataset.iso);
+  });
+}
+ 
 export function escape_html(value) {
   return String(value).replace(/[&<>"']/g, char => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'

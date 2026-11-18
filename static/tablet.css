@@ -59,6 +59,10 @@ body[data-shell="dashboard"] > .hud-strip {
 }
 
 @media (min-width: 641px) and (orientation: portrait) {
+  .hero-intro--landing .specimen-viewer {
+    aspect-ratio: 4 / 3;
+  }
+
   .readings-split {
     grid-template-columns: minmax(220px, 0.85fr) 1.15fr;
   }
