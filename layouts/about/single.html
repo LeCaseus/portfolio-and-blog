@@ -3,77 +3,76 @@
 <section class="hero-intro" id="top" data-screen-label="02 About">
   <div class="name-eyebrow">0x0002 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
   <h1>SUBJECT'S<br /><span class="alive">PROFILE<span class="records-cursor">_</span></span></h1>
-  <div class="doc-flag">
-    <strong>RECORD LOG //</strong> So, who's behind all of this, you might ask? It could be me, or it could be a rat!
-    Anyway, here's a little bit about me, what I've studied, where I've been, and the things I've picked up along the
-    way.
+  <div class="prose">
+    <div class="col-label">// RECORD LOG</div>
+    <p>
+      So, who's behind all of this, you might ask? It could be me, or it could be a rat! Anyway, here's a little bit
+      about me, what I've studied, where I've been, and the things I've picked up along the way.
+    </p>
   </div>
 </section>
 
-<section class="doc-section" id="about">
-  <div class="channel">
-    <span class="line"></span>
-    <span>CH-02.1</span>
-    <strong>ABOUT</strong>
-  </div>
-  <div class="about-grid">
-    <aside class="about-marginalia">
-      <ul>
-        <li><span>NAME</span> <strong>Chezter Vargas</strong></li>
-        <li><span>LOCATION</span> <strong>Wellington, NZ</strong></li>
-        <li><span>DEGREE</span> <strong>BS Biomedical Eng.</strong></li>
-        <li><span>GRAD</span> <strong>2025</strong></li>
-        <li><span>STACK</span> <strong>C / C++, ESP32</strong></li>
-      </ul>
-    </aside>
-    <div class="doc-prose about-prose">
-      <p>
-        Fresh graduate with a bachelor's degree in biomedical engineering and a passion for embedded systems
-        programming. Experienced in sEMG-based biosignal processing and embedded systems development, with complementary
-        skills in C/C++ programming. Seeking to contribute to R&amp;D workspaces and healthcare/medical environments
-        within a forward-thinking organization. Open to employer-sponsored visa arrangements while processing residence
-        visa application.
-      </p>
+<section id="about">
+  <div class="term term--about" role="region" aria-label="About terminal">
+    <span class="ln"><span class="prompt">$</span> whoami</span>
+    <span class="ln out"><em>Ako si</em> Chezter.</span>
+    <span class="ln out">Filipino, biomedical engineer, amateur homelabber, sailor of
+      the seven seas, enthusiastic vocalist, and someone who's a little bit too self-aware.
+    </span>
 
-      <h3>Education</h3>
-      <p>
-        <strong>Bachelor of Science in Biomedical Engineering</strong> — Ateneo de Zamboanga University
-        <span style="color: var(--mute_2)">// Aug 2021 – Dec 2025</span>
-      </p>
-      <ul>
-        <li>GPA: 3.28 / 4.00</li>
-        <li>
-          Thesis: <em>"eM-Brace: Development of an Autonomous Wrist Splint with an Integrated Massage System for
-            Alleviating Muscle Weakness Related to Carpal Tunnel Syndrome"</em>
-        </li>
-        <li>Officer, Biomedical Engineering Society — Head of Creatives (2023–2024)</li>
-      </ul>
+    <span class="ln"><span class="prompt">$</span> cat ./about/origin.md</span>
+    <span class="ln out">After completing my bachelor's degree at the end of 2025, I packed my bags and moved to New
+      Zealand to start from zero. You could even say that I'm <a href="https://en.wikipedia.org/wiki/Re:Zero">starting
+        life in another world</a>.</span>
 
-      <h3>Experience</h3>
-      <p>
-        <strong>Biomedical Engineering Intern</strong> — Zamboanga City Medical Center
-        <span style="color: var(--mute_2)">// Jun 2024 – Jul 2024</span>
-      </p>
-      <ul>
-        <li>Calibrated and functionally tested clinical equipment: Fluke patient simulators, defibrillator analyzers,
-          medical gas flow analyzers.</li>
-        <li>Disassembled, cleaned, and recalibrated portable devices for redeployment across hospital departments.</li>
-        <li>Completed a rotation in the ENT Medical Makerspace — FDM 3D printing, slicer workflows, basic CAD.</li>
-      </ul>
+    <span class="ln"><span class="prompt">$</span> journalctl --user -u blogging.service</span>
+    <span class="ln out">2024-01-01 00:00:01 chezter blogging[2024]: Initialising personal blog...</span>
+    <span class="ln out">2024-01-01 00:00:02 chezter blogging[2024]: New objective: monetise content through affiliate
+      marketing,
+      product promotions, and SEO.</span>
+    <span class="ln out">---</span>
+    <span class="ln out">2024-03-01 12:00:00 chezter blogging[2024]: WARNING: Motivation rapidly declining.</span>
+    <span class="ln out">2024-03-01 12:00:01 chezter blogging[2024]: After two or three posts, I realised that this
+      wasn't the kind of blogging I wanted to pursue.</span>
+    <span class="ln out">2024-03-01 12:00:02 chezter blogging[2024]: ERROR: Soul not found. Corporate blogging
+      environment deemed unsuitable.</span>
+    <span class="ln out">---</span>
+    <span class="ln out">2026-01-01 00:00:01 chezter blogging[2026]: Reinitialising blogging service...</span>
+    <span class="ln out">2026-01-01 00:00:02 chezter blogging[2026]: Social media platforms increasingly plagued by
+      algorithmic feeds, AI slop, and performative behaviour.</span>
+    <span class="ln out">2026-01-01 00:00:03 chezter blogging[2026]: Personal website deployment initiated.</span>
+    <span class="ln out">---</span>
+    <span class="ln out">2026-01-02 09:00:00 chezter blogging[2026]: Personal website deployed successfully.</span>
+    <span class="ln out">2026-01-02 09:00:01 chezter blogging[2026]: Resuming writing activities.</span>
+    <span class="ln out">2026-01-02 09:00:02 chezter blogging[2026]: New objective: write for enjoyment, not engagement
+      metrics.</span>
+    <span class="ln out">2026-01-02 09:00:03 chezter blogging[2026]: INFO: Blogging service running normally.</span>
 
-      <h3>Skills</h3>
-      <ul>
-        <li><strong>Embedded:</strong> ESP32, sEMG acquisition &amp; processing, sensor integration</li>
-        <li><strong>Biomedical:</strong> Calibration &amp; preventive maintenance, clinical documentation</li>
-        <li><strong>Programming:</strong> C/C++ — basic, HTML/CSS/JS — beginner</li>
-        <li><strong>Tools:</strong> Git, VS Code, Arduino IDE, MATLAB, BSL Analysis</li>
-      </ul>
-    </div>
+    <span class="ln"><span class="prompt">$</span> less ./about/manifesto.md</span>
+    <span class="ln out">I'm not a writer, but I've recently taken a liking to it and absolutely love looking back at my
+      posts, as they reflect my journey as a writer and as a friend to the world.</span>
+    <span class="ln out">I hope this website can also serve as a beacon for anyone who's tired of the algorithms and
+      endless doomscrolling and just wants somewhere fresh to explore.</span>
+
+    <span class="ln"><span class="prompt">$</span> cat ./about/digital-independence.md</span>
+    <span class="ln out">I'm also an advocate for digital independence, privacy, and owning all of my data, which is
+      what led me to start building my homelab.</span>
+    <span class="ln out">If big tech companies can decide whenever they want to do whatever they want with my data, I
+      might as well hold it myself and be accountable for my own stuff.</span>
+    <span class="ln out">Besides, I'm also just a cheapskate who can't be bothered to pay for yet another recurring
+      subscription fee.</span>
+
+    <span class="ln"><span class="prompt">$</span> ./contact.sh</span>
+    <span class="ln out">I'm always down for a good chat about digital independence, games, movies, anime, or just about
+      anything, so don't be afraid to <a href="https://cheztervargas.com/contact.html">contact me</a> through email or
+      my socials (though I'm not particularly active on those platforms).</span>
+
+    <span class="ln"><span class="prompt">$</span> <span class="blink"></span></span>
   </div>
 </section>
 
 {{ end }}
 
 {{ define "scripts" }}
-<script type="module" src="/portfolio.js"></script>
+<script type="module" src="/shell.js"></script>
 {{ end }}

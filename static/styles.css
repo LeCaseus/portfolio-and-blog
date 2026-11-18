@@ -2239,6 +2239,14 @@ section:first-of-type {
   color: var(--ink);
   padding-left: 18px;
 }
+.term--about {
+  margin-top: 0;
+  font-size: var(--text_md);
+  line-height: 1.65;
+}
+.term--about .ln:has(.prompt):not(:first-child) {
+  margin-top: var(--space_3);
+}
 
 .webrings .head {
   margin: 24px 0 18px;
