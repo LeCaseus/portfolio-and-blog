@@ -1803,7 +1803,8 @@ section:first-of-type {
   gap: 16px;
 }
 
-#feed {
+#feed,
+#entry {
   max-width: 680px;
   margin-inline: auto;
   border-top: 0;

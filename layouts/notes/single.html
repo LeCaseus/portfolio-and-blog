@@ -1,13 +1,8 @@
 {{ define "main" }}
 
-<section class="hero-intro" id="top" data-screen-label="04 Notes">
-  <div class="name-eyebrow">0x0004 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
-  <h1>A SINGLE<br /><span class="alive">THREAD<span class="records-cursor">_</span></span></h1>
-</section>
-
 <section class="doc-section" id="entry">
-  <div class="channel"><span class="line"></span><span>CH-04</span><strong>THREAD</strong></div>
-  <article class="h-entry feed-card feed-card--full" data-kind='{{ .Params.entry_kind | default "note" }}'>
+  <div class="channel"><span class="line"></span><span>CH-04.2</span><strong>THREAD</strong></div>
+  <article class="h-entry feed-card" data-kind='{{ .Params.entry_kind | default "note" }}'>
     <div class="feed-card-head">
       {{ partial "note-author.html" . }}
       <span class="feed-card-meta">
