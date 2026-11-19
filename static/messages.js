@@ -34,7 +34,7 @@ export function render_message(entry) {
       <div class="gb-entry-head">
         <span class="gb-entry-name">${display_name}</span>
         ${website_html ? `<span class="gb-entry-site">${website_html}</span>` : ""}
-        <span class="gb-entry-date">${format_messages_date(entry.created_at)}</span>
+        <span class="gb-entry-date">${format_message_date(entry.created_at)}</span>
       </div>
       <p class="gb-entry-msg">${escape_html(entry.message)}</p>
       ${reply_html}
