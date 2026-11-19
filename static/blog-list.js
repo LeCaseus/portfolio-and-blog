@@ -1,141 +1,116 @@
-import { init_theme_toggle, start_clock, init_hero_ecg, init_mobile_nav } from '/shared.js';
+import { init_shell, matches_tags, init_tag_chips } from "/shared.js";
 
-init_theme_toggle();
-start_clock();
-init_hero_ecg();
-init_mobile_nav();
+init_shell();
 
-const search_storage_key = 'cv.blogSearch';
-const tags_storage_key = 'cv.blogActiveTags';
-
-function get_active_tags(tag_list) {
-  return new Set([...tag_list.querySelectorAll('.blog-tag-chip.active')].map(chip => chip.dataset.tag));
-}
+const search_storage_key = "cv.blogSearch";
+const tags_storage_key = "cv.blogActiveTags";
+const nav_scroll_storage_key = "cv.blogNavScroll";
+const panel = document.querySelector(".spec-col--blog");
 
 function post_matches(item, search_term, active_tags) {
-  const item_tags = item.dataset.tags ? item.dataset.tags.split('||') : [];
-  const tags_match = active_tags.size === 0 || [...active_tags].some(tag => item_tags.includes(tag));
-  if (!tags_match) return false;
-  if (!search_term) return true;
-  return (item.dataset.title || '').toLowerCase().includes(search_term);
-}
-
-function apply_filters(tag_list, search_input, groups) {
-  const active_tags = get_active_tags(tag_list);
-  const search_term = search_input.value.trim().toLowerCase();
-
-  groups.forEach(group => {
-    const items = group.querySelectorAll('li[data-tags]');
-    let visible_count = 0;
-    items.forEach(item => {
-      const matches = post_matches(item, search_term, active_tags);
-      item.hidden = !matches;
-      if (matches) visible_count++;
-    });
-    group.classList.toggle('no-match', visible_count === 0);
-  });
+  return (
+    matches_tags(item, active_tags) &&
+    item.dataset.title.toLowerCase().includes(search_term)
+  );
 }
 
 function init_search_and_filters() {
-  const tag_list = document.querySelector('[data-blog-tag-list]');
-  const search_input = document.querySelector('[data-blog-search]');
-  const clear_button = document.querySelector('[data-blog-clear-filters]');
-  const active_count_el = document.querySelector('[data-blog-tag-active-count]');
-  const groups = document.querySelectorAll('[data-blog-year-group]');
-  if (!tag_list || !search_input) return;
+  const tag_list = document.querySelector("[data-blog-tag-list]");
+  const search_input = document.querySelector("[data-blog-search]");
+  const clear_button = document.querySelector("[data-blog-clear-filters]");
+  const active_count_el = document.querySelector(
+    "[data-blog-tag-active-count]",
+  );
+  const groups = document.querySelectorAll("[data-blog-year-group]");
 
-  const stored_search = sessionStorage.getItem(search_storage_key) || '';
-  const stored_tags = JSON.parse(sessionStorage.getItem(tags_storage_key) || '[]');
-
-  search_input.value = stored_search;
-  tag_list.querySelectorAll('.blog-tag-chip').forEach(chip => {
-    chip.classList.toggle('active', stored_tags.includes(chip.dataset.tag));
+  const stored_tags = JSON.parse(
+    sessionStorage.getItem(tags_storage_key) || "[]",
+  );
+  search_input.value = sessionStorage.getItem(search_storage_key) || "";
+  tag_list.querySelectorAll(".blog-tag-chip").forEach((chip) => {
+    chip.classList.toggle("active", stored_tags.includes(chip.dataset.tag));
   });
 
   const persist_and_apply = () => {
+    const active_tags = new Set(
+      [...tag_list.querySelectorAll(".blog-tag-chip.active")].map(
+        (chip) => chip.dataset.tag,
+      ),
+    );
+    const search_term = search_input.value.trim().toLowerCase();
+
     sessionStorage.setItem(search_storage_key, search_input.value);
-    const active_tags = [...get_active_tags(tag_list)];
-    sessionStorage.setItem(tags_storage_key, JSON.stringify(active_tags));
-    clear_button.hidden = active_tags.length === 0 && !search_input.value;
-    if (active_count_el) {
-      active_count_el.textContent = `(${active_tags.length})`;
-      active_count_el.hidden = active_tags.length === 0;
-    }
-    apply_filters(tag_list, search_input, groups);
+    sessionStorage.setItem(tags_storage_key, JSON.stringify([...active_tags]));
+    clear_button.hidden = active_tags.size === 0 && !search_input.value;
+    active_count_el.textContent = `(${active_tags.size})`;
+    active_count_el.hidden = active_tags.size === 0;
+
+    groups.forEach((group) => {
+      const items = [...group.querySelectorAll("li[data-tags]")];
+      items.forEach((item) => {
+        item.hidden = !post_matches(item, search_term, active_tags);
+      });
+      group.classList.toggle(
+        "no-match",
+        items.every((item) => item.hidden),
+      );
+    });
   };
 
-  search_input.addEventListener('input', persist_and_apply);
+  search_input.addEventListener("input", persist_and_apply);
+  init_tag_chips(tag_list, ".blog-tag-chip", persist_and_apply);
 
-  tag_list.addEventListener('click', event => {
-    const chip = event.target.closest('.blog-tag-chip');
-    if (!chip) return;
-    chip.classList.toggle('active');
-    persist_and_apply();
-  });
-
-  clear_button.addEventListener('click', () => {
-    search_input.value = '';
-    tag_list.querySelectorAll('.blog-tag-chip.active').forEach(chip => chip.classList.remove('active'));
+  clear_button.addEventListener("click", () => {
+    search_input.value = "";
+    tag_list
+      .querySelectorAll(".blog-tag-chip.active")
+      .forEach((chip) => chip.classList.remove("active"));
     persist_and_apply();
   });
 
   persist_and_apply();
 }
 
-function init_scroll_memory(selector, storage_key) {
-  const el = document.querySelector(selector);
-  if (!el) return;
-
-  const stored_scroll = sessionStorage.getItem(storage_key);
-  if (stored_scroll !== null) el.scrollTop = parseInt(stored_scroll, 10);
+function init_scroll_memory() {
+  panel.scrollTop = Number(sessionStorage.getItem(nav_scroll_storage_key));
 
   let ticking = false;
-  el.addEventListener('scroll', () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      sessionStorage.setItem(storage_key, el.scrollTop);
-      ticking = false;
-    });
-  }, { passive: true });
+  panel.addEventListener(
+    "scroll",
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        sessionStorage.setItem(nav_scroll_storage_key, panel.scrollTop);
+        ticking = false;
+      });
+    },
+    { passive: true },
+  );
 }
 
 function init_blog_nav_drawer() {
-  const panel = document.querySelector('.spec-col--blog');
-  const backdrop = document.querySelector('[data-blog-nav-backdrop]');
-  const trigger_button = document.querySelector('[data-blog-nav-trigger]');
-  if (!panel || !backdrop || !trigger_button) return;
+  const backdrop = document.querySelector("[data-blog-nav-backdrop]");
+  const trigger_button = document.querySelector("[data-blog-nav-trigger]");
 
-  const open_drawer = () => {
-    panel.classList.add('open');
-    backdrop.classList.add('open');
-    trigger_button.setAttribute('aria-expanded', 'true');
+  const set_drawer_open = (is_open) => {
+    panel.classList.toggle("open", is_open);
+    backdrop.classList.toggle("open", is_open);
+    trigger_button.setAttribute("aria-expanded", String(is_open));
   };
 
-  const close_drawer = () => {
-    panel.classList.remove('open');
-    backdrop.classList.remove('open');
-    trigger_button.setAttribute('aria-expanded', 'false');
-  };
-
-  trigger_button.addEventListener('click', () => {
-    if (panel.classList.contains('open')) {
-      close_drawer();
-    } else {
-      open_drawer();
-    }
+  trigger_button.addEventListener("click", () =>
+    set_drawer_open(!panel.classList.contains("open")),
+  );
+  backdrop.addEventListener("click", () => set_drawer_open(false));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") set_drawer_open(false);
   });
-
-  backdrop.addEventListener('click', close_drawer);
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && panel.classList.contains('open')) close_drawer();
-  });
-
-  document.querySelectorAll('.blog-post-item').forEach(link => {
-    link.addEventListener('click', close_drawer);
+  document.querySelectorAll(".blog-post-item").forEach((link) => {
+    link.addEventListener("click", () => set_drawer_open(false));
   });
 }
 
 init_search_and_filters();
-init_scroll_memory('.spec-col', 'cv.blogNavScroll');
+init_scroll_memory();
 init_blog_nav_drawer();

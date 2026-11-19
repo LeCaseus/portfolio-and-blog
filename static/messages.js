@@ -1,127 +1,125 @@
-import { escape_html } from '/shared.js';
+import { escape_html, render_link } from "/shared.js";
 
-const messagesEndpoint = '/api/messages';
+const messages_endpoint = "/api/messages";
 
-export function parseServerTimestamp(serverTimestamp) {
-  return new Date(`${serverTimestamp.replace(' ', 'T')}Z`);
+export function parse_server_timestamp(server_timestamp) {
+  return new Date(`${server_timestamp.replace(" ", "T")}Z`);
 }
 
-export function formatEntryDate(serverTimestamp) {
-  const date = parseServerTimestamp(serverTimestamp);
-  if (Number.isNaN(date.getTime())) return serverTimestamp;
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+export function format_message_date(server_timestamp) {
+  const date = parse_server_timestamp(server_timestamp);
+  if (Number.isNaN(date.getTime())) return server_timestamp;
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 }
 
-function renderWebsiteLink(website) {
-  const trimmedWebsite = (website || '').trim();
-  if (!/^https?:\/\//i.test(trimmedWebsite)) return '';
-  const label = escape_html(trimmedWebsite.replace(/^https?:\/\//i, ''));
-  return `<a href="${escape_html(trimmedWebsite)}" target="_blank" rel="nofollow ugc noopener">${label}</a>`;
-}
-
-export function renderEntry(entry) {
-  const displayName = entry.name?.trim() ? escape_html(entry.name.trim()) : 'anonymous';
-  const websiteHtml = renderWebsiteLink(entry.website);
-  const replyHtml = entry.reply_message ? `
+export function render_message(entry) {
+  const display_name = entry.name?.trim()
+    ? escape_html(entry.name.trim())
+    : "anonymous";
+  const website_html = render_link(entry.website);
+  const reply_html = entry.reply_message
+    ? `
     <div class="gb-reply">
       <span class="gb-reply-label">↳ reply</span>
       <p>${escape_html(entry.reply_message)}</p>
-    </div>` : '';
+    </div>`
+    : "";
 
   return `
     <li class="gb-entry">
       <div class="gb-entry-head">
-        <span class="gb-entry-name">${displayName}</span>
-        ${websiteHtml ? `<span class="gb-entry-site">${websiteHtml}</span>` : ''}
-        <span class="gb-entry-date">${formatEntryDate(entry.created_at)}</span>
+        <span class="gb-entry-name">${display_name}</span>
+        ${website_html ? `<span class="gb-entry-site">${website_html}</span>` : ""}
+        <span class="gb-entry-date">${format_messages_date(entry.created_at)}</span>
       </div>
       <p class="gb-entry-msg">${escape_html(entry.message)}</p>
-      ${replyHtml}
+      ${reply_html}
     </li>
   `;
 }
 
-export async function fetchMessages(page) {
-  const response = await fetch(`${messagesEndpoint}?page=${encodeURIComponent(page)}`);
-  if (!response.ok) throw new Error('messages request failed');
+export async function fetch_messages(page) {
+  const response = await fetch(
+    `${messages_endpoint}?page=${encodeURIComponent(page)}`,
+  );
+  if (!response.ok) throw new Error("messages request failed");
   return response.json();
 }
 
-export async function loadMessages({ page, listElement, entryCountElement, emptyText }) {
-  try {
-    const entries = await fetchMessages(page);
+export function init_message_form({ page, form, success_text }) {
+  const message_input = form.elements.message;
+  const submit_button = form.querySelector('[type="submit"]');
+  const status_element = form.querySelector('[role="status"]');
+  const count_box = form.querySelector(".gb-count");
+  const count_element = count_box.querySelector("span");
 
-    if (entryCountElement) entryCountElement.textContent = entries.length;
-    listElement.innerHTML = entries.length
-      ? entries.map(renderEntry).join('')
-      : `<li class="doc-empty">${emptyText}</li>`;
-  } catch {
-    if (entryCountElement) entryCountElement.textContent = '—';
-    listElement.innerHTML = '<li class="doc-empty">couldn\'t load entries — refresh to try again.</li>';
-  }
-}
+  const field_value = (field_name) => form.elements[field_name].value.trim();
 
-export function initCharCounter(textarea, charCountElement) {
-  textarea.addEventListener('input', () => {
-    const length = textarea.value.length;
-    charCountElement.textContent = length;
-    charCountElement.classList.toggle('gb-count-warn', length > 900);
-  });
-}
-
-export function initMessageForm({ page, form, submitButton, statusElement, charCountElement, successText }) {
-  const fieldValue = fieldName => form.elements[fieldName].value.trim();
-
-  const setStatus = (text, kind) => {
-    statusElement.textContent = text;
-    statusElement.classList.remove('gb-status-ok', 'gb-status-err');
-    if (kind) statusElement.classList.add(kind === 'ok' ? 'gb-status-ok' : 'gb-status-err');
+  const update_count = () => {
+    const length = message_input.value.length;
+    count_element.textContent = length;
+    count_box.classList.toggle("gb-count-warn", length > 900);
   };
 
-  form.addEventListener('submit', async event => {
+  const set_status = (text, kind) => {
+    status_element.textContent = text;
+    status_element.classList.toggle("gb-status-ok", kind === "ok");
+    status_element.classList.toggle("gb-status-err", kind === "err");
+  };
+
+  message_input.addEventListener("input", update_count);
+
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const message = fieldValue('message');
+    const message = field_value("message");
     if (!message) {
-      setStatus('message can\'t be empty.', 'err');
+      set_status("message can't be empty.", "err");
       return;
     }
 
     const payload = {
-      name: fieldValue('name') || undefined,
-      website: fieldValue('website') || undefined,
+      name: field_value("name") || undefined,
+      website: field_value("website") || undefined,
       message,
-      page
+      page,
     };
 
-    submitButton.disabled = true;
-    setStatus('sending…', null);
+    submit_button.disabled = true;
+    set_status("sending…");
 
     try {
-      const response = await fetch(messagesEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+      const response = await fetch(messages_endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
       if (response.status === 429) {
-        setStatus('hourly limit reached — try again later.', 'err');
+        set_status("hourly limit reached — try again later.", "err");
         return;
       }
 
       if (!response.ok) {
-        const errorBody = await response.json().catch(() => null);
-        setStatus(errorBody?.message || 'something didn\'t go through — try again.', 'err');
+        const error_body = await response.json().catch(() => null);
+        set_status(
+          error_body?.message || "something didn't go through — try again.",
+          "err",
+        );
         return;
       }
 
       form.reset();
-      charCountElement.textContent = '0';
-      setStatus(successText, 'ok');
+      update_count();
+      set_status(success_text, "ok");
     } catch {
-      setStatus('couldn\'t reach the server — try again in a bit.', 'err');
+      set_status("couldn't reach the server — try again in a bit.", "err");
     } finally {
-      submitButton.disabled = false;
+      submit_button.disabled = false;
     }
   });
 }
