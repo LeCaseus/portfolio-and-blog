@@ -2892,6 +2892,22 @@ button.blog-tag-chip:hover {
   color: var(--mute_2);
 }
 
+.prose-body .footnotes {
+  font-size: 0.85em;
+  color: var(--mute);
+}
+
+.prose-body .footnotes p {
+  text-align: left;
+  margin: 0 0 0.5em;
+}
+
+.prose-body sup a,
+.prose-body .footnote-backref {
+  background-image: none;
+  color: var(--signal);
+}
+
 .prose-body img {
   max-width: 100%;
   height: auto;

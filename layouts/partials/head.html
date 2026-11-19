@@ -29,15 +29,15 @@
     function load_umami() {
       if (loaded) return;
       loaded = true;
-      interactions.forEach(function (name) { removeEventListener(name, load_umami, { capture: true }); });
+      interactions.forEach(function (name) {removeEventListener(name, load_umami, {capture: true});});
       var script = document.createElement('script');
-      script.src = 'https://analytics.cheztervargas.com/site_visits.js';
+      script.src = '/site_visits.js';
       script.defer = true;
       script.dataset.websiteId = '0ada5184-e307-4125-b5d6-e6b37861ce7c';
       document.head.appendChild(script);
     }
     interactions.forEach(function (name) {
-      addEventListener(name, load_umami, { passive: true, capture: true });
+      addEventListener(name, load_umami, {passive: true, capture: true});
     });
   })();
 </script>
