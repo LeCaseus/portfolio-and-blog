@@ -27,7 +27,7 @@ function init_copy_link() {
 
 function init_feed_visibility() {
   const tag_list = document.querySelector("[data-notes-tag-list]");
-  const cards = [...document.querySelectorAll(".feed-card[data-tags]")];
+  const cards = [...document.querySelectorAll(".note_card[data-tags]")];
   if (!cards.length) return;
 
   const batch_size = 10;
@@ -37,7 +37,7 @@ function init_feed_visibility() {
   const apply_visibility = () => {
     const active_tags = tag_list
       ? new Set(
-          [...tag_list.querySelectorAll(".tag-pill.active")].map(
+          [...tag_list.querySelectorAll(".note_tag_chip.is_active")].map(
             (chip) => chip.dataset.tag,
           ),
         )
@@ -48,7 +48,7 @@ function init_feed_visibility() {
     });
   };
 
-  if (tag_list) init_tag_chips(tag_list, ".tag-pill", apply_visibility);
+  if (tag_list) init_tag_chips(tag_list, ".note_tag_chip", apply_visibility);
 
   if (cards.length > batch_size) {
     const observer = new IntersectionObserver(

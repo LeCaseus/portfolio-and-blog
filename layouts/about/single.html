@@ -1,10 +1,10 @@
 {{ define "main" }}
 
-<section class="hero-intro" id="top" data-screen-label="02 About">
-  <div class="name-eyebrow">0x0002 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
-  <h1>SUBJECT'S<br /><span class="alive">PROFILE<span class="records-cursor">_</span></span></h1>
-  <div class="prose">
-    <div class="col-label">// RECORD LOG</div>
+<section class="hero_intro" id="top" data-screen-label="02 About">
+  <div class="hero_eyebrow">0x0002 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
+  <h1>SUBJECT'S<br /><span class="hero_title_accent">PROFILE<span class="hero_title_cursor">_</span></span></h1>
+  <div class="intro_box">
+    <div class="panel_label">// RECORD LOG</div>
     <p>
       So, who's behind all of this, you might ask? It could be me, or it could be a rat! Anyway, here's a little bit
       about me, what I've studied, where I've been, and the things I've picked up along the way.
@@ -13,61 +13,81 @@
 </section>
 
 <section id="about">
-  <div class="term term--about" role="region" aria-label="About terminal">
-    <span class="ln"><span class="prompt">$</span> whoami</span>
-    <span class="ln out"><em>Ako si</em> Chezter.</span>
-    <span class="ln out">Filipino, biomedical engineer, amateur homelabber, sailor of
+  <div class="channel_label">
+    <span class="channel_label_line"></span>
+    <span>CH-02.1</span>
+    <strong>ABOUT LOG</strong>
+  </div>
+  <div class="terminal terminal_about" role="region" aria-label="About terminal">
+    <span class="terminal_command"><span class="terminal_prompt">$</span> whoami</span>
+    <span class="terminal_output"><em>Ako si</em> Chezter.</span>
+    <span class="terminal_output">Filipino, biomedical engineer, amateur homelabber, sailor of
       the seven seas, enthusiastic vocalist, and someone who's a little bit too self-aware.
     </span>
 
-    <span class="ln"><span class="prompt">$</span> cat ./about/origin.md</span>
-    <span class="ln out">After completing my bachelor's degree at the end of 2025, I packed my bags and moved to New
+    <span class="terminal_command"><span class="terminal_prompt">$</span> cat ./about/origin.md</span>
+    <span class="terminal_output">After completing my bachelor's degree at the end of 2025, I packed my bags and moved
+      to New
       Zealand to start from zero. You could even say that I'm <a href="https://en.wikipedia.org/wiki/Re:Zero">starting
         life in another world</a>.</span>
 
-    <span class="ln"><span class="prompt">$</span> journalctl --user -u blogging.service</span>
-    <span class="ln out">2024-01-01 00:00:01 chezter blogging[2024]: Initialising personal blog...</span>
-    <span class="ln out">2024-01-01 00:00:02 chezter blogging[2024]: New objective: monetise content through affiliate
+    <span class="terminal_command"><span class="terminal_prompt">$</span> journalctl --user -u blogging.service</span>
+    <span class="terminal_output">2024-01-01 00:00:01 chezter blogging[2024]: Initialising personal blog...</span>
+    <span class="terminal_output">2024-01-01 00:00:02 chezter blogging[2024]: New objective: monetise content through
+      affiliate
       marketing,
       product promotions, and SEO.</span>
-    <span class="ln out">---</span>
-    <span class="ln out">2024-03-01 12:00:00 chezter blogging[2024]: WARNING: Motivation rapidly declining.</span>
-    <span class="ln out">2024-03-01 12:00:01 chezter blogging[2024]: After two or three posts, I realised that this
+    <span class="terminal_output">---</span>
+    <span class="terminal_output">2024-03-01 12:00:00 chezter blogging[2024]: WARNING: Motivation rapidly
+      declining.</span>
+    <span class="terminal_output">2024-03-01 12:00:01 chezter blogging[2024]: After two or three posts, I realised that
+      this
       wasn't the kind of blogging I wanted to pursue.</span>
-    <span class="ln out">2024-03-01 12:00:02 chezter blogging[2024]: ERROR: Soul not found. Corporate blogging
+    <span class="terminal_output">2024-03-01 12:00:02 chezter blogging[2024]: ERROR: Soul not found. Corporate blogging
       environment deemed unsuitable.</span>
-    <span class="ln out">---</span>
-    <span class="ln out">2026-01-01 00:00:01 chezter blogging[2026]: Reinitialising blogging service...</span>
-    <span class="ln out">2026-01-01 00:00:02 chezter blogging[2026]: Social media platforms increasingly plagued by
+    <span class="terminal_output">---</span>
+    <span class="terminal_output">2026-01-01 00:00:01 chezter blogging[2026]: Reinitialising blogging service...</span>
+    <span class="terminal_output">2026-01-01 00:00:02 chezter blogging[2026]: Social media platforms increasingly
+      plagued by
       algorithmic feeds, AI slop, and performative behaviour.</span>
-    <span class="ln out">2026-01-01 00:00:03 chezter blogging[2026]: Personal website deployment initiated.</span>
-    <span class="ln out">---</span>
-    <span class="ln out">2026-01-02 09:00:00 chezter blogging[2026]: Personal website deployed successfully.</span>
-    <span class="ln out">2026-01-02 09:00:01 chezter blogging[2026]: Resuming writing activities.</span>
-    <span class="ln out">2026-01-02 09:00:02 chezter blogging[2026]: New objective: write for enjoyment, not engagement
+    <span class="terminal_output">2026-01-01 00:00:03 chezter blogging[2026]: Personal website deployment
+      initiated.</span>
+    <span class="terminal_output">---</span>
+    <span class="terminal_output">2026-01-02 09:00:00 chezter blogging[2026]: Personal website deployed
+      successfully.</span>
+    <span class="terminal_output">2026-01-02 09:00:01 chezter blogging[2026]: Resuming writing activities.</span>
+    <span class="terminal_output">2026-01-02 09:00:02 chezter blogging[2026]: New objective: write for enjoyment, not
+      engagement
       metrics.</span>
-    <span class="ln out">2026-01-02 09:00:03 chezter blogging[2026]: INFO: Blogging service running normally.</span>
+    <span class="terminal_output">2026-01-02 09:00:03 chezter blogging[2026]: INFO: Blogging service running
+      normally.</span>
 
-    <span class="ln"><span class="prompt">$</span> less ./about/manifesto.md</span>
-    <span class="ln out">I'm not a writer, but I've recently taken a liking to it and absolutely love looking back at my
+    <span class="terminal_command"><span class="terminal_prompt">$</span> less ./about/manifesto.md</span>
+    <span class="terminal_output">I'm not a writer, but I've recently taken a liking to it and absolutely love looking
+      back at my
       posts, as they reflect my journey as a writer and as a friend to the world.</span>
-    <span class="ln out">I hope this website can also serve as a beacon for anyone who's tired of the algorithms and
+    <span class="terminal_output">I hope this website can also serve as a beacon for anyone who's tired of the
+      algorithms and
       endless doomscrolling and just wants somewhere fresh to explore.</span>
 
-    <span class="ln"><span class="prompt">$</span> cat ./about/digital-independence.md</span>
-    <span class="ln out">I'm also an advocate for digital independence, privacy, and owning all of my data, which is
+    <span class="terminal_command"><span class="terminal_prompt">$</span> cat ./about/digital-independence.md</span>
+    <span class="terminal_output">I'm also an advocate for digital independence, privacy, and owning all of my data,
+      which is
       what led me to start building my homelab.</span>
-    <span class="ln out">If big tech companies can decide whenever they want to do whatever they want with my data, I
+    <span class="terminal_output">If big tech companies can decide whenever they want to do whatever they want with my
+      data, I
       might as well hold it myself and be accountable for my own stuff.</span>
-    <span class="ln out">Besides, I'm also just a cheapskate who can't be bothered to pay for yet another recurring
+    <span class="terminal_output">Besides, I'm also just a cheapskate who can't be bothered to pay for yet another
+      recurring
       subscription fee.</span>
 
-    <span class="ln"><span class="prompt">$</span> ./contact.sh</span>
-    <span class="ln out">I'm always down for a good chat about digital independence, games, movies, anime, or just about
+    <span class="terminal_command"><span class="terminal_prompt">$</span> ./contact.sh</span>
+    <span class="terminal_output">I'm always down for a good chat about digital independence, games, movies, anime, or
+      just about
       anything, so don't be afraid to <a href="https://cheztervargas.com/contact.html">contact me</a> through email or
       my socials (though I'm not particularly active on those platforms).</span>
 
-    <span class="ln"><span class="prompt">$</span> <span class="blink"></span></span>
+    <span class="terminal_command"><span class="terminal_prompt">$</span> <span class="terminal_cursor"></span></span>
   </div>
 </section>
 

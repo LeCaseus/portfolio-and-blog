@@ -1,32 +1,32 @@
 {{ define "main" }}
 
-<section class="doc-section" id="entry">
-  <div class="channel"><span class="line"></span><span>CH-04.2</span><strong>THREAD</strong></div>
-  <article class="h-entry feed-card" data-kind='{{ .Params.entry_kind | default "note" }}'>
-    <div class="feed-card-head">
+<section class="page_section" id="entry">
+  <div class="channel_label"><span class="channel_label_line"></span><span>CH-04.2</span><strong>THREAD</strong></div>
+  <article class="h-entry note_card" data-kind='{{ .Params.entry_kind | default "note" }}'>
+    <div class="note_card_header">
       {{ partial "note-author.html" . }}
-      <span class="feed-card-meta">
+      <span class="note_card_meta">
         {{ $lvl := cond (not .Params.source_url) .Params.lvl (partial "note-kind-key.html" .) }}
-        <span class="lvl" data-lvl="{{ $lvl }}">{{ $lvl }}</span>
-        <span class="feed-card-dot" aria-hidden="true">·</span>
-        <time class="dt-published feed-card-time" datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
+        <span class="level_badge" data-lvl="{{ $lvl }}">{{ $lvl }}</span>
+        <span class="note_card_meta_separator" aria-hidden="true">·</span>
+        <time class="dt-published note_card_time" datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
           data-iso='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
           title='{{ .Date.Format "2 January 2006, 15:04" }}'>{{ .Date.Format "2 January 2006, 15:04" }}</time>
       </span>
     </div>
-    <div class="e-content feed-card-body">
+    <div class="e-content note_card_body">
       {{ .Content }}
     </div>
     {{ partial "note-kind.html" . }}
     {{ with .Params.tags }}
-    <div class="feed-card-tags">{{ range . }}<span class="p-category">{{ . }}</span>{{ end }}</div>
+    <div class="note_card_tags">{{ range . }}<span class="p-category">{{ . }}</span>{{ end }}</div>
     {{ end }}
   </article>
-  <div class="entry-back">
+  <div class="note_back_row">
     <a class="u-url u-uid" href="{{ .Permalink }}">{{ .Permalink }}</a>
-    <span class="dot" aria-hidden="true"></span>
+    <span class="note_back_row_dot" aria-hidden="true"></span>
     <a class="p-author h-card" href="https://cheztervargas.com/">Chezter Vargas</a>
-    <span class="dot" aria-hidden="true"></span>
+    <span class="note_back_row_dot" aria-hidden="true"></span>
     <a href="/notes.html">← back to the feed</a>
   </div>
 </section>

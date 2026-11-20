@@ -45,14 +45,14 @@ function render_mention(mention) {
   const verb = mention_verbs[mention.type] || mention_verbs.mention;
 
   return `
-    <li class="gb-entry">
-      <div class="gb-entry-head">
-        <span class="gb-entry-name">${author_html}</span>
-        <span class="gb-entry-kind">↗ ${verb}</span>
-        ${source_html ? `<span class="gb-entry-site">${source_html}</span>` : ""}
-        <span class="gb-entry-date">${format_message_date(mention.created_at)}</span>
+    <li class="message_entry">
+      <div class="message_entry_header">
+        <span class="message_entry_name">${author_html}</span>
+        <span class="message_entry_kind">↗ ${verb}</span>
+        ${source_html ? `<span class="message_entry_website">${source_html}</span>` : ""}
+        <span class="message_entry_date">${format_message_date(mention.created_at)}</span>
       </div>
-      ${mention.content ? `<p class="gb-entry-msg">${escape_html(mention.content)}</p>` : ""}
+      ${mention.content ? `<p class="message_entry_text">${escape_html(mention.content)}</p>` : ""}
     </li>
   `;
 }
@@ -69,7 +69,7 @@ async function load_discussion() {
   ) {
     entry_count_element.textContent = "—";
     list_element.innerHTML =
-      '<li class="doc-empty">couldn\'t load comments, refresh to try again.</li>';
+      '<li class="empty_message">couldn\'t load comments, refresh to try again.</li>';
     return;
   }
 
@@ -87,7 +87,7 @@ async function load_discussion() {
   entry_count_element.textContent = items.length;
   list_element.innerHTML = items.length
     ? items.map((item) => item.html).join("")
-    : '<li class="doc-empty">no comments yet.</li>';
+    : '<li class="empty_message">no comments yet.</li>';
 }
 
 init_message_form({

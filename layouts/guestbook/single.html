@@ -1,10 +1,10 @@
 {{ define "main" }}
 
-<section class="hero-intro" id="top" data-screen-label="07 Guestbook">
-  <div class="name-eyebrow">0x0007 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
-  <h1>CHEZTER'S<br /><span class="alive">PATIENTS<span class="records-cursor">_</span></span></h1>
-  <div class="prose">
-    <div class="col-label">// RECORD LOG</div>
+<section class="hero_intro" id="top" data-screen-label="07 Guestbook">
+  <div class="hero_eyebrow">0x0007 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
+  <h1>CHEZTER'S<br /><span class="hero_title_accent">PATIENTS<span class="hero_title_cursor">_</span></span></h1>
+  <div class="intro_box">
+    <div class="panel_label">// RECORD LOG</div>
     <p>
       This is a self-hosted guestbook page. All entries are sent to my own personal server in which I will be notified
       via email and an hourly desktop notification. I moderate each one to avoid any spam being displayed publicly.
@@ -12,34 +12,34 @@
   </div>
 </section>
 
-<section class="doc-section" id="sign">
-  <div class="channel"><span class="line"></span><span>CH-07.1</span><strong>ADD&nbsp;ENTRY</strong></div>
-  <form class="gb-form" data-gb-form novalidate>
-    <div class="gb-row">
-      <label for="gb-name">name <span class="opt">optional</span></label>
+<section class="page_section" id="sign">
+  <div class="channel_label"><span class="channel_label_line"></span><span>CH-07.1</span><strong>ADD&nbsp;ENTRY</strong></div>
+  <form class="message_form" data-gb-form novalidate>
+    <div class="message_form_row">
+      <label for="gb-name">name <span class="message_form_optional">optional</span></label>
       <input type="text" id="gb-name" name="name" maxlength="80" autocomplete="name" />
     </div>
-    <div class="gb-row">
-      <label for="gb-website">website <span class="opt">optional</span></label>
+    <div class="message_form_row">
+      <label for="gb-website">website <span class="message_form_optional">optional</span></label>
       <input type="url" id="gb-website" name="website" maxlength="200" placeholder="https://" autocomplete="url" />
     </div>
-    <div class="gb-row">
+    <div class="message_form_row">
       <label for="gb-message">message</label>
       <textarea id="gb-message" name="message" maxlength="1000" rows="5" required></textarea>
-      <div class="gb-count"><span>0</span> / 1000</div>
+      <div class="message_form_char_count"><span>0</span> / 1000</div>
     </div>
-    <div class="gb-actions">
+    <div class="message_form_actions">
       <button type="submit" data-umami-event="guestbook-submit">sign the book</button>
-      <span class="gb-status" role="status" aria-live="polite"></span>
+      <span class="message_form_status" role="status" aria-live="polite"></span>
     </div>
   </form>
 </section>
 
-<section class="doc-section" id="entries">
-  <div class="channel"><span class="line"></span><span>CH-07.2</span><strong>ANNOTATIONS</strong></div>
-  <div class="gb-entries-head"><span data-gb-entry-count>—</span> entries on file</div>
-  <ul class="gb-entries" data-gb-entries>
-    <li class="doc-empty">loading entries…</li>
+<section class="page_section" id="entries">
+  <div class="channel_label"><span class="channel_label_line"></span><span>CH-07.2</span><strong>ANNOTATIONS</strong></div>
+  <div class="message_list_header"><span data-gb-entry-count>—</span> entries on file</div>
+  <ul class="message_list" data-gb-entries>
+    <li class="empty_message">loading entries…</li>
   </ul>
 </section>
 

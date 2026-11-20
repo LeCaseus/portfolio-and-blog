@@ -22,10 +22,10 @@ fetch_messages(page)
     entry_count_element.textContent = entries.length;
     entries_element.innerHTML = entries.length
       ? entries.map(render_message).join("")
-      : '<li class="doc-empty">no entries yet — be the first.</li>';
+      : '<li class="empty_message">no entries yet — be the first.</li>';
   })
   .catch(() => {
     entry_count_element.textContent = "—";
     entries_element.innerHTML =
-      '<li class="doc-empty">couldn\'t load entries — refresh to try again.</li>';
+      '<li class="empty_message">couldn\'t load entries — refresh to try again.</li>';
   });
