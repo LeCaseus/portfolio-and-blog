@@ -1,13 +1,13 @@
-<header class="status" role="banner">
-  <div class="left">
-    <span class="dot" aria-hidden="true"></span>
-    ELECTRODES CONNECTED · <span class="build-tag">v3.5 · stable</span>
+<header class="status_bar" role="banner">
+  <div class="status_bar_left">
+    <span class="status_bar_pulse" aria-hidden="true"></span>
+    ELECTRODES CONNECTED · <span class="status_bar_build_tag">v3.5 · stable</span>
   </div>
-  <div class="center">{{ .Params.statusline }}</div>
-  <div class="right">
+  <div class="status_bar_center">{{ .Params.statusline }}</div>
+  <div class="status_bar_right">
     <span>UTC <span data-clock>00:00:00</span></span>
-    <label class="switch" aria-label="Toggle theme">
-      <input type="checkbox" class="toggle" data-theme-toggle data-umami-event="theme-toggle" />
+    <label class="theme_switch" aria-label="Toggle theme">
+      <input type="checkbox" class="theme_switch_input" data-theme-toggle data-umami-event="theme-toggle" />
     </label>
   </div>
 </header>

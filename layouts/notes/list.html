@@ -1,10 +1,10 @@
 {{ define "main" }}
 
-<section class="hero-intro" id="top" data-screen-label="04 Notes">
-  <div class="name-eyebrow">0x0004 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
-  <h1>CHEZTER'S<br /><span class="alive">MICRO-LOGS<span class="records-cursor">_</span></span></h1>
-  <div class="prose">
-    <div class="col-label">// RECORD LOG</div>
+<section class="hero_intro" id="top" data-screen-label="04 Notes">
+  <div class="hero_eyebrow">0x0004 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
+  <h1>CHEZTER'S<br /><span class="hero_title_accent">MICRO-LOGS<span class="hero_title_cursor">_</span></span></h1>
+  <div class="intro_box">
+    <div class="panel_label">// RECORD LOG</div>
     <p>
       Welcome to my running record of shorter thoughts, passing observations, and things encountered elsewhere on the
       web. Entries include original notes and webmentions of things liked, bookmarked, replied to, or quoted. This is an
@@ -14,68 +14,68 @@
   </div>
 </section>
 
-<section class="doc-section" id="feed">
-  <div class="channel"><span class="line"></span><span>CH-04.1</span><strong>LIVE&nbsp;FEED</strong></div>
+<section class="page_section" id="feed">
+  <div class="channel_label"><span class="channel_label_line"></span><span>CH-04.1</span><strong>LIVE&nbsp;FEED</strong></div>
   {{ $notes := (where .Site.RegularPages "Section" "notes").ByDate.Reverse }}
   {{ $allTags := slice }}
   {{- range $notes }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end -}}
   {{ $uniqueTags := $allTags | uniq | sort }}
-  <div class="feed-head">
-    <span class="feed-head-count"><span>{{ len $notes }}</span> transmissions</span>
-    <span class="feed-head-live"><span class="feed-live-dot" aria-hidden="true"></span>live</span>
+  <div class="note_feed_header">
+    <span class="note_feed_count"><span>{{ len $notes }}</span> transmissions</span>
+    <span class="note_feed_live"><span class="note_feed_live_dot" aria-hidden="true"></span>live</span>
   </div>
   {{ if $uniqueTags }}
-  <div class="tag-dropdown">
-    <input type="checkbox" id="notes-tag-toggle" class="tag-dropdown-toggle"
+  <div class="note_tag_dropdown">
+    <input type="checkbox" id="notes-tag-toggle" class="note_tag_dropdown_toggle"
       data-umami-event="notes-tag-dropdown-toggle" />
-    <label for="notes-tag-toggle" class="tag-dropdown-summary">
-      <span>FILTER BY TAG</span><span class="tag-dropdown-arrow">▾</span>
+    <label for="notes-tag-toggle" class="note_tag_dropdown_summary">
+      <span>FILTER BY TAG</span><span class="note_tag_dropdown_arrow">▾</span>
     </label>
-    <div class="tag-pill-list" data-notes-tag-list>
+    <div class="note_tag_list" data-notes-tag-list>
       {{ range $uniqueTags }}
-      <button type="button" class="tag-pill" data-tag="{{ . }}" data-umami-event="notes-tag-filter"
+      <button type="button" class="note_tag_chip" data-tag="{{ . }}" data-umami-event="notes-tag-filter"
         data-umami-event-tag="{{ . }}">
-        <span class="lbl">{{ . }}</span>
-        <span class="count">{{ len (where $notes "Params.tags" "intersect" (slice .)) }}</span>
+        <span class="note_tag_chip_label">{{ . }}</span>
+        <span class="note_tag_chip_count">{{ len (where $notes "Params.tags" "intersect" (slice .)) }}</span>
       </button>
       {{ end }}
     </div>
   </div>
   {{ end }}
-  <ul class="feed-list">
+  <ul class="note_feed">
     {{ if $notes }}
     {{ range $index, $note := $notes }}
-    <li class="h-entry feed-card" data-kind='{{ .Params.entry_kind | default "note" }}'
+    <li class="h-entry note_card" data-kind='{{ .Params.entry_kind | default "note" }}'
       data-tags='{{ delimit (.Params.tags | default slice) "||" }}'>
-      <div class="feed-card-head">
+      <div class="note_card_header">
         {{ partial "note-author.html" . }}
-        <span class="feed-card-meta">
+        <span class="note_card_meta">
           {{ $lvl := cond (not .Params.source_url) .Params.lvl (partial "note-kind-key.html" .) }}
-          <span class="lvl" data-lvl="{{ $lvl }}">{{ $lvl }}</span>
-          <span class="feed-card-dot" aria-hidden="true">·</span>
-          <time class="dt-published feed-card-time" datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
+          <span class="level_badge" data-lvl="{{ $lvl }}">{{ $lvl }}</span>
+          <span class="note_card_meta_separator" aria-hidden="true">·</span>
+          <time class="dt-published note_card_time" datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
             data-iso='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
             title='{{ .Date.Format "2 January 2006, 15:04" }}'>{{ .Date.Format "2 January 2006, 15:04" }}</time>
         </span>
       </div>
-      <div class="e-content feed-card-body">{{ .Content }}</div>
+      <div class="e-content note_card_body">{{ .Content }}</div>
       {{ partial "note-kind.html" . }}
       {{ with .Params.tags }}
-      <div class="feed-card-tags">{{ range . }}<span class="p-category">{{ . }}</span>{{ end }}</div>
+      <div class="note_card_tags">{{ range . }}<span class="p-category">{{ . }}</span>{{ end }}</div>
       {{ end }}
-      <div class="feed-card-foot">
-        <a class="u-url u-uid log-nav" href="{{ .RelPermalink }}">open [↵]</a>
-        <a class="log-nav" href="{{ .RelPermalink }}#comments" data-umami-event="note-comment-click">comment [C]</a>
-        <button type="button" class="log-nav" data-copy-link data-permalink="{{ .Permalink }}"
+      <div class="note_card_footer">
+        <a class="u-url u-uid action_button" href="{{ .RelPermalink }}">open [↵]</a>
+        <a class="action_button" href="{{ .RelPermalink }}#comments" data-umami-event="note-comment-click">comment [C]</a>
+        <button type="button" class="action_button" data-copy-link data-permalink="{{ .Permalink }}"
           data-umami-event="note-copy-link">share [S]</button>
       </div>
     </li>
     {{ end }}
     {{ else }}
-    <li class="doc-empty">no transmissions yet.</li>
+    <li class="empty_message">no transmissions yet.</li>
     {{ end }}
   </ul>
-  <div class="feed-sentinel" data-feed-sentinel aria-hidden="true"></div>
+  <div class="note_feed_sentinel" data-feed-sentinel aria-hidden="true"></div>
 </section>
 
 {{ end }}

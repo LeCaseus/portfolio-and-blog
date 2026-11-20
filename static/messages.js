@@ -23,20 +23,20 @@ export function render_message(entry) {
   const website_html = render_link(entry.website);
   const reply_html = entry.reply_message
     ? `
-    <div class="gb-reply">
-      <span class="gb-reply-label">↳ reply</span>
+    <div class="message_entry_reply">
+      <span class="message_entry_reply_label">↳ reply</span>
       <p>${escape_html(entry.reply_message)}</p>
     </div>`
     : "";
 
   return `
-    <li class="gb-entry">
-      <div class="gb-entry-head">
-        <span class="gb-entry-name">${display_name}</span>
-        ${website_html ? `<span class="gb-entry-site">${website_html}</span>` : ""}
-        <span class="gb-entry-date">${format_message_date(entry.created_at)}</span>
+    <li class="message_entry">
+      <div class="message_entry_header">
+        <span class="message_entry_name">${display_name}</span>
+        ${website_html ? `<span class="message_entry_website">${website_html}</span>` : ""}
+        <span class="message_entry_date">${format_message_date(entry.created_at)}</span>
       </div>
-      <p class="gb-entry-msg">${escape_html(entry.message)}</p>
+      <p class="message_entry_text">${escape_html(entry.message)}</p>
       ${reply_html}
     </li>
   `;
@@ -54,7 +54,7 @@ export function init_message_form({ page, form, success_text }) {
   const message_input = form.elements.message;
   const submit_button = form.querySelector('[type="submit"]');
   const status_element = form.querySelector('[role="status"]');
-  const count_box = form.querySelector(".gb-count");
+  const count_box = form.querySelector(".message_form_char_count");
   const count_element = count_box.querySelector("span");
 
   const field_value = (field_name) => form.elements[field_name].value.trim();
@@ -62,13 +62,13 @@ export function init_message_form({ page, form, success_text }) {
   const update_count = () => {
     const length = message_input.value.length;
     count_element.textContent = length;
-    count_box.classList.toggle("gb-count-warn", length > 900);
+    count_box.classList.toggle("message_form_char_count_warning", length > 900);
   };
 
   const set_status = (text, kind) => {
     status_element.textContent = text;
-    status_element.classList.toggle("gb-status-ok", kind === "ok");
-    status_element.classList.toggle("gb-status-err", kind === "err");
+    status_element.classList.toggle("message_form_status_ok", kind === "ok");
+    status_element.classList.toggle("message_form_status_error", kind === "err");
   };
 
   message_input.addEventListener("input", update_count);

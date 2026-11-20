@@ -7,7 +7,7 @@ export function init_typewriter() {
   const text_node = document.createTextNode("");
   const cursor = document.createElement("span");
 
-  cursor.className = "cursor";
+  cursor.className = "typewriter_cursor";
 
   typewriter_el.innerHTML = "";
   typewriter_el.appendChild(text_node);
@@ -96,7 +96,7 @@ export function init_hero_ecg() {
   ecg_svg.setAttribute("preserveAspectRatio", "none");
   ecg_svg.appendChild(path);
 
-  const app_main = document.querySelector(".app-main");
+  const app_main = document.querySelector(".app_main");
   const get_scroll_position = () => window.scrollY + app_main.scrollTop;
 
   let intensity = 1;
@@ -247,7 +247,7 @@ export function start_clock() {
 
 export function init_mobile_nav() {
   const toggle = document.getElementById("mobile-nav-check");
-  document.querySelectorAll(".nav-col .nav-chip").forEach((link) => {
+  document.querySelectorAll(".nav_panel .nav_link").forEach((link) => {
     link.addEventListener("click", () => {
       toggle.checked = false;
     });
@@ -310,7 +310,7 @@ export function init_tag_chips(tag_list, chip_selector, on_change) {
   tag_list.addEventListener("click", (event) => {
     const chip = event.target.closest(chip_selector);
     if (!chip) return;
-    chip.classList.toggle("active");
+    chip.classList.toggle("is_active");
     on_change();
   });
 }

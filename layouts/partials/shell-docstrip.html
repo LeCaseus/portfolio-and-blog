@@ -1,22 +1,22 @@
-<input type="checkbox" id="docstrip-toggle" class="mobile-dropdown-toggle" />
-<label for="docstrip-toggle" class="col-label mobile-dropdown-summary doc-strip-summary" data-umami-event="doc-strip-toggle">
+<input type="checkbox" id="docstrip-toggle" class="accordion_toggle" />
+<label for="docstrip-toggle" class="panel_label accordion_summary doc_strip_summary" data-umami-event="doc-strip-toggle">
   // SUBJECT RECORD
 </label>
-<div class="doc-strip mobile-dropdown-content">
-  <div class="doc-field">
-    <span class="k">SUBJECT</span>
-    <span class="v signal">001 · CHEZTER VARGAS</span>
+<div class="doc_strip accordion_content">
+  <div class="doc_strip_field">
+    <span class="doc_strip_field_label">SUBJECT</span>
+    <span class="doc_strip_field_value doc_strip_field_value_highlight">001 · CHEZTER VARGAS</span>
   </div>
-  <div class="doc-field">
-    <span class="k">CLASSIFICATION</span>
-    <span class="v">{{ if .Params.classification }}{{ .Params.classification }}{{ else if eq .Section "posts" }}BLOG ENTRY{{ else }}PUBLIC RECORD{{ end }}</span>
+  <div class="doc_strip_field">
+    <span class="doc_strip_field_label">CLASSIFICATION</span>
+    <span class="doc_strip_field_value">{{ if .Params.classification }}{{ .Params.classification }}{{ else if eq .Section "posts" }}BLOG ENTRY{{ else }}PUBLIC RECORD{{ end }}</span>
   </div>
-  <div class="doc-field">
-    <span class="k">DOCUMENT ID</span>
-    <span class="v">{{ if .Params.docid }}{{ .Params.docid }}{{ else if not .Date.IsZero }}{{ .Date.Format "2006-01-02" }}{{ end }}</span>
+  <div class="doc_strip_field">
+    <span class="doc_strip_field_label">DOCUMENT ID</span>
+    <span class="doc_strip_field_value">{{ if .Params.docid }}{{ .Params.docid }}{{ else if not .Date.IsZero }}{{ .Date.Format "2006-01-02" }}{{ end }}</span>
   </div>
-  <div class="doc-field">
-    <span class="k">ORIGIN</span>
-    <span class="v">PHL © 2026 <small>// self-hosted, laptop-powered</small></span>
+  <div class="doc_strip_field">
+    <span class="doc_strip_field_label">ORIGIN</span>
+    <span class="doc_strip_field_value">PHL © 2026 </span>
   </div>
 </div>

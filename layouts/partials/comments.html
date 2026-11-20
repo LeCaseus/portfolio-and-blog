@@ -1,34 +1,34 @@
 <section id="comments" data-comments data-page="{{ .messagePage }}" data-target-url="{{ .targetUrl }}">
-  <div class="log">
-    <div class="log-bar">
-      <div class="stream"><strong>COMMENTS</strong> <span class="ok">moderated</span></div>
+  <div class="log_box">
+    <div class="log_bar">
+      <div class="log_bar_stream"><strong>COMMENTS</strong> <span class="log_bar_status">moderated</span></div>
       <div>entries=<span data-comments-entry-count>—</span></div>
     </div>
-    <ul class="gb-entries" data-comments-list>
-      <li class="doc-empty">loading comments…</li>
+    <ul class="message_list" data-comments-list>
+      <li class="empty_message">loading comments…</li>
     </ul>
-    <form class="gb-form" data-comments-form novalidate>
-      <div class="gb-row">
-        <label for="comment-name">name <span class="opt">optional</span></label>
+    <form class="message_form" data-comments-form novalidate>
+      <div class="message_form_row">
+        <label for="comment-name">name <span class="message_form_optional">optional</span></label>
         <input type="text" id="comment-name" name="name" maxlength="80" autocomplete="name" />
       </div>
-      <div class="gb-row">
-        <label for="comment-website">website <span class="opt">optional</span></label>
+      <div class="message_form_row">
+        <label for="comment-website">website <span class="message_form_optional">optional</span></label>
         <input type="url" id="comment-website" name="website" maxlength="200" placeholder="https://"
           autocomplete="url" />
       </div>
-      <div class="gb-row">
+      <div class="message_form_row">
         <label for="comment-message">comment</label>
         <textarea id="comment-message" name="message" maxlength="1000" rows="4" required></textarea>
-        <div class="gb-count"><span>0</span> / 1000</div>
+        <div class="message_form_char_count"><span>0</span> / 1000</div>
       </div>
-      <div class="gb-actions">
+      <div class="message_form_actions">
         <button type="submit" data-umami-event="comment-submit">post comment</button>
-        <span class="gb-status" role="status" aria-live="polite"></span>
+        <span class="message_form_status" role="status" aria-live="polite"></span>
       </div>
     </form>
   </div>
-  <div class="doc-prose">
+  <div class="section_prose">
     <p>
       thoughts on this? drop a comment above, or email me at
       <code>{{ site.Params.contactEmail }}</code>
