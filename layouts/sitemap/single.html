@@ -2,12 +2,13 @@
 
 <section class="hero_intro" id="top" data-screen-label="09 Sitemap">
   <div class="hero_eyebrow">0x0009 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
-  <h1>EVERY&nbsp;PAGE<br /><span class="hero_title_accent">I&nbsp;HAVE<span class="hero_title_cursor">_</span></span></h1>
+  <h1>INDEXED<br /><span class="hero_title_accent">CHARTS<span class="hero_title_cursor">_</span></span></h1>
   <div class="intro_box">
     <div class="panel_label">// RECORD LOG</div>
     <p>
-      Take this. It's a running record of everything around here. Not sure where to go? Take a look through the
-      available pages and find your way around.
+      Welcome to my website! I'm not sure why you'd be here right away, nor why I even have this in the first place
+      since I do have all my pages listed down on the navigation menu to the right or inside the hamburger
+      menu if you're on mobile. Sitemap, Slash Pages, call it whatever you want, but please, take your time.
     </p>
   </div>
 </section>
@@ -32,7 +33,8 @@
   <div class="channel_label"><span class="channel_label_line"></span><span>CH-09.2</span><strong>READINGS</strong></div>
   <ul class="link_list link_list_mobile_arrow">
     {{ range (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
-    <li><a href="{{ .RelPermalink }}"><span>{{ .Title }}</span><span class="link_list_path">{{ .RelPermalink }}</span></a></li>
+    <li><a href="{{ .RelPermalink }}"><span>{{ .Title }}</span><span class="link_list_path">{{ .RelPermalink
+          }}</span></a></li>
     {{ else }}
     <li class="empty_message">no entries yet.</li>
     {{ end }}
