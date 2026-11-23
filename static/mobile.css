@@ -31,17 +31,19 @@
     grid-template-columns: calc(var(--content_width) - 88px) 64px;
   }
 
-  .project_block,
-  .project_block_flipped {
-    grid-template-columns: 1fr;
+  .project_block {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .project_block_flipped .project_viewer_column {
-    order: 0;
+  .project_viewer_column {
+    contain: none;
+    overflow: visible;
+    min-width: 0;
+    padding-right: 0;
   }
 
   .project_stats {
-    grid-template-columns: repeat(2, 1fr);
+    min-width: 0;
   }
 }
 

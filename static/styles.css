@@ -1196,41 +1196,31 @@ body[data-shell="dashboard"] {
 
 .project_block {
   display: grid;
-  grid-template-columns: 330px 390px;
-  column-gap: 40px;
-  align-items: start;
-  margin-top: 28px;
-}
-
-.project_block_flipped {
-  grid-template-columns: 390px 330px;
-}
-
-.project_block_flipped .project_viewer_column {
-  order: 2;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px;
 }
 
 .project_viewer_column .model_viewer {
   height: 250px;
 }
 
-.project_info_header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.project_info_column {
+  min-width: 0;
 }
 
-.project_title {
-  margin: 0;
-  font-family: var(--pixel_display);
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 1.1;
+@media (min-width: 53.26em) {
+  .project_info_column {
+    contain: size;
+    overflow-y: auto;
+    padding-right: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--signal) transparent;
+  }
 }
 
-.project_title em {
-  font-style: normal;
-  color: var(--signal);
+.project_info_column > :first-child {
+  margin-top: 0;
 }
 
 .project_description {
@@ -1241,9 +1231,9 @@ body[data-shell="dashboard"] {
 
 .project_stats {
   display: grid;
-  grid-template-columns: repeat(2, 189px);
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 12px;
 }
 
 .project_note {
@@ -1256,27 +1246,6 @@ body[data-shell="dashboard"] {
 .project_note a {
   border-bottom: 2px dotted var(--signal);
   color: var(--signal);
-}
-
-.status_pill {
-  flex-shrink: 0;
-  padding: 3px 7px;
-  border: var(--border_soft);
-  border-radius: 2px;
-  background: var(--paper);
-  font-size: var(--text_xs);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mute);
-}
-
-.status_pill[data-s="active"] {
-  border-color: var(--signal);
-  color: var(--signal);
-}
-
-.status_pill[data-s="active"]::before {
-  content: "● ";
 }
 
 /* ---------- message forms and lists (guestbook, comments) ---------- */
@@ -2483,7 +2452,6 @@ body[data-shell="dashboard"] {
 .model_viewer,
 .terminal,
 .message_form_actions button,
-.status_pill[data-s="active"],
 .nav_link:hover,
 .nav_link.is_active,
 .status_bar,
