@@ -37,5 +37,26 @@ disableKinds = ["taxonomy", "term"]
   mediaType = "application/rss+xml"
   isPlainText = true
 
+[outputFormats.NotesRSS]
+  baseName = "notes"
+  mediaType = "application/rss+xml"
+  isPlainText = true
+
+[outputFormats.BlogRSS]
+  baseName = "blog"
+  mediaType = "application/rss+xml"
+  isPlainText = true
+
+[mediaTypes."application/atom+xml"]
+  suffixes = ["xml"]
+
+[outputFormats.AtomFeed]
+  baseName = "atom"
+  mediaType = "application/atom+xml"
+  isPlainText = true
+
+[outputs]
+  home = ["HTML", "RSS", "NotesRSS", "BlogRSS", "AtomFeed"]
+  
 [markup.goldmark.parser]
   wrapStandAloneImageWithinParagraph = false
