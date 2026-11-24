@@ -19,7 +19,7 @@
     </div>
     {{ partial "note-kind.html" . }}
     {{ with .Params.tags }}
-    <div class="note_card_tags">{{ range . }}<span class="p-category">{{ . }}</span>{{ end }}</div>
+    <div class="note_card_tags">{{ range . }}<span class="p-category" data-tag="{{ . }}">{{ . }}</span>{{ end }}</div>
     {{ end }}
   </article>
   <div class="note_back_row">

@@ -15,6 +15,7 @@
   --cyan: rgb(0, 122, 153);
   --violet: rgb(124, 77, 196);
   --yellow: rgb(201, 156, 0);
+  --red: rgb(190, 55, 65);
   --grid: rgba(12, 13, 12, 0.05);
   --scanline: rgba(12, 13, 12, 0.05);
   --glow_text: none;
@@ -46,6 +47,7 @@
   --cyan: rgb(86, 204, 242);
   --violet: rgb(177, 140, 255);
   --yellow: rgb(255, 224, 51);
+  --red: rgb(255, 105, 115);
   --grid: rgba(240, 236, 227, 0.06);
   --scanline: rgba(240, 236, 227, 0.06);
   --glow_text:
@@ -1038,7 +1040,7 @@ body[data-shell="dashboard"] {
   padding: 1px 6px;
   border: var(--border_soft);
   border-radius: 2px;
-  color: var(--signal);
+  color: var(--tag_colour, var(--signal));
 }
 
 .log_entry_text {
@@ -1075,6 +1077,53 @@ body[data-shell="dashboard"] {
 }
 .level_badge[data-lvl="quote"] {
   color: var(--ink);
+}
+
+[data-tag="ai"],
+[data-tag="social media"],
+[data-tag="privacy"],
+[data-tag="society"],
+[data-tag="culture"],
+[data-tag="philosophy"],
+[data-tag="loneliness"],
+[data-tag="friendship"],
+[data-tag="education"],
+[data-tag="science"],
+[data-tag="philosophical"] {
+  --tag_colour: var(--violet);
+}
+
+[data-tag="homelab"],
+[data-tag="linux"],
+[data-tag="website"],
+[data-tag="programming"],
+[data-tag="indieweb"] {
+  --tag_colour: var(--cyan);
+}
+
+[data-tag="personal"],
+[data-tag="love & loss"],
+[data-tag="work"] {
+  --tag_colour: var(--warn);
+}
+
+[data-tag="opinion"],
+[data-tag="rant"],
+[data-tag="humor"] {
+  --tag_colour: var(--yellow);
+}
+
+[data-tag="film & tv"],
+[data-tag="anime"],
+[data-tag="book"],
+[data-tag="review"],
+[data-tag="gaming"],
+[data-tag="music"] {
+  --tag_colour: var(--red);
+}
+
+[data-tag="admin"] {
+  --tag_colour: var(--mute);
 }
 
 /* ---------- action button ---------- */
@@ -1603,9 +1652,13 @@ body[data-shell="dashboard"] {
 }
 
 .note_tag_chip.is_active {
-  border-color: var(--signal);
-  background: var(--signal_soft);
-  color: var(--signal);
+  border-color: var(--tag_colour, var(--signal));
+  background: color-mix(
+    in srgb,
+    var(--tag_colour, var(--signal)) 16%,
+    transparent
+  );
+  color: var(--tag_colour, var(--signal));
 }
 
 .note_tag_chip_count {
@@ -1613,7 +1666,7 @@ body[data-shell="dashboard"] {
 }
 
 .note_tag_chip.is_active .note_tag_chip_count {
-  color: var(--signal);
+  color: var(--tag_colour, var(--signal));
 }
 
 .note_feed {
@@ -1811,7 +1864,7 @@ body[data-shell="dashboard"] {
   padding: 1px 7px;
   border: var(--border_soft);
   border-radius: 2px;
-  color: var(--signal);
+  color: var(--tag_colour, var(--signal));
 }
 
 .note_card_footer {
@@ -1965,9 +2018,13 @@ body[data-shell="dashboard"] {
 }
 
 .blog_tag_chip.is_active {
-  border-color: var(--signal);
-  background: var(--signal_soft);
-  color: var(--signal);
+  border-color: var(--tag_colour, var(--signal));
+  background: color-mix(
+    in srgb,
+    var(--tag_colour, var(--signal)) 16%,
+    transparent
+  );
+  color: var(--tag_colour, var(--signal));
 }
 
 .blog_tag_chip_label {
@@ -2116,7 +2173,7 @@ body[data-shell="dashboard"] {
 }
 
 .post_meta_tag {
-  color: var(--signal);
+  color: var(--tag_colour, var(--signal));
 }
 
 .post_meta_dot {

@@ -52,7 +52,8 @@
         <div class="level_badge" data-lvl="{{ $lvl }}">{{ $lvl }}</div>
         <div class="log_entry_message">
           <p class="log_entry_text"><a href="{{ .RelPermalink }}">{{ $msg }}</a></p>
-          {{ with .Params.tags }}<div class="log_entry_tags">{{ range . }}<span>{{ . }}</span>{{ end }}</div>{{ end }}
+          {{ with .Params.tags }}<div class="log_entry_tags">{{ range . }}<span data-tag="{{ . }}">{{ . }}</span>{{ end
+            }}</div>{{ end }}
         </div>
       </div>
       {{ end }}

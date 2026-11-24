@@ -8,7 +8,7 @@
           time.Format
           "2 January 2006" }}</time>
         <span class="post_meta_dot"></span>
-        {{ range .Params.tags }}<span class="post_meta_tag p-category">{{ . }}</span>{{ end }}
+        {{ range .Params.tags }}<span class="post_meta_tag p-category" data-tag="{{ . }}">{{ . }}</span>{{ end }}
         <span class="post_meta_dot"></span>
         <span>{{ .ReadingTime }} min read</span>
       </div>
