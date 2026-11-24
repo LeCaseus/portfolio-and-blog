@@ -1,0 +1,11 @@
+{{- $items := .RegularPages -}}
+{{- if .IsHome -}}
+  {{- $items = where site.RegularPages "Section" "in" site.Params.mainSections -}}
+{{- end -}}
+{{ partial "rss-feed.xml" (dict
+  "title" .Title
+  "description" (.Description | default .Site.Title)
+  "link" .Permalink
+  "self" (.OutputFormats.Get "rss").Permalink
+  "items" $items.ByDate.Reverse
+  "locale" .Site.Language.Locale) }}

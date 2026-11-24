@@ -2505,6 +2505,85 @@ body[data-shell="dashboard"] {
   }
 }
 
+/* ---------- photos ---------- */
+
+.profile_picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo_grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.photo_tile {
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border: var(--border_soft);
+  position: relative;
+}
+
+.photo_tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo_tile_count {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  padding: 1px 6px;
+  border: var(--border_soft);
+  background: var(--paper_2);
+  font-size: var(--text_xs);
+}
+
+.photo_carousel {
+  display: flex;
+  overflow-x: auto;
+  border: var(--border);
+  scroll-snap-type: x mandatory;
+}
+
+.photo_slide {
+  flex: 0 0 100%;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background: var(--paper_2);
+  scroll-snap-align: start;
+}
+
+.photo_title {
+  margin: 16px 0 4px;
+  font-size: var(--text_lg);
+  font-weight: 500;
+}
+
+.photo_date {
+  display: block;
+  margin-bottom: 12px;
+  font-size: var(--text_xs);
+  color: var(--mute);
+}
+
+.photo_controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 12px;
+  font-size: var(--text_sm);
+  color: var(--mute);
+}
+
 /* ---------- dark theme glow ---------- */
 
 .hero_title_accent,

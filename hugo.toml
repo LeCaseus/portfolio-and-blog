@@ -7,6 +7,7 @@ disableKinds = ["taxonomy", "term"]
 [params]
   author = 'Chezter Vargas'
   contactEmail = 'records [at] cheztervargas [dot] com'
+  mainSections = ["posts", "notes", "photos"]
 
 [params.note_kinds.like]
   label = "liked"
@@ -28,35 +29,28 @@ disableKinds = ["taxonomy", "term"]
   class = "u-repost-of"
   emoji = "💬"
   
-[permalinks]
+[permalinks.page]
   posts = "/blog/:slug/"
   notes = "/notes/:slug"
+
+[permalinks.section]
+  posts = "/blog/"
   
 [outputFormats.RSS]
   baseName = "feed"
   mediaType = "application/rss+xml"
   isPlainText = true
 
-[outputFormats.NotesRSS]
-  baseName = "notes"
-  mediaType = "application/rss+xml"
-  isPlainText = true
-
-[outputFormats.BlogRSS]
-  baseName = "blog"
-  mediaType = "application/rss+xml"
-  isPlainText = true
-
 [mediaTypes."application/atom+xml"]
   suffixes = ["xml"]
 
-[outputFormats.AtomFeed]
+[outputFormats.Atom]
   baseName = "atom"
   mediaType = "application/atom+xml"
   isPlainText = true
 
 [outputs]
-  home = ["HTML", "RSS", "NotesRSS", "BlogRSS", "AtomFeed"]
+  home = ["HTML", "RSS"]
   
 [markup.goldmark.parser]
   wrapStandAloneImageWithinParagraph = false

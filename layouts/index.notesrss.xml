@@ -1,8 +1,0 @@
-{{- $notes := .Site.GetPage "/notes" -}}
-{{ partial "rss-feed.xml" (dict
-  "title" $notes.Title
-  "description" $notes.Description
-  "link" $notes.Permalink
-  "self" (.OutputFormats.Get "NotesRSS").Permalink
-  "items" $notes.RegularPages.ByDate.Reverse
-  "locale" .Site.Language.Locale) }}

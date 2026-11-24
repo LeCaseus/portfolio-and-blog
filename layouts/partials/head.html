@@ -20,7 +20,12 @@
 <link rel="apple-touch-icon" href="/assets/favicons/180x180.ico" />
 <link rel="icon" href="/assets/favicons/512x512.ico" sizes="512x512" type="image/x-icon" />
 <link rel="webmention" href="https://cheztervargas.com/api/webmention" />
-<link rel="alternate" type="application/rss+xml" title="Chezter's Readings" href="/feed.xml" />
+{{ with site.Home.OutputFormats.Get "rss" }}
+<link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ site.Title }}" />{{ end }}
+{{ if not .IsHome }}{{ range .AlternativeOutputFormats }}
+<link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ $.Title }}" />{{ end }}{{ end }}
+{{ with .Site.GetPage "/photos" }}{{ with .OutputFormats.Get "atom" }}
+<link rel="alternate" type="application/atom+xml" title="Chezter's Photos" href="{{ .Permalink }}" />{{ end }}{{ end }}
 <script>
   (function () {
     var loaded = false;

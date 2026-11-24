@@ -1,0 +1,40 @@
+{{ define "main" }}
+
+<section class="page_section" id="frame">
+  <div class="channel_label"><span class="channel_label_line"></span><span>CH-05.2</span><strong>FRAME</strong></div>
+  <article class="h-entry">
+    {{ $images := .Resources.ByType "image" }}
+    <div class="photo_viewer" data-photo-viewer>
+      <div class="photo_carousel" data-photo-track>
+        {{ range $images }}
+        <img class="photo_slide u-photo" src="{{ (.Fill " 1200x1200 Center").RelPermalink }}" alt="{{ $.Title }}"
+          loading="lazy" decoding="async" />
+        {{ end }}
+      </div>
+      {{ if gt (len $images) 1 }}
+      <div class="photo_controls">
+        <button type="button" class="action_button" data-photo-prev aria-label="Previous photo">←</button>
+        <span class="photo_counter"><span data-photo-index>1</span> / {{ len $images }}</span>
+        <button type="button" class="action_button" data-photo-next aria-label="Next photo">→</button>
+      </div>
+      {{ end }}
+    </div>
+    <h1 class="p-name photo_title">{{ .Title }}</h1>
+    <time class="dt-published photo_date" datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'>
+      {{ .Date.Format "2 January 2006" }}
+    </time>
+    {{ with .Content }}<div class="e-content section_prose">{{ . }}</div>{{ end }}
+    <a class="u-url" href="{{ .Permalink }}" hidden>{{ .Permalink }}</a>
+  </article>
+  <div class="note_back_row"><a href="/photos">go back</a></div>
+</section>
+
+{{ partial "comments.html" (dict "messagePage" (printf "photos/%s" .File.ContentBaseName) "targetUrl" .Permalink "title"
+.Title) }}
+
+{{ end }}
+
+{{ define "scripts" }}
+<script type="module" src="/photos.js"></script>
+<script type="module" src="/comments.js"></script>
+{{ end }}

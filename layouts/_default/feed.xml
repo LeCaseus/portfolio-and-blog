@@ -1,7 +1,0 @@
-{{ partial "rss-feed.xml" (dict
-  "title" .Site.Title
-  "description" (.Site.Params.description | default .Site.Title)
-  "link" .Site.BaseURL
-  "self" (.OutputFormats.Get "RSS").Permalink
-  "items" (where .Site.RegularPages "Section" "in" (slice "posts" "notes")).ByDate.Reverse
-  "locale" .Site.Language.Locale) }}

@@ -1,7 +1,7 @@
 {{ define "main" }}
 
-<section class="hero_intro" id="top" data-screen-label="09 Sitemap">
-  <div class="hero_eyebrow">0x0009 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
+<section class="hero_intro" id="top" data-screen-label="10 Sitemap">
+  <div class="hero_eyebrow">0x0010 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
   <h1>INDEXED<br /><span class="hero_title_accent">CHARTS<span class="hero_title_cursor">_</span></span></h1>
   <div class="intro_box">
     <div class="panel_label">// RECORD LOG</div>
@@ -14,12 +14,13 @@
 </section>
 
 <section class="page_section" id="pages">
-  <div class="channel_label"><span class="channel_label_line"></span><span>CH-09.1</span><strong>PAGES</strong></div>
+  <div class="channel_label"><span class="channel_label_line"></span><span>CH-10.1</span><strong>PAGES</strong></div>
   <ul class="link_list link_list_mobile_arrow">
     <li><a href="/"><span>home</span><span class="link_list_path">/</span></a></li>
     <li><a href="/about.html"><span>about</span><span class="link_list_path">/about.html</span></a></li>
-    <li><a href="/blog.html"><span>readings log</span><span class="link_list_path">/blog.html</span></a></li>
-    <li><a href="/notes.html"><span>micro-logs</span><span class="link_list_path">/notes.html</span></a></li>
+    <li><a href="/blog"><span>readings log</span><span class="link_list_path">/blog</span></a></li>
+    <li><a href="/notes"><span>micro-logs</span><span class="link_list_path">/notes</span></a></li>
+    <li><a href="/photos"><span>photos</span><span class="link_list_path">/photos</span></a></li>
     <li><a href="/projects.html"><span>projects</span><span class="link_list_path">/projects.html</span></a></li>
     <li><a href="/bookmarks.html"><span>bookmarks</span><span class="link_list_path">/bookmarks.html</span></a></li>
     <li><a href="/guestbook.html"><span>guestbook</span><span class="link_list_path">/guestbook.html</span></a></li>
@@ -30,7 +31,7 @@
 </section>
 
 <section class="page_section" id="readings">
-  <div class="channel_label"><span class="channel_label_line"></span><span>CH-09.2</span><strong>READINGS</strong></div>
+  <div class="channel_label"><span class="channel_label_line"></span><span>CH-10.2</span><strong>READINGS</strong></div>
   <ul class="link_list link_list_mobile_arrow">
     {{ range (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
     <li><a href="{{ .RelPermalink }}"><span>{{ .Title }}</span><span class="link_list_path">{{ .RelPermalink

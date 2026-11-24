@@ -1,8 +1,0 @@
-{{- $posts := .Site.GetPage "/posts" -}}
-{{ partial "rss-feed.xml" (dict
-  "title" $posts.Title
-  "description" $posts.Description
-  "link" $posts.Permalink
-  "self" (.OutputFormats.Get "BlogRSS").Permalink
-  "items" $posts.RegularPages.ByDate.Reverse
-  "locale" .Site.Language.Locale) }}

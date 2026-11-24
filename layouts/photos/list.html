@@ -1,0 +1,44 @@
+{{ define "main" }}
+
+<section class="hero_intro" id="top" data-screen-label="05 Photos">
+  <div class="hero_split">
+    <div class="hero_text_column">
+      <div class="hero_eyebrow">0x0005 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
+      <h1>RADIOGRAPHIC<br /><span class="hero_title_accent">MEMORIES<span class="hero_title_cursor">_</span></span></h1>
+    </div>
+    <div class="model_viewer">
+      <img class="profile_picture" src="/assets/face.jpg" alt="Chezter Vargas" />
+    </div>
+  </div>
+  <div class="intro_box">
+    <div class="panel_label">// RECORD LOG</div>
+    <p>I understand what you're saying, and your comments are valuable, but I'm gonna ignore your advice.</p>
+  </div>
+</section>
+
+<section class="page_section" id="frames">
+  <div class="channel_label"><span class="channel_label_line"></span><span>CH-05.1</span><strong>FRAMES</strong></div>
+  <div class="photo_grid">
+    {{ range .RegularPages.ByDate.Reverse }}
+    {{ $photo := . }}
+    {{ with .Resources.ByType "image" }}
+    {{ $images := . }}
+    {{ $cover := index $images 0 }}
+    <a class="photo_tile" href="{{ $photo.RelPermalink }}">
+      <img src="{{ ($cover.Fill " 600x600 Center").RelPermalink }}" alt="{{ $photo.Title }}" loading="lazy"
+        decoding="async" />
+      {{ if gt (len $images) 1 }}<span class="photo_tile_count">{{ len $images }}</span>{{ end }}
+      decoding="async" />
+    </a>
+    {{ end }}
+    {{ else }}
+    <p class="empty_message">no frames yet.</p>
+    {{ end }}
+  </div>
+</section>
+
+{{ end }}
+
+{{ define "scripts" }}
+<script type="module" src="/shell.js"></script>
+{{ end }}
