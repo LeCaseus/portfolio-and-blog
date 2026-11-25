@@ -7,7 +7,7 @@ disableKinds = ["taxonomy", "term"]
 [params]
   author = 'Chezter Vargas'
   contactEmail = 'records [at] cheztervargas [dot] com'
-  mainSections = ["posts", "notes", "photos"]
+  mainSections = ["posts", "notes"]
 
 [params.note_kinds.like]
   label = "liked"

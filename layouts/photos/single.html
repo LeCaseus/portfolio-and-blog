@@ -7,7 +7,7 @@
     <div class="photo_viewer" data-photo-viewer>
       <div class="photo_carousel" data-photo-track>
         {{ range $images }}
-        <img class="photo_slide u-photo" src="{{ (.Fill " 1200x1200 Center").RelPermalink }}" alt="{{ $.Title }}"
+        <img class="photo_slide u-photo" src='{{ (.Fill "1200x1200 Center").RelPermalink }}' alt="{{ $.Title }}"
           loading="lazy" decoding="async" />
         {{ end }}
       </div>

@@ -25,10 +25,9 @@
     {{ $images := . }}
     {{ $cover := index $images 0 }}
     <a class="photo_tile" href="{{ $photo.RelPermalink }}">
-      <img src="{{ ($cover.Fill " 600x600 Center").RelPermalink }}" alt="{{ $photo.Title }}" loading="lazy"
+      <img src='{{ ($cover.Fill "600x600 Center").RelPermalink }}' alt="{{ $photo.Title }}" loading="lazy"
         decoding="async" />
       {{ if gt (len $images) 1 }}<span class="photo_tile_count">{{ len $images }}</span>{{ end }}
-      decoding="async" />
     </a>
     {{ end }}
     {{ else }}

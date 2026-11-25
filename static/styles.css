@@ -2545,6 +2545,11 @@ body[data-shell="dashboard"] {
   font-size: var(--text_xs);
 }
 
+.photo_viewer {
+  max-width: 32em;
+  margin: 0 auto;
+}
+
 .photo_carousel {
   display: flex;
   overflow-x: auto;
