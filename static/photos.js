@@ -2,6 +2,26 @@ import { init_shell } from "/shared.js";
 
 init_shell();
 
+function init_photo_columns() {
+  const grid = document.querySelector("[data-photo-grid]");
+  if (!grid) return;
+
+  const column_heights = [0, 0, 0];
+  const columns = column_heights.map(() => {
+    const column = document.createElement("div");
+    column.className = "photo_column";
+    return column;
+  });
+
+  grid.querySelectorAll(".photo_tile").forEach((tile) => {
+    const shortest = column_heights.indexOf(Math.min(...column_heights));
+    columns[shortest].append(tile);
+    column_heights[shortest] += Number(tile.dataset.ratio);
+  });
+
+  grid.append(...columns);
+}
+
 function init_photo_viewer() {
   const viewer = document.querySelector("[data-photo-viewer]");
   if (!viewer) return;
@@ -27,4 +47,5 @@ function init_photo_viewer() {
   );
 }
 
+init_photo_columns();
 init_photo_viewer();

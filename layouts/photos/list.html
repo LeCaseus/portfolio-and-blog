@@ -1,32 +1,30 @@
 {{ define "main" }}
 
 <section class="hero_intro" id="top" data-screen-label="05 Photos">
-  <div class="hero_split">
-    <div class="hero_text_column">
-      <div class="hero_eyebrow">0x0005 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
-      <h1>RADIOGRAPHIC<br /><span class="hero_title_accent">MEMORIES<span class="hero_title_cursor">_</span></span></h1>
-    </div>
-    <div class="model_viewer">
-      <img class="profile_picture" src="/assets/face.jpg" alt="Chezter Vargas" />
-    </div>
-  </div>
+  <div class="hero_eyebrow">0x0005 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
+  <h1>RADIOGRAPHIC<br /><span class="hero_title_accent">MEMORIES<span class="hero_title_cursor">_</span></span></h1>
   <div class="intro_box">
     <div class="panel_label">// RECORD LOG</div>
+    <img class="profile_picture" src="/assets/face.jpg" alt="Chezter Vargas" />
     <p>I understand what you're saying, and your comments are valuable, but I'm gonna ignore your advice.</p>
   </div>
 </section>
 
 <section class="page_section" id="frames">
   <div class="channel_label"><span class="channel_label_line"></span><span>CH-05.1</span><strong>FRAMES</strong></div>
-  <div class="photo_grid">
+  {{ $nudges := slice 0.85 0.92 1 1.08 1.15 }}
+  <div class="photo_grid" data-photo-grid>
     {{ range .RegularPages.ByDate.Reverse }}
     {{ $photo := . }}
     {{ with .Resources.ByType "image" }}
     {{ $images := . }}
     {{ $cover := index $images 0 }}
-    <a class="photo_tile" href="{{ $photo.RelPermalink }}">
-      <img src='{{ ($cover.Fill "600x600 Center").RelPermalink }}' alt="{{ $photo.Title }}" loading="lazy"
-        decoding="async" />
+    {{ $thumb := $cover.Resize "800x" }}
+    {{ $nudge := index $nudges (mod (hash.FNV32a $photo.File.ContentBaseName) (len $nudges)) }}
+    {{ $ratio := mul (div (float $cover.Height) $cover.Width) $nudge }}
+    <a class="photo_tile" href="{{ $photo.RelPermalink }}" data-ratio="{{ $ratio }}"
+      style="aspect-ratio: 1 / {{ $ratio }}">
+      <img src="{{ $thumb.RelPermalink }}" alt="{{ $photo.Title }}" loading="lazy" decoding="async" />
       {{ if gt (len $images) 1 }}<span class="photo_tile_count">{{ len $images }}</span>{{ end }}
     </a>
     {{ end }}
@@ -39,5 +37,5 @@
 {{ end }}
 
 {{ define "scripts" }}
-<script type="module" src="/shell.js"></script>
+<script type="module" src="/photos.js"></script>
 {{ end }}

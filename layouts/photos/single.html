@@ -4,11 +4,13 @@
   <div class="channel_label"><span class="channel_label_line"></span><span>CH-05.2</span><strong>FRAME</strong></div>
   <article class="h-entry">
     {{ $images := .Resources.ByType "image" }}
-    <div class="photo_viewer" data-photo-viewer>
+    {{ $ratio := 1.0 }}
+    {{ with $images }}{{ $first := index . 0 }}{{ $ratio = div (float $first.Width) $first.Height }}{{ end }}
+    <div class="photo_viewer" data-photo-viewer style="--photo_ratio: {{ $ratio }}">
       <div class="photo_carousel" data-photo-track>
         {{ range $images }}
-        <img class="photo_slide u-photo" src='{{ (.Fill "1200x1200 Center").RelPermalink }}' alt="{{ $.Title }}"
-          loading="lazy" decoding="async" />
+        <img class="photo_slide u-photo" src='{{ (.Fit "1200x1200").RelPermalink }}' alt="{{ $.Title }}" loading="lazy"
+          decoding="async" />
         {{ end }}
       </div>
       {{ if gt (len $images) 1 }}

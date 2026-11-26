@@ -5,5 +5,5 @@ description = "Welcome to my running record of shorter thoughts, passing observa
 docid = "CV-2026-0x0004"
 statusline = "CH-04 · NOTES"
 classification = "MICRO-LOGS"
-outputs = ["html", "rss"]
+outputs = ["html", "rss", "atom"]
 +++
