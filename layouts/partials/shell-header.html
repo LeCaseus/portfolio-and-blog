@@ -6,8 +6,9 @@
   <div class="status_bar_center">{{ .Params.statusline }}</div>
   <div class="status_bar_right">
     <span>UTC <span data-clock>00:00:00</span></span>
-    <label class="theme_switch" aria-label="Toggle theme">
-      <input type="checkbox" class="theme_switch_input" data-theme-toggle data-umami-event="theme-toggle" />
+    <label class="theme_switch" aria-label="Toggle shell">
+      <input type="checkbox" class="theme_switch_input" data-shell-toggle data-umami-event="shell-toggle" />
     </label>
+    {{ partial "shell-mobilenav.html" . }}
   </div>
 </header>

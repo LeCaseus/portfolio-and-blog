@@ -1,45 +1,62 @@
 {{ define "main" }}
 
-<section class="hero_intro" id="top" data-screen-label="10 Sitemap">
-  <div class="hero_eyebrow">0x0010 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
+<section class="hero_intro" id="top" data-screen-label="07 Sitemap">
+  <div class="hero_eyebrow">0x0007 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
   <h1>INDEXED<br /><span class="hero_title_accent">CHARTS<span class="hero_title_cursor">_</span></span></h1>
   <div class="intro_box">
     <div class="panel_label">// RECORD LOG</div>
     <p>
-      Welcome to my website! I'm not sure why you'd be here right away, nor why I even have this in the first place
-      since I do have all my pages listed down on the navigation menu to the right or inside the hamburger
-      menu if you're on mobile. Sitemap, Slash Pages, call it whatever you want, but please, take your time.
+      Welcome to the rest of my website! /slashes, /sitemap, /pages, call it whatever you want. Though I'm not sure why
+      you'd be here right away, I mean, there's so much to explore over at the blog, notes, and photos, but nevertheless
+      take your time.
     </p>
   </div>
 </section>
 
 <section class="page_section" id="pages">
-  <div class="channel_label"><span class="channel_label_line"></span><span>CH-10.1</span><strong>PAGES</strong></div>
-  <ul class="link_list link_list_mobile_arrow">
-    <li><a href="/"><span>home</span><span class="link_list_path">/</span></a></li>
-    <li><a href="/about/"><span>about</span><span class="link_list_path">/about/</span></a></li>
-    <li><a href="/blog"><span>readings log</span><span class="link_list_path">/blog</span></a></li>
-    <li><a href="/notes"><span>micro-logs</span><span class="link_list_path">/notes</span></a></li>
-    <li><a href="/photos"><span>photos</span><span class="link_list_path">/photos</span></a></li>
-    <li><a href="/projects/"><span>projects</span><span class="link_list_path">/projects/</span></a></li>
-    <li><a href="/bookmarks/"><span>bookmarks</span><span class="link_list_path">/bookmarks/</span></a></li>
-    <li><a href="/guestbook/"><span>guestbook</span><span class="link_list_path">/guestbook/</span></a></li>
-    <li><a href="/contact/"><span>contact</span><span class="link_list_path">/contact/</span></a></li>
-    <li><a href="/sitemap/"><span>sitemap</span><span class="link_list_path">/sitemap/</span></a></li>
-    <li><a href="/privacy/"><span>privacy policy</span><span class="link_list_path">/privacy/</span></a></li>
+  <div class="channel_label"><span class="channel_label_line"></span><span>CH-07.1</span><strong>PAGES</strong></div>
+  <ul class="menu_list">
+    {{ range site.Pages.ByParam "docid" }}
+    {{ if or (not .Params.docid) (le .Params.docid $.Params.docid) }}{{ continue }}{{ end }}
+    <li>
+      <a class="menu_item" href="{{ .RelPermalink }}">
+        <span class="menu_item_index">{{ index (split .Params.statusline " ") 0 }}</span>
+        <span>
+          <span class="menu_item_label">{{ strings.Trim .RelPermalink "/" | upper }}/</span>
+          <span class="menu_item_description">{{ .Params.description | truncate 120 }}</span>
+        </span>
+        <span class="menu_item_arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+    {{ end }}
   </ul>
 </section>
 
-<section class="page_section" id="readings">
-  <div class="channel_label"><span class="channel_label_line"></span><span>CH-10.2</span><strong>READINGS</strong></div>
-  <ul class="link_list link_list_mobile_arrow">
-    {{ range (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
-    <li><a href="{{ .RelPermalink }}"><span>{{ .Title }}</span><span class="link_list_path">{{ .RelPermalink
-          }}</span></a></li>
-    {{ else }}
-    <li class="empty_message">no entries yet.</li>
+<section class="page_section" id="tags">
+  <div class="channel_label"><span class="channel_label_line"></span><span>CH-07.2</span><strong>TAGS</strong></div>
+  {{ $entries := where site.RegularPages "Section" "in" (slice "posts" "notes") }}
+  {{ $used := slice }}
+  {{ range $entries }}{{ range .Params.tags }}{{ $used = $used | append . }}{{ end }}{{ end }}
+  {{ $used = $used | uniq | sort }}
+  {{ $groups := site.Data.tag_groups.group }}
+  {{ $listed := slice }}
+  {{ range $groups }}{{ $listed = $listed | append .tags }}{{ end }}
+  {{ $groups = $groups | append (dict "name" "unlisted" "tags" (complement $listed $used)) }}
+  <div class="tag_groups">
+    {{ range $groups }}
+    {{ $present := intersect .tags $used }}
+    {{ if not $present }}{{ continue }}{{ end }}
+    <div class="tag_group">
+      <span class="tag_group_label" data-tag="{{ index $present 0 }}">{{ .name }}</span>
+      <div>
+        {{ range $present }}
+        <span class="tag_group_item" data-tag="{{ . }}">{{ . }}<span class="tag_group_count">{{ len (where $entries
+            "Params.tags" "intersect" (slice .)) }}</span></span>
+        {{ end }}
+      </div>
+    </div>
     {{ end }}
-  </ul>
+  </div>
 </section>
 
 {{ end }}

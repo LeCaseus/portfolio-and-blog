@@ -6,12 +6,8 @@
   (dict "href" "/blog" "idx" "CH-03" "lbl" "BLOG/")
   (dict "href" "/notes" "idx" "CH-04" "lbl" "NOTES/")
   (dict "href" "/photos" "idx" "CH-05" "lbl" "PHOTOS/")
-  (dict "href" "/projects/" "idx" "CH-06" "lbl" "PROJECTS/")
-  (dict "href" "/bookmarks/" "idx" "CH-07" "lbl" "BOOKMARKS/")
-  (dict "href" "/guestbook/" "idx" "CH-08" "lbl" "GUESTBOOK/")
-  (dict "href" "/contact/" "idx" "CH-09" "lbl" "CONTACT/")
-  (dict "href" "/sitemap/" "idx" "CH-10" "lbl" "SITEMAP/")
-  (dict "href" "/privacy/" "idx" "CH-11" "lbl" "PRIVACY/")
+  (dict "href" "/contact/" "idx" "CH-06" "lbl" "CONTACT/")
+  (dict "href" "/sitemap/" "idx" "CH-07" "lbl" "MORE/")
   }}
   {{ range $tree }}
   <a class="nav_link nav_link_root{{ if eq .href $.RelPermalink }} is_active{{ end }}" href="{{ .href }}">

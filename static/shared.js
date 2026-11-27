@@ -222,13 +222,13 @@ export function init_hero_ecg() {
   setInterval(update_bpm, 700);
 }
 
-export function init_theme_toggle() {
-  const checkbox = document.querySelector("[data-theme-toggle]");
-  checkbox.checked = document.documentElement.dataset.theme === "dark";
+export function init_shell_toggle() {
+  const checkbox = document.querySelector("[data-shell-toggle]");
+  const root = document.documentElement;
+  checkbox.checked = !root.hasAttribute("data-minimal");
   checkbox.addEventListener("change", () => {
-    const theme = checkbox.checked ? "dark" : "light";
-    document.documentElement.dataset.theme = theme;
-    localStorage.setItem("cv.theme", theme);
+    root.toggleAttribute("data-minimal", !checkbox.checked);
+    localStorage.setItem("cv.shell", checkbox.checked ? "on" : "off");
   });
 }
 
@@ -295,7 +295,7 @@ export function escape_html(value) {
 
 export function init_shell() {
   init_hero_ecg();
-  init_theme_toggle();
+  init_shell_toggle();
   start_clock();
   init_mobile_nav();
 }

@@ -1,0 +1,45 @@
+{{ define "main" }}
+
+<section class="hero_intro" id="top" data-screen-label="12 Subscribe">
+  <div class="hero_eyebrow">0x0012 · <span>ELECTRODES CONNECTED</span> · LEAD II</div>
+  <h1>FOLLOW-UP<br /><span class="hero_title_accent">APPOINTMENTS<span class="hero_title_cursor">_</span></span></h1>
+  <div class="intro_box">
+    <div class="panel_label">// RECORD LOG</div>
+    <p>
+      Take one... Take two... Take all if you prefer it that way? Here are my different RSS and Atom Feeds for your
+      personal use. I do not mainly encourage Atom since I only use that for my automated POSSE syndication to another
+      silo, but if you prefer that, then I'm not one to stop you.
+    </p>
+  </div>
+</section>
+
+<section class="page_section" id="feeds">
+  <div class="channel_label"><span class="channel_label_line"></span><span>CH-12.1</span><strong>FEEDS</strong></div>
+  {{ $feeds := slice
+  (dict "id" "firehose-rss" "name" "firehose" "page" site.Home "format" "rss" "size" "1.2K" "date" "Nov 26 22:24")
+  (dict "id" "blog-rss" "name" "blog" "page" (site.GetPage "/posts") "format" "rss" "size" "0.8K" "date" "Nov 25 18:42")
+  (dict "id" "notes-rss" "name" "notes" "page" (site.GetPage "/notes") "format" "rss" "size" "0.9K" "date"
+  "Nov 24 09:16")
+  (dict "id" "blog-atom" "name" "blog" "page" (site.GetPage "/posts") "format" "atom" "size" "0.7K" "date"
+  "Nov 26 21:08")
+  (dict "id" "photos-atom" "name" "photos" "page" (site.GetPage "/photos") "format" "atom" "size" "0.4K" "date"
+  "Nov 23 14:32")
+  }}
+  <div class="terminal" role="region" aria-label="Feeds terminal">
+    <span class="terminal_command"><span class="terminal_prompt">$</span> ls -lAh ./feeds</span>
+    <span class="terminal_output">total 4.0K</span>
+    {{ range $feeds }}
+    {{ $url := (.page.OutputFormats.Get .format).Permalink }}
+    {{ $filename := printf "%s.%s" .name .format }}
+    <span class="terminal_output">-rw-r--r--. 1 lecaseus lecaseus {{ .size }} {{ .date }} <a href="{{ $url }}"
+        data-umami-event="feed-click" data-umami-event-feed="{{ .id }}">{{ $filename }}</a></span>
+    {{ end }}
+    <span class="terminal_command"><span class="terminal_prompt">$</span><span class="terminal_cursor"></span></span>
+  </div>
+</section>
+
+{{ end }}
+
+{{ define "scripts" }}
+<script type="module" src="/shell.js"></script>
+{{ end }}

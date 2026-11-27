@@ -3,9 +3,13 @@
 <meta name="robots" content="noai, noimageai">
 <script>
   (function () {
-    var stored = localStorage.getItem('cv.theme');
-    var theme = stored || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', theme);
+    var dark_query = matchMedia('(prefers-color-scheme: dark)');
+    document.documentElement.toggleAttribute('data-minimal', localStorage.getItem('cv.shell') === 'off');
+    var apply_theme = function () {
+      document.documentElement.dataset.theme = dark_query.matches ? 'dark' : 'light';
+    };
+    apply_theme();
+    dark_query.addEventListener('change', apply_theme);
   })();
 </script>
 <title>{{ .Title }}</title>
